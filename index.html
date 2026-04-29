@@ -3,27 +3,29 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>PastelGreen Web App</title>
+<title>PowerAds — AI Marketing Automation</title>
 <style>
   /* ====== Pastel Green Theme ====== */
   :root {
-    --pg-bg:        #E8F5EC;   /* พื้นหลังหลัก เขียวพาสเทลอ่อน */
-    --pg-bg-2:      #D4EDDB;   /* พื้นหลังโทนเข้มขึ้นนิด */
+    --pg-bg:        #E8F5EC;
+    --pg-bg-2:      #D4EDDB;
     --pg-card:      #FFFFFF;
-    --pg-tint:      #F2FAF4;   /* สีพื้น tint ในการ์ด */
+    --pg-tint:      #F2FAF4;
     --pg-primary:   #88C9A1;
     --pg-primary-d: #5FAE83;
     --pg-light:     #DFF5E1;
     --pg-soft:      #EAF7EE;
     --pg-text:      #2E4A3A;
+    --pg-text-2:    #1F3A2A;
     --pg-muted:     #6E8F7B;
     --pg-border:    #BFE0CC;
     --pg-shadow:    0 6px 18px rgba(95, 174, 131, 0.18);
+    --pg-shadow-l:  0 18px 50px rgba(95, 174, 131, 0.22);
     --pg-radius:    14px;
   }
-
   * { box-sizing: border-box; }
-  html, body {
+  html { scroll-behavior: smooth; }
+  body {
     margin: 0; padding: 0;
     font-family: "Segoe UI", "Noto Sans Thai", "Sarabun", system-ui, sans-serif;
     color: var(--pg-text);
@@ -32,118 +34,390 @@
       radial-gradient(circle at 15% 10%, #CFEAD6, transparent 45%),
       radial-gradient(circle at 85% 90%, #C8E6CC, transparent 45%),
       var(--pg-bg);
+    overflow-x: hidden;
   }
-  a { color: var(--pg-primary-d); text-decoration: none; }
+  a { color: inherit; text-decoration: none; }
   button { font-family: inherit; cursor: pointer; }
   .hidden { display: none !important; }
 
-  /* ====== Auth Page ====== */
-  .auth-wrap {
-    min-height: 100vh;
-    display: flex; align-items: center; justify-content: center;
-    padding: 24px;
+  /* ===== Buttons ===== */
+  .btn {
+    border: 0; cursor: pointer;
+    padding: 12px 22px;
+    border-radius: 999px;
+    font-weight: 800; font-size: 14px;
+    transition: .2s ease;
+    display: inline-flex; align-items: center; justify-content: center;
+    gap: 8px;
   }
-  .auth-card {
-    width: 100%; max-width: 440px;
-    background: var(--pg-card);
-    border-radius: 22px;
-    padding: 32px 30px;
-    box-shadow: var(--pg-shadow);
+  .btn-primary {
+    background: linear-gradient(135deg, var(--pg-primary), var(--pg-primary-d));
+    color: white;
+    box-shadow: 0 10px 24px rgba(95,174,131,.3);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(95,174,131,.4); }
+  .btn-ghost {
+    background: white;
+    color: var(--pg-primary-d);
     border: 1px solid var(--pg-border);
   }
-  .brand {
-    display: flex; align-items: center; gap: 10px;
+  .btn-ghost:hover { background: var(--pg-light); }
+  .btn-block { width: 100%; padding: 12px; border-radius: 10px; }
+
+  /* ====== Landing Page ====== */
+  .landing { display: block; }
+  .container {
+    width: min(1180px, calc(100% - 32px));
+    margin: 0 auto;
+  }
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: blur(18px);
+    background: rgba(232,245,236,.78);
+    border-bottom: 1px solid var(--pg-border);
+  }
+  .nav-inner {
+    height: 72px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .logo {
+    display: flex; align-items: center; gap: 12px;
+    font-weight: 900; font-size: 20px; letter-spacing: -.5px;
+    color: var(--pg-text-2);
+  }
+  .logo-icon {
+    width: 40px; height: 40px;
+    border-radius: 12px;
+    display: grid; place-items: center;
+    background: linear-gradient(135deg, var(--pg-primary), var(--pg-primary-d));
+    color: white; font-size: 18px;
+    box-shadow: 0 8px 20px rgba(95,174,131,.3);
+  }
+  .menu {
+    display: flex; align-items: center; gap: 28px;
+    color: var(--pg-muted); font-size: 14px; font-weight: 600;
+  }
+  .menu a:hover { color: var(--pg-primary-d); }
+  .nav-actions { display: flex; align-items: center; gap: 10px; }
+
+  .hero { padding: 70px 0 50px; }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.02fr .98fr;
+    gap: 50px; align-items: center;
+  }
+  .badge {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: var(--pg-light);
+    border: 1px solid var(--pg-border);
+    color: var(--pg-primary-d);
+    font-weight: 700; font-size: 13px;
+    margin-bottom: 22px;
+  }
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 999px; background: var(--pg-primary-d);
+    box-shadow: 0 0 12px var(--pg-primary);
+  }
+  .hero h1 {
+    font-size: clamp(40px, 5.5vw, 72px);
+    line-height: .98; letter-spacing: -2px;
+    margin: 0 0 22px;
+    color: var(--pg-text-2);
+  }
+  .gradient-text {
+    background: linear-gradient(135deg, var(--pg-primary-d), var(--pg-primary), #2E4A3A);
+    -webkit-background-clip: text; background-clip: text;
+    color: transparent;
+  }
+  .lead {
+    color: var(--pg-muted);
+    font-size: 18px; line-height: 1.7;
+    max-width: 580px; margin-bottom: 28px;
+  }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 26px; }
+  .trust { display: flex; align-items: center; gap: 16px; color: var(--pg-muted); font-size: 13px; }
+  .avatars { display: flex; }
+  .av {
+    width: 36px; height: 36px; border-radius: 999px;
+    border: 2px solid #fff; margin-left: -10px;
+    background: linear-gradient(135deg, var(--pg-light), var(--pg-primary));
+    box-shadow: 0 2px 6px rgba(0,0,0,.08);
+  }
+  .av:first-child { margin-left: 0; }
+
+  .mockup {
+    position: relative;
+    border-radius: 30px;
+    background: linear-gradient(180deg, #ffffffd9, #ffffff80);
+    border: 1px solid var(--pg-border);
+    box-shadow: var(--pg-shadow-l);
+    padding: 16px;
+  }
+  .dashboard-mock {
+    border-radius: 22px;
+    background: white;
+    border: 1px solid var(--pg-border);
+    padding: 18px;
+  }
+  .dash-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .window-dots { display: flex; gap: 6px; }
+  .window-dots span { width: 10px; height: 10px; border-radius: 50%; background: var(--pg-light); border: 1px solid var(--pg-border); }
+  .status {
+    color: var(--pg-primary-d);
+    background: var(--pg-light);
+    border: 1px solid var(--pg-border);
+    padding: 6px 12px; border-radius: 999px;
+    font-size: 12px; font-weight: 800;
+  }
+  .dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .metric {
+    background: var(--pg-tint);
+    border: 1px solid var(--pg-border);
+    border-radius: 16px; padding: 14px;
+  }
+  .metric small { color: var(--pg-muted); display: block; margin-bottom: 6px; font-size: 12px; }
+  .metric strong { font-size: 24px; color: var(--pg-primary-d); }
+  .chart-mock {
+    height: 150px; border-radius: 18px;
+    background: linear-gradient(180deg, var(--pg-light), white);
+    border: 1px solid var(--pg-border);
+    position: relative; overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .chart-mock svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .task-mock {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; padding: 12px;
+    border-radius: 14px;
+    background: var(--pg-tint);
+    border: 1px solid var(--pg-border);
+    margin-bottom: 8px;
+  }
+  .task-left { display: flex; align-items: center; gap: 10px; }
+  .check {
+    width: 30px; height: 30px;
+    border-radius: 999px;
+    background: var(--pg-light);
+    color: var(--pg-primary-d);
+    display: grid; place-items: center;
+    font-weight: 900;
+  }
+  .task-mock p { font-weight: 700; margin: 0 0 2px; font-size: 13px; }
+  .task-mock .sub { color: var(--pg-muted); font-size: 12px; }
+  .pill {
+    color: white;
+    background: var(--pg-primary-d);
+    border-radius: 999px;
+    padding: 6px 10px;
+    font-size: 11px; font-weight: 800;
+  }
+
+  .section { padding: 70px 0; }
+  .section-head { text-align: center; max-width: 720px; margin: 0 auto 40px; }
+  .section-head h2 {
+    font-size: clamp(30px, 4vw, 48px);
+    line-height: 1.05; letter-spacing: -1.5px;
+    margin: 0 0 14px;
+    color: var(--pg-text-2);
+  }
+  .section-head p { color: var(--pg-muted); font-size: 17px; line-height: 1.7; margin: 0; }
+
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .feat-card {
+    border-radius: 22px;
+    background: white;
+    border: 1px solid var(--pg-border);
+    padding: 26px;
+    box-shadow: var(--pg-shadow);
+  }
+  .feat-icon {
+    width: 52px; height: 52px;
+    border-radius: 16px;
+    display: grid; place-items: center;
+    background: linear-gradient(135deg, var(--pg-light), var(--pg-soft));
+    border: 1px solid var(--pg-border);
+    font-size: 22px;
     margin-bottom: 18px;
   }
-  .brand-logo {
-    width: 42px; height: 42px;
-    background: linear-gradient(135deg, var(--pg-primary), var(--pg-primary-d));
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    color: white; font-weight: 700; font-size: 20px;
-    box-shadow: 0 4px 8px rgba(95,174,131,.25);
-  }
-  .brand-name { font-weight: 700; font-size: 18px; color: var(--pg-text); }
+  .feat-card h3 { font-size: 20px; margin: 0 0 10px; color: var(--pg-text-2); }
+  .feat-card p  { color: var(--pg-muted); line-height: 1.7; margin: 0; }
 
+  .split { display: grid; grid-template-columns: .9fr 1.1fr; gap: 26px; align-items: center; }
+  .panel {
+    border-radius: 28px;
+    background: white;
+    border: 1px solid var(--pg-border);
+    padding: 32px;
+    box-shadow: var(--pg-shadow-l);
+  }
+  .panel h2 {
+    font-size: clamp(28px, 3.5vw, 42px);
+    line-height: 1.05; letter-spacing: -1.2px;
+    margin: 0 0 14px; color: var(--pg-text-2);
+  }
+  .panel p { color: var(--pg-muted); line-height: 1.8; font-size: 16px; margin: 0 0 16px; }
+  .list { display: grid; gap: 10px; margin-top: 18px; }
+  .list div { display: flex; gap: 10px; color: var(--pg-text); line-height: 1.6; }
+  .list b { color: var(--pg-primary-d); }
+  .platforms-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 22px;
+  }
+  .platform-tile {
+    padding: 14px; border-radius: 16px;
+    background: var(--pg-tint);
+    border: 1px solid var(--pg-border);
+    text-align: center; font-weight: 800; font-size: 14px;
+    color: var(--pg-text-2);
+  }
+  .recommend {
+    background: var(--pg-tint);
+    border: 1px solid var(--pg-border);
+    padding: 14px 16px; border-radius: 16px;
+    margin-bottom: 10px;
+  }
+  .recommend strong { color: var(--pg-primary-d); display: block; margin-bottom: 4px; font-size: 14px; }
+  .recommend span { color: var(--pg-muted); font-size: 13px; line-height: 1.6; }
+
+  .pricing { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .price-card {
+    border-radius: 24px;
+    background: white;
+    border: 1px solid var(--pg-border);
+    padding: 28px;
+    box-shadow: var(--pg-shadow);
+    display: flex; flex-direction: column;
+  }
+  .price-card.featured {
+    background: linear-gradient(180deg, var(--pg-light), white);
+    border: 2px solid var(--pg-primary);
+    transform: translateY(-8px);
+  }
+  .price-card h3 { font-size: 18px; margin: 0 0 4px; color: var(--pg-text-2); }
+  .price { font-size: 36px; font-weight: 900; color: var(--pg-primary-d); margin: 8px 0 16px; }
+  .price small { font-size: 14px; color: var(--pg-muted); font-weight: 600; }
+  .price-card ul { list-style: none; padding: 0; margin: 0 0 22px; }
+  .price-card li { padding: 6px 0; color: var(--pg-text); font-size: 14px; }
+  .price-card li:before { content: "✓ "; color: var(--pg-primary-d); font-weight: 900; }
+
+  .faq { display: grid; gap: 12px; max-width: 800px; margin: 0 auto; }
+  .faq-item {
+    background: white;
+    border: 1px solid var(--pg-border);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: var(--pg-shadow);
+  }
+  .faq-item h3 { margin: 0 0 6px; font-size: 16px; color: var(--pg-text-2); }
+  .faq-item p  { margin: 0; color: var(--pg-muted); line-height: 1.7; font-size: 14px; }
+
+  .cta {
+    text-align: center;
+    border-radius: 32px;
+    padding: 60px 24px;
+    background: linear-gradient(135deg, var(--pg-light), white);
+    border: 1px solid var(--pg-border);
+    box-shadow: var(--pg-shadow-l);
+  }
+  .cta h2 { font-size: clamp(30px, 4vw, 50px); line-height: 1; margin: 0 0 14px; color: var(--pg-text-2); }
+  .cta p  { color: var(--pg-muted); font-size: 17px; line-height: 1.7; margin: 0 0 22px; }
+
+  footer { padding: 30px 0; border-top: 1px solid var(--pg-border); color: var(--pg-muted); text-align: center; font-size: 14px; }
+
+  @media (max-width: 920px) {
+    .menu { display: none; }
+    .hero-grid, .split { grid-template-columns: 1fr; }
+    .cards, .pricing { grid-template-columns: 1fr; }
+    .platforms-grid { grid-template-columns: repeat(2, 1fr); }
+    .price-card.featured { transform: none; }
+  }
+
+  /* ====== Auth Modal ====== */
+  .modal-bg {
+    position: fixed; inset: 0;
+    background: rgba(46,74,58,.45);
+    backdrop-filter: blur(6px);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 100;
+    padding: 16px;
+  }
+  .auth-card {
+    width: 100%; max-width: 420px;
+    background: var(--pg-card);
+    border-radius: 22px;
+    padding: 30px 28px;
+    box-shadow: var(--pg-shadow-l);
+    border: 1px solid var(--pg-border);
+    position: relative;
+  }
+  .modal-close {
+    position: absolute; top: 14px; right: 14px;
+    background: var(--pg-tint); border: 1px solid var(--pg-border);
+    width: 30px; height: 30px; border-radius: 50%;
+    display: grid; place-items: center;
+    color: var(--pg-text); font-weight: 700;
+  }
   .tabs {
     display: flex;
     background: var(--pg-soft);
-    border-radius: 12px;
-    padding: 4px;
-    margin-bottom: 22px;
-    border: 1px solid var(--pg-border);
+    border-radius: 12px; padding: 4px;
+    margin-bottom: 20px; border: 1px solid var(--pg-border);
   }
   .tab {
-    flex: 1; padding: 11px 0;
+    flex: 1; padding: 10px 0;
     border: none; background: transparent;
     border-radius: 10px; font-weight: 700; font-size: 14px;
     color: var(--pg-muted);
     transition: all .2s;
   }
   .tab.active {
-    background: var(--pg-primary);
-    color: white;
+    background: var(--pg-primary); color: white;
     box-shadow: 0 3px 8px rgba(95,174,131,.3);
   }
-
-  .form-title { font-size: 20px; font-weight: 700; margin: 4px 0 16px; }
+  .form-title { font-size: 20px; font-weight: 700; margin: 4px 0 16px; color: var(--pg-text-2); }
   .form-group { margin-bottom: 14px; }
-  .form-group label {
-    display: block; font-size: 13px; font-weight: 600;
-    margin-bottom: 6px; color: var(--pg-text);
-  }
+  .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
   .form-group input {
     width: 100%; padding: 12px 14px;
     border: 1px solid var(--pg-border);
     border-radius: 10px; font-size: 14px;
     background: var(--pg-tint);
-    transition: border-color .2s, box-shadow .2s, background .2s;
+    transition: .2s;
   }
   .form-group input:focus {
-    outline: none;
-    background: white;
+    outline: none; background: white;
     border-color: var(--pg-primary);
     box-shadow: 0 0 0 3px rgba(136,201,161,.25);
   }
-
-  .btn {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 10px;
-    background: linear-gradient(135deg, var(--pg-primary), var(--pg-primary-d));
-    color: white;
-    font-weight: 700; font-size: 15px;
-    transition: filter .2s, transform .05s;
-    box-shadow: 0 4px 10px rgba(95,174,131,.25);
-  }
-  .btn:hover { filter: brightness(1.05); }
-  .btn:active { transform: translateY(1px); }
-  .btn-secondary {
-    background: var(--pg-soft);
-    color: var(--pg-primary-d);
-    box-shadow: none;
-    border: 1px solid var(--pg-border);
-  }
-  .btn-secondary:hover { background: var(--pg-light); filter:none; }
-
-  .auth-footer {
-    margin-top: 16px; text-align: center;
-    color: var(--pg-muted); font-size: 13px;
-  }
-  .auth-footer .link {
-    color: var(--pg-primary-d);
-    cursor: pointer; font-weight: 700;
-  }
-  .alert {
-    padding: 10px 12px;
-    border-radius: 10px;
-    font-size: 13px;
-    margin-bottom: 12px;
-    border: 1px solid transparent;
-  }
+  .auth-footer { margin-top: 14px; text-align: center; color: var(--pg-muted); font-size: 13px; }
+  .auth-footer .link { color: var(--pg-primary-d); cursor: pointer; font-weight: 700; }
+  .alert { padding: 10px 12px; border-radius: 10px; font-size: 13px; margin-bottom: 12px; border: 1px solid transparent; }
   .alert-error   { background: #FBE3E3; color: #8C2A2A; border-color: #F1B5B5; }
   .alert-success { background: var(--pg-light); color: #2C5C3F; border-color: var(--pg-border); }
+
+  /* Google sign-in button */
+  .btn-google {
+    width: 100%;
+    background: white;
+    color: #3c4043;
+    border: 1px solid #dadce0;
+    border-radius: 10px;
+    padding: 11px;
+    font-weight: 700; font-size: 14px;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    transition: background .2s, box-shadow .2s;
+  }
+  .btn-google:hover { background: #f8f9fa; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+  .divider {
+    display: flex; align-items: center; gap: 10px;
+    color: var(--pg-muted); font-size: 12px;
+    margin: 16px 0;
+  }
+  .divider:before, .divider:after {
+    content: ""; flex: 1; height: 1px; background: var(--pg-border);
+  }
 
   /* ====== Dashboard ====== */
   .dash-wrap {
@@ -157,7 +431,7 @@
     border-right: 1px solid var(--pg-border);
     display: flex; flex-direction: column;
   }
-  .sidebar .brand { margin-bottom: 28px; }
+  .sidebar .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 28px; }
   .nav-item {
     display: flex; align-items: center; gap: 10px;
     width: 100%; text-align: left;
@@ -171,15 +445,10 @@
   }
   .nav-item:hover { background: rgba(255,255,255,.55); }
   .nav-item.active {
-    background: white;
-    color: var(--pg-primary-d);
+    background: white; color: var(--pg-primary-d);
     box-shadow: 0 4px 10px rgba(95,174,131,.2);
   }
-  .nav-icon {
-    width: 22px; height: 22px;
-    display: inline-flex; align-items: center; justify-content: center;
-    font-size: 15px;
-  }
+  .nav-icon { width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; font-size: 15px; }
   .sidebar-footer { margin-top: auto; }
 
   .main {
@@ -187,45 +456,32 @@
     overflow-y: auto;
     background: linear-gradient(180deg, var(--pg-bg) 0%, #DDF1E2 100%);
   }
-  .topbar {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 22px;
-  }
-  .page-title {
-    font-size: 24px; font-weight: 700; margin: 0;
-    color: var(--pg-text);
-  }
+  .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; }
+  .page-title { font-size: 24px; font-weight: 700; margin: 0; color: var(--pg-text); }
   .user-chip {
     display: flex; align-items: center; gap: 10px;
     background: white; padding: 6px 14px 6px 6px;
     border-radius: 50px; border: 1px solid var(--pg-border);
     box-shadow: 0 3px 8px rgba(95,174,131,.1);
   }
-  .avatar {
+  .avatar-lg {
     width: 34px; height: 34px; border-radius: 50%;
     background: linear-gradient(135deg, var(--pg-primary), var(--pg-primary-d));
     color: white;
     display: flex; align-items: center; justify-content: center;
     font-weight: 700;
   }
-
-  .card {
-    background: var(--pg-card);
+  .card-d {
+    background: white;
     border: 1px solid var(--pg-border);
     border-radius: var(--pg-radius);
     padding: 22px;
     box-shadow: var(--pg-shadow);
     margin-bottom: 20px;
   }
-  .card h3 { margin: 0 0 8px; font-size: 18px; color: var(--pg-text); }
-  .card p { margin: 0; color: var(--pg-muted); }
-
-  .stat-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 16px;
-    margin-bottom: 20px;
-  }
+  .card-d h3 { margin: 0 0 8px; font-size: 18px; color: var(--pg-text); }
+  .card-d p  { margin: 0; color: var(--pg-muted); }
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 20px; }
   .stat-card {
     background: linear-gradient(135deg, #FFFFFF 0%, var(--pg-soft) 100%);
     border: 1px solid var(--pg-border);
@@ -235,42 +491,15 @@
   }
   .stat-label { font-size: 12px; color: var(--pg-muted); text-transform: uppercase; letter-spacing: .5px; font-weight: 600; }
   .stat-value { font-size: 28px; font-weight: 700; margin-top: 6px; color: var(--pg-primary-d); }
-
-  /* Tables */
-  .table-wrap {
-    background: white;
-    border-radius: var(--pg-radius);
-    overflow: hidden;
-    border: 1px solid var(--pg-border);
-    box-shadow: var(--pg-shadow);
-  }
+  .table-wrap { background: white; border-radius: var(--pg-radius); overflow: hidden; border: 1px solid var(--pg-border); box-shadow: var(--pg-shadow); }
   table { width: 100%; border-collapse: collapse; }
-  th, td {
-    padding: 12px 14px; text-align: left;
-    border-bottom: 1px solid var(--pg-border);
-    font-size: 14px;
-  }
-  th {
-    background: var(--pg-soft);
-    color: var(--pg-text);
-    font-weight: 700; font-size: 13px;
-    text-transform: uppercase; letter-spacing: .3px;
-  }
+  th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--pg-border); font-size: 14px; }
+  th { background: var(--pg-soft); color: var(--pg-text); font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: .3px; }
   tr:last-child td { border-bottom: none; }
   tr:hover td { background: var(--pg-tint); }
-
-  .toolbar {
-    display: flex; gap: 10px; justify-content: flex-end;
-    margin-bottom: 14px; flex-wrap: wrap;
-  }
-  .btn-inline { width: auto; padding: 9px 18px; font-size: 14px; }
-
-  /* Feature pages */
-  .feature-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 16px;
-  }
+  .toolbar { display: flex; gap: 10px; justify-content: flex-end; margin-bottom: 14px; flex-wrap: wrap; }
+  .btn-inline { width: auto; padding: 9px 18px; font-size: 14px; border-radius: 10px; }
+  .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
   .feature-tile {
     background: linear-gradient(135deg, var(--pg-light) 0%, #FFFFFF 100%);
     border: 1px solid var(--pg-border);
@@ -280,8 +509,7 @@
   }
   .feature-tile h4 { margin: 0 0 6px; color: var(--pg-text); }
   .feature-tile p  { margin: 0; color: var(--pg-muted); font-size: 14px; }
-
-  .badge {
+  .badge-d {
     display: inline-block;
     background: var(--pg-light);
     color: var(--pg-primary-d);
@@ -290,7 +518,6 @@
     font-size: 12px; font-weight: 700;
     border: 1px solid var(--pg-border);
   }
-
   @media (max-width: 768px) {
     .dash-wrap { grid-template-columns: 1fr; }
     .sidebar { flex-direction: row; flex-wrap: wrap; }
@@ -301,14 +528,182 @@
 </head>
 <body>
 
-<!-- ====================== AUTH PAGE ====================== -->
-<div id="authPage" class="auth-wrap">
-  <div class="auth-card">
-    <div class="brand">
-      <div class="brand-logo">P</div>
-      <div class="brand-name">PastelGreen</div>
+<!-- ====================== LANDING PAGE ====================== -->
+<div id="landingPage" class="landing">
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="#" class="logo">
+        <span class="logo-icon">⚡</span>
+        <span>PowerAds</span>
+      </a>
+      <div class="menu">
+        <a href="#features">ฟีเจอร์</a>
+        <a href="#platforms">แพลตฟอร์ม</a>
+        <a href="#pricing">ราคา</a>
+        <a href="#faq">คำถาม</a>
+      </div>
+      <div class="nav-actions">
+        <button type="button" class="btn btn-ghost" onclick="openAuth('login')">Login</button>
+        <button type="button" class="btn btn-primary" onclick="openAuth('register')">เริ่มใช้ฟรี</button>
+      </div>
     </div>
+  </nav>
 
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="badge"><span class="dot"></span> AI Marketing Automation Dashboard</div>
+          <h1>ผู้ช่วย AI สำหรับ <span class="gradient-text">ยิงแอดและโพสต์คอนเทนต์</span></h1>
+          <p class="lead">รวมระบบจัดการคอนเทนต์ โฆษณา และแคมเปญไว้ในที่เดียว รองรับ Facebook, TikTok, YouTube และ Shopee ช่วยวางแผน สร้างข้อความ วิเคราะห์ผล และเตรียมโพสต์ได้เร็วขึ้น</p>
+          <div class="hero-actions">
+            <button type="button" class="btn btn-primary" onclick="openAuth('register')">Start Free Trial →</button>
+            <a class="btn btn-ghost" href="#features">ดูฟีเจอร์</a>
+          </div>
+          <div class="trust">
+            <div class="avatars"><span class="av"></span><span class="av"></span><span class="av"></span><span class="av"></span></div>
+            <span>เหมาะสำหรับร้านค้าออนไลน์ นักยิงแอด และทีมคอนเทนต์</span>
+          </div>
+        </div>
+        <div class="mockup">
+          <div class="dashboard-mock">
+            <div class="dash-top">
+              <div class="window-dots"><span></span><span></span><span></span></div>
+              <div class="status">AI Active</div>
+            </div>
+            <div class="dash-grid">
+              <div class="metric"><small>ยอดเข้าชม</small><strong>128K</strong></div>
+              <div class="metric"><small>ROAS</small><strong>4.8x</strong></div>
+            </div>
+            <div class="chart-mock">
+              <svg viewBox="0 0 500 180" preserveAspectRatio="none">
+                <path d="M0,135 C60,120 85,95 130,102 C190,112 190,45 250,58 C315,72 320,35 380,42 C430,48 450,22 500,30" fill="none" stroke="#5FAE83" stroke-width="4" />
+                <path d="M0,135 C60,120 85,95 130,102 C190,112 190,45 250,58 C315,72 320,35 380,42 C430,48 450,22 500,30 L500,180 L0,180 Z" fill="rgba(136,201,161,.25)" />
+              </svg>
+            </div>
+            <div class="task-mock">
+              <div class="task-left">
+                <div class="check">✓</div>
+                <div><p>AI พบกลุ่มเป้าหมายใหม่</p><span class="sub">แนะนำให้เพิ่มงบกับแคมเปญที่กำลังโต</span></div>
+              </div>
+              <span class="pill">Launch</span>
+            </div>
+            <div class="task-mock">
+              <div class="task-left">
+                <div class="check">✓</div>
+                <div><p>สร้าง Caption พร้อม Hashtag</p><span class="sub">เหมาะกับ TikTok และ YouTube Shorts</span></div>
+              </div>
+              <span class="pill">Ready</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>ทำงานการตลาดให้เร็วขึ้นด้วย AI</h2>
+          <p>ระบบนี้ออกแบบมาเพื่อช่วยลดเวลาการทำงานซ้ำ ๆ ตั้งแต่คิดคอนเทนต์ เตรียมโพสต์ วิเคราะห์ผล ไปจนถึงจัดการแคมเปญ</p>
+        </div>
+        <div class="cards">
+          <div class="feat-card"><div class="feat-icon">🤖</div><h3>AI Campaign Assistant</h3><p>ให้ AI ช่วยวิเคราะห์แคมเปญ แนะนำจุดที่ควรปรับ และสรุปสิ่งที่ควรทำต่อแบบเข้าใจง่าย</p></div>
+          <div class="feat-card"><div class="feat-icon">🎬</div><h3>Auto Post Hub</h3><p>อัปโหลดวิดีโอ ใส่ Caption เลือกแพลตฟอร์ม และเตรียมโพสต์ได้จากหน้าเดียว</p></div>
+          <div class="feat-card"><div class="feat-icon">📈</div><h3>Performance Dashboard</h3><p>ดูภาพรวมยอดเข้าชม ค่าโฆษณา คอนเวอร์ชัน และผลลัพธ์ของทุกช่องทาง</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="platforms" class="section">
+      <div class="container split">
+        <div class="panel">
+          <h2>เชื่อมหลายแพลตฟอร์มในที่เดียว</h2>
+          <p>วางระบบให้รองรับการเชื่อมต่อ API ของแต่ละแพลตฟอร์ม เพื่อจัดการคอนเทนต์และข้อมูลการตลาดจากศูนย์กลางเดียว</p>
+          <div class="list">
+            <div><b>✓</b> Login และเชื่อมบัญชีผู้ใช้</div>
+            <div><b>✓</b> อัปโหลดรูปภาพหรือวิดีโอ</div>
+            <div><b>✓</b> ตั้ง Caption และ Hashtag</div>
+            <div><b>✓</b> ดูประวัติการโพสต์และสถานะงาน</div>
+          </div>
+          <div class="platforms-grid">
+            <div class="platform-tile">Facebook</div>
+            <div class="platform-tile">TikTok</div>
+            <div class="platform-tile">YouTube</div>
+            <div class="platform-tile">Shopee</div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="recommend"><strong>AI Recommendation</strong><span>แนะนำให้ใช้คลิปสั้น 15–25 วินาที พร้อม Hook ใน 3 วินาทีแรก เพื่อเพิ่มอัตราการรับชม</span></div>
+          <div class="recommend"><strong>Audience Insight</strong><span>กลุ่มเป้าหมายที่มีแนวโน้มตอบสนองดีที่สุดคือผู้ใช้ที่สนใจสินค้าราคาพิเศษและรีวิวจากผู้ใช้จริง</span></div>
+          <div class="recommend"><strong>Next Action</strong><span>เตรียมชุดโฆษณาใหม่ 3 แบบ เพื่อทดสอบข้อความ รูปภาพ และกลุ่มเป้าหมาย</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>เลือกแพ็กเกจที่เหมาะกับคุณ</h2>
+          <p>เริ่มจากระบบทดลองก่อน แล้วค่อยอัปเกรดเมื่อพร้อมใช้งานจริง</p>
+        </div>
+        <div class="pricing">
+          <div class="price-card">
+            <h3>Starter</h3>
+            <div class="price">ฟรี <small>/ ทดลอง</small></div>
+            <ul><li>Dashboard พื้นฐาน</li><li>บันทึกแคมเปญ</li><li>ทดสอบหน้าเว็บ</li></ul>
+            <button type="button" class="btn btn-ghost btn-block" onclick="openAuth('register')">เริ่มต้น</button>
+          </div>
+          <div class="price-card featured">
+            <h3>Pro</h3>
+            <div class="price">฿499 <small>/ เดือน</small></div>
+            <ul><li>เชื่อมหลายแพลตฟอร์ม</li><li>AI Caption</li><li>ตั้งเวลาโพสต์</li><li>Analytics Dashboard</li></ul>
+            <button type="button" class="btn btn-primary btn-block" onclick="openAuth('register')">เลือกแพ็กเกจนี้</button>
+          </div>
+          <div class="price-card">
+            <h3>Agency</h3>
+            <div class="price">฿1,990 <small>/ เดือน</small></div>
+            <ul><li>หลายบัญชีผู้ใช้</li><li>จัดการลูกค้าหลายแบรนด์</li><li>รายงานขั้นสูง</li></ul>
+            <button type="button" class="btn btn-ghost btn-block" onclick="openAuth('register')">ติดต่อเรา</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="section">
+      <div class="container">
+        <div class="section-head"><h2>คำถามที่พบบ่อย</h2></div>
+        <div class="faq">
+          <div class="faq-item"><h3>ระบบนี้ยิงแอดได้ทันทีไหม?</h3><p>หน้านี้เป็น Landing Page สำหรับเริ่มต้น ส่วนระบบยิงแอดจริงต้องเชื่อม API และผ่านเงื่อนไขของแต่ละแพลตฟอร์มก่อน</p></div>
+          <div class="faq-item"><h3>รองรับ TikTok และ YouTube ไหม?</h3><p>รองรับในแผนระบบได้ แต่ต้องทำ OAuth Login และเชื่อม API ของแต่ละแพลตฟอร์มในขั้นตอน Backend</p></div>
+          <div class="faq-item"><h3>ใช้ GitHub Pages ได้ไหม?</h3><p>ใช้ได้สำหรับหน้าเว็บแบบ Static เช่นหน้า Landing Page นี้ แต่ถ้าจะ Login และเชื่อม API จริง ต้องมี Backend เพิ่ม</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="cta">
+          <h2>เริ่มสร้างระบบ PowerAds วันนี้</h2>
+          <p>ทดลองหน้าเว็บ Landing Page ก่อน แล้วค่อยต่อยอดเป็นระบบ Login, Dashboard, Upload และเชื่อม API ภายหลัง</p>
+          <button type="button" class="btn btn-primary" onclick="openAuth('register')">Start Free Trial →</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">© 2026 PowerAds. AI Marketing Automation Platform.</div>
+  </footer>
+</div>
+
+<!-- ====================== AUTH MODAL ====================== -->
+<div id="authModal" class="modal-bg hidden" onclick="if(event.target===this) closeAuth()">
+  <div class="auth-card">
+    <button type="button" class="modal-close" onclick="closeAuth()" aria-label="ปิด">✕</button>
+    <div class="logo" style="margin-bottom:18px;">
+      <span class="logo-icon">⚡</span>
+      <span>PowerAds</span>
+    </div>
     <div class="tabs">
       <button type="button" class="tab active" id="tabLogin"    onclick="switchTab('login')">เข้าสู่ระบบ</button>
       <button type="button" class="tab"        id="tabRegister" onclick="switchTab('register')">สมัครสมาชิก</button>
@@ -316,44 +711,35 @@
 
     <div id="alertBox"></div>
 
+    <!-- Google Sign-in -->
+    <button type="button" class="btn-google" onclick="loginWithGoogle()">
+      <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.616z" fill="#4285F4"/>
+        <path d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.836.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z" fill="#34A853"/>
+        <path d="M3.964 10.707c-.18-.54-.282-1.117-.282-1.707s.102-1.167.282-1.707V4.961H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.039l3.007-2.332z" fill="#FBBC05"/>
+        <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.961L3.964 7.293C4.672 5.166 6.656 3.58 9 3.58z" fill="#EA4335"/>
+      </svg>
+      เข้าสู่ระบบด้วย Google
+    </button>
+    <div class="divider">หรือ</div>
+
     <!-- Login Form -->
     <form id="loginForm" autocomplete="off">
       <div class="form-title">ยินดีต้อนรับกลับมา</div>
-      <div class="form-group">
-        <label>อีเมล</label>
-        <input type="email" id="loginEmail" required placeholder="you@example.com" />
-      </div>
-      <div class="form-group">
-        <label>รหัสผ่าน</label>
-        <input type="password" id="loginPassword" required placeholder="••••••••" />
-      </div>
-      <button class="btn" type="submit">เข้าสู่ระบบ</button>
-      <div class="auth-footer">
-        ยังไม่มีบัญชี?
-        <span class="link" onclick="switchTab('register')">สมัครเลย</span>
-      </div>
+      <div class="form-group"><label>อีเมล</label><input type="email" id="loginEmail" required placeholder="you@example.com" /></div>
+      <div class="form-group"><label>รหัสผ่าน</label><input type="password" id="loginPassword" required placeholder="••••••••" /></div>
+      <button class="btn btn-primary btn-block" type="submit">เข้าสู่ระบบ</button>
+      <div class="auth-footer">ยังไม่มีบัญชี? <span class="link" onclick="switchTab('register')">สมัครเลย</span></div>
     </form>
 
     <!-- Register Form -->
     <form id="registerForm" class="hidden" autocomplete="off">
       <div class="form-title">สมัครสมาชิกใหม่</div>
-      <div class="form-group">
-        <label>ชื่อ-นามสกุล</label>
-        <input type="text" id="regName" required placeholder="เช่น Kawin S." />
-      </div>
-      <div class="form-group">
-        <label>อีเมล</label>
-        <input type="email" id="regEmail" required placeholder="you@example.com" />
-      </div>
-      <div class="form-group">
-        <label>รหัสผ่าน</label>
-        <input type="password" id="regPassword" required minlength="6" placeholder="อย่างน้อย 6 ตัวอักษร" />
-      </div>
-      <button class="btn" type="submit">สมัครสมาชิก</button>
-      <div class="auth-footer">
-        มีบัญชีอยู่แล้ว?
-        <span class="link" onclick="switchTab('login')">เข้าสู่ระบบ</span>
-      </div>
+      <div class="form-group"><label>ชื่อ-นามสกุล</label><input type="text" id="regName" required placeholder="เช่น Kawin S." /></div>
+      <div class="form-group"><label>อีเมล</label><input type="email" id="regEmail" required placeholder="you@example.com" /></div>
+      <div class="form-group"><label>รหัสผ่าน</label><input type="password" id="regPassword" required minlength="6" placeholder="อย่างน้อย 6 ตัวอักษร" /></div>
+      <button class="btn btn-primary btn-block" type="submit">สมัครสมาชิก</button>
+      <div class="auth-footer">มีบัญชีอยู่แล้ว? <span class="link" onclick="switchTab('login')">เข้าสู่ระบบ</span></div>
     </form>
   </div>
 </div>
@@ -362,8 +748,8 @@
 <div id="dashboard" class="dash-wrap hidden">
   <aside class="sidebar">
     <div class="brand">
-      <div class="brand-logo">P</div>
-      <div class="brand-name">PastelGreen</div>
+      <div class="logo-icon">⚡</div>
+      <div style="font-weight:700;">PowerAds</div>
     </div>
     <button type="button" class="nav-item active" data-page="dashboard" onclick="showPage('dashboard')"><span class="nav-icon">🏠</span> Dashboard</button>
     <button type="button" class="nav-item" data-page="ads"      onclick="showPage('ads')"><span class="nav-icon">📢</span> ADS</button>
@@ -380,7 +766,7 @@
     <div class="topbar">
       <h1 class="page-title" id="pageTitle">Dashboard</h1>
       <div class="user-chip">
-        <div class="avatar" id="userAvatar">U</div>
+        <div class="avatar-lg" id="userAvatar">U</div>
         <div>
           <div style="font-weight:700;font-size:14px;" id="userName">User</div>
           <div style="font-size:12px;color:var(--pg-muted);" id="userEmail">user@example.com</div>
@@ -388,7 +774,6 @@
       </div>
     </div>
 
-    <!-- Page: Dashboard -->
     <div id="page-dashboard" class="page">
       <div class="stat-grid">
         <div class="stat-card"><div class="stat-label">สมาชิกทั้งหมด</div><div class="stat-value" id="statMembers">0</div></div>
@@ -396,37 +781,25 @@
         <div class="stat-card"><div class="stat-label">เพจที่เชื่อมต่อ</div><div class="stat-value">3</div></div>
         <div class="stat-card"><div class="stat-label">AI Credits</div><div class="stat-value">8.5k</div></div>
       </div>
-
-      <div class="card">
-        <h3>👋 ยินดีต้อนรับเข้าสู่ PastelGreen</h3>
-        <p>เลือกเมนูทางด้านซ้ายเพื่อเริ่มจัดการ ADS, Facebook Page, AI Studio, Platform และสมาชิก</p>
-      </div>
+      <div class="card-d"><h3>👋 ยินดีต้อนรับเข้าสู่ PowerAds</h3><p>เลือกเมนูทางด้านซ้ายเพื่อเริ่มจัดการ ADS, Facebook Page, AI Studio, Platform และสมาชิก</p></div>
     </div>
 
-    <!-- Page: ADS -->
     <div id="page-ads" class="page hidden">
-      <div class="card">
-        <h3>📢 จัดการแคมเปญโฆษณา</h3>
-        <p>ดูสถานะ งบประมาณ และผลลัพธ์ของแคมเปญที่กำลังรัน</p>
-      </div>
+      <div class="card-d"><h3>📢 จัดการแคมเปญโฆษณา</h3><p>ดูสถานะ งบประมาณ และผลลัพธ์ของแคมเปญที่กำลังรัน</p></div>
       <div class="table-wrap">
         <table>
           <thead><tr><th>แคมเปญ</th><th>แพลตฟอร์ม</th><th>งบ</th><th>สถานะ</th></tr></thead>
           <tbody>
-            <tr><td>โปรเดือนนี้</td><td>Facebook</td><td>฿5,000</td><td><span class="badge">Active</span></td></tr>
-            <tr><td>สินค้าใหม่</td><td>Google</td><td>฿8,500</td><td><span class="badge">Active</span></td></tr>
-            <tr><td>Brand Awareness</td><td>TikTok</td><td>฿3,200</td><td><span class="badge">Paused</span></td></tr>
+            <tr><td>โปรเดือนนี้</td><td>Facebook</td><td>฿5,000</td><td><span class="badge-d">Active</span></td></tr>
+            <tr><td>สินค้าใหม่</td><td>Google</td><td>฿8,500</td><td><span class="badge-d">Active</span></td></tr>
+            <tr><td>Brand Awareness</td><td>TikTok</td><td>฿3,200</td><td><span class="badge-d">Paused</span></td></tr>
           </tbody>
         </table>
       </div>
     </div>
 
-    <!-- Page: Facebook -->
     <div id="page-facebook" class="page hidden">
-      <div class="card">
-        <h3>📘 จัดการ Facebook Page</h3>
-        <p>เชื่อมต่อเพจของคุณ ตอบข้อความอัตโนมัติ และดูสถิติการเข้าถึง</p>
-      </div>
+      <div class="card-d"><h3>📘 จัดการ Facebook Page</h3><p>เชื่อมต่อเพจของคุณ ตอบข้อความอัตโนมัติ และดูสถิติการเข้าถึง</p></div>
       <div class="feature-grid">
         <div class="feature-tile"><h4>เพจที่เชื่อมต่อ</h4><p>3 เพจ</p></div>
         <div class="feature-tile"><h4>ข้อความรอตอบ</h4><p>17 ข้อความ</p></div>
@@ -435,12 +808,8 @@
       </div>
     </div>
 
-    <!-- Page: AI Studio -->
     <div id="page-ai" class="page hidden">
-      <div class="card">
-        <h3>🤖 AI Studio</h3>
-        <p>สร้างเนื้อหา รูปภาพ และเครื่องมือ AI สำหรับธุรกิจของคุณ</p>
-      </div>
+      <div class="card-d"><h3>🤖 AI Studio</h3><p>สร้างเนื้อหา รูปภาพ และเครื่องมือ AI สำหรับธุรกิจของคุณ</p></div>
       <div class="feature-grid">
         <div class="feature-tile"><h4>เขียนแคปชั่น</h4><p>สร้างแคปชั่นโพสต์ด้วย AI</p></div>
         <div class="feature-tile"><h4>สร้างรูป</h4><p>Generate ภาพประกอบสไตล์ที่คุณต้องการ</p></div>
@@ -449,35 +818,27 @@
       </div>
     </div>
 
-    <!-- Page: Platform -->
     <div id="page-platform" class="page hidden">
-      <div class="card">
-        <h3>🧩 Platform</h3>
-        <p>ตั้งค่าและเชื่อมต่อแพลตฟอร์มที่คุณใช้งาน</p>
-      </div>
+      <div class="card-d"><h3>🧩 Platform</h3><p>ตั้งค่าและเชื่อมต่อแพลตฟอร์มที่คุณใช้งาน</p></div>
       <div class="feature-grid">
-        <div class="feature-tile"><h4>Facebook</h4><p><span class="badge">เชื่อมต่อแล้ว</span></p></div>
-        <div class="feature-tile"><h4>Instagram</h4><p><span class="badge">เชื่อมต่อแล้ว</span></p></div>
-        <div class="feature-tile"><h4>LINE OA</h4><p><span class="badge">เชื่อมต่อแล้ว</span></p></div>
+        <div class="feature-tile"><h4>Facebook</h4><p><span class="badge-d">เชื่อมต่อแล้ว</span></p></div>
+        <div class="feature-tile"><h4>Instagram</h4><p><span class="badge-d">เชื่อมต่อแล้ว</span></p></div>
+        <div class="feature-tile"><h4>LINE OA</h4><p><span class="badge-d">เชื่อมต่อแล้ว</span></p></div>
         <div class="feature-tile"><h4>TikTok</h4><p>ยังไม่เชื่อมต่อ</p></div>
         <div class="feature-tile"><h4>Shopee</h4><p>ยังไม่เชื่อมต่อ</p></div>
         <div class="feature-tile"><h4>Lazada</h4><p>ยังไม่เชื่อมต่อ</p></div>
       </div>
     </div>
 
-    <!-- Page: Members -->
     <div id="page-members" class="page hidden">
-      <div class="card">
-        <h3>👥 สมาชิกเว็บ</h3>
-        <p>รายชื่อสมาชิกทั้งหมดที่สมัครใช้งานในระบบ</p>
-      </div>
+      <div class="card-d"><h3>👥 สมาชิกเว็บ</h3><p>รายชื่อสมาชิกทั้งหมดที่สมัครใช้งานในระบบ</p></div>
       <div class="toolbar">
-        <button type="button" class="btn btn-inline btn-secondary" onclick="refreshMembers()">🔄 รีเฟรช</button>
-        <button type="button" class="btn btn-inline" onclick="exportMembersCSV()">⬇️ Export CSV</button>
+        <button type="button" class="btn-inline btn-ghost" onclick="refreshMembers()">🔄 รีเฟรช</button>
+        <button type="button" class="btn-inline btn-primary" onclick="exportMembersCSV()">⬇️ Export CSV</button>
       </div>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>#</th><th>ชื่อ</th><th>อีเมล</th><th>วันสมัคร</th></tr></thead>
+          <thead><tr><th>#</th><th>ชื่อ</th><th>อีเมล</th><th>ผู้ให้บริการ</th><th>วันสมัคร</th></tr></thead>
           <tbody id="memberTbody"></tbody>
         </table>
       </div>
@@ -496,7 +857,17 @@
   function setSession(u){ localStorage.setItem(STORAGE_SESSION, JSON.stringify(u)); }
   function clearSession(){ localStorage.removeItem(STORAGE_SESSION); }
 
-  /* ============== Auth UI ============== */
+  /* ============== Auth Modal ============== */
+  function openAuth(which) {
+    document.getElementById('authModal').classList.remove('hidden');
+    switchTab(which || 'login');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeAuth() {
+    document.getElementById('authModal').classList.add('hidden');
+    document.body.style.overflow = '';
+    document.getElementById('alertBox').innerHTML = '';
+  }
   function switchTab(which) {
     document.getElementById('alertBox').innerHTML = '';
     const tabL = document.getElementById('tabLogin');
@@ -511,12 +882,12 @@
       formR.classList.remove('hidden'); formL.classList.add('hidden');
     }
   }
-
   function showAlert(msg, type) {
     const cls = type === 'success' ? 'alert-success' : 'alert-error';
     document.getElementById('alertBox').innerHTML = '<div class="alert ' + cls + '">' + msg + '</div>';
   }
 
+  /* ============== Login / Register ============== */
   function handleLogin(e) {
     e.preventDefault();
     const email = (document.getElementById('loginEmail').value || '').trim().toLowerCase();
@@ -542,6 +913,7 @@
     const newUser = {
       id: Date.now(),
       name: name, email: email, password: password,
+      provider: 'email',
       createdAt: new Date().toISOString()
     };
     users.push(newUser);
@@ -551,27 +923,76 @@
     setTimeout(function(){ enterDashboard(newUser); }, 400);
   }
 
+  /* ============== Google Login (Mock) ============== */
+  /*
+   * NOTE: นี่คือ Mock Google Sign-In สำหรับใช้งานบน file:// หรือทดสอบบน local
+   * วิธีเปลี่ยนเป็น Google Sign-In ของจริง:
+   *   1) สมัคร Google Cloud Console -> สร้าง OAuth 2.0 Client ID (Web application)
+   *      เพิ่ม Authorized JavaScript origin = โดเมนเว็บคุณ (ต้องเป็น https)
+   *   2) ใส่ <script src="https://accounts.google.com/gsi/client" async defer></script> ที่ <head>
+   *   3) แทน loginWithGoogle() ด้วยโค้ดนี้:
+   *
+   *      google.accounts.id.initialize({
+   *        client_id: 'YOUR_CLIENT_ID.apps.googleusercontent.com',
+   *        callback: (response) => {
+   *          const payload = JSON.parse(atob(response.credential.split('.')[1]));
+   *          // payload.email, payload.name, payload.picture
+   *          loginGoogleUser(payload.name, payload.email);
+   *        }
+   *      });
+   *      google.accounts.id.prompt();
+   */
+  function loginWithGoogle() {
+    const email = prompt('🟢 จำลอง Google Sign-In\nกรอก Gmail ของคุณ:', '');
+    if (email === null) return;
+    const cleanEmail = (email || '').trim().toLowerCase();
+    if (!cleanEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)) {
+      showAlert('กรุณากรอกอีเมลให้ถูกต้อง'); return;
+    }
+    const users = getUsers();
+    let user = users.find(u => u.email === cleanEmail);
+    if (!user) {
+      const name = prompt('ครั้งแรกที่ใช้บัญชีนี้\nกรอกชื่อที่จะแสดง:', cleanEmail.split('@')[0]);
+      if (name === null) return;
+      user = {
+        id: Date.now(),
+        name: (name || cleanEmail.split('@')[0]).trim(),
+        email: cleanEmail,
+        password: '',          // Google account ไม่มีรหัสผ่านใน local
+        provider: 'google',
+        createdAt: new Date().toISOString()
+      };
+      users.push(user);
+      saveUsers(users);
+    }
+    setSession(user);
+    showAlert('เข้าสู่ระบบด้วย Google สำเร็จ!', 'success');
+    setTimeout(function(){ enterDashboard(user); }, 400);
+  }
+
+  /* ============== Logout ============== */
   function handleLogout() {
     clearSession();
     document.getElementById('dashboard').classList.add('hidden');
-    document.getElementById('authPage').classList.remove('hidden');
+    document.getElementById('landingPage').classList.remove('hidden');
     document.getElementById('loginForm').reset();
     document.getElementById('registerForm').reset();
-    document.getElementById('alertBox').innerHTML = '';
-    switchTab('login');
+    closeAuth();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   /* ============== Dashboard ============== */
   function enterDashboard(user) {
-    document.getElementById('authPage').classList.add('hidden');
+    closeAuth();
+    document.getElementById('landingPage').classList.add('hidden');
     document.getElementById('dashboard').classList.remove('hidden');
     document.getElementById('userName').textContent = user.name;
     document.getElementById('userEmail').textContent = user.email;
     document.getElementById('userAvatar').textContent = (user.name || 'U').charAt(0).toUpperCase();
     showPage('dashboard');
     refreshMembers();
+    document.body.style.overflow = '';
   }
-
   function showPage(page) {
     document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
     const target = document.getElementById('page-' + page);
@@ -599,31 +1020,36 @@
     const tbody = document.getElementById('memberTbody');
     if (!tbody) return;
     if (users.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--pg-muted);padding:24px;">ยังไม่มีสมาชิก</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--pg-muted);padding:24px;">ยังไม่มีสมาชิก</td></tr>';
       return;
     }
-    tbody.innerHTML = users.map((u, i) =>
-      '<tr><td>' + (i + 1) + '</td>' +
-      '<td>' + escapeHTML(u.name) + '</td>' +
-      '<td>' + escapeHTML(u.email) + '</td>' +
-      '<td>' + new Date(u.createdAt).toLocaleString('th-TH') + '</td></tr>'
-    ).join('');
+    tbody.innerHTML = users.map((u, i) => {
+      const provider = u.provider === 'google'
+        ? '<span class="badge-d">Google</span>'
+        : '<span class="badge-d">Email</span>';
+      return '<tr>' +
+        '<td>' + (i + 1) + '</td>' +
+        '<td>' + escapeHTML(u.name) + '</td>' +
+        '<td>' + escapeHTML(u.email) + '</td>' +
+        '<td>' + provider + '</td>' +
+        '<td>' + new Date(u.createdAt).toLocaleString('th-TH') + '</td>' +
+      '</tr>';
+    }).join('');
   }
-
   function escapeHTML(s) {
     return String(s).replace(/[&<>"']/g, c => ({
       '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
     }[c]));
   }
-
   function exportMembersCSV() {
     const users = getUsers();
     if (users.length === 0) { alert('ยังไม่มีสมาชิกให้ export'); return; }
-    const header = ['ID', 'Name', 'Email', 'CreatedAt'];
+    const header = ['ID', 'Name', 'Email', 'Provider', 'CreatedAt'];
     const rows = users.map(u => [
       u.id,
       '"' + (u.name || '').replace(/"/g,'""') + '"',
       '"' + (u.email || '').replace(/"/g,'""') + '"',
+      u.provider || 'email',
       u.createdAt
     ]);
     const csv = [header.join(','), ...rows.map(r => r.join(','))].join('\n');
@@ -633,15 +1059,12 @@
     const a = document.createElement('a');
     a.href = url;
     a.download = 'members_' + new Date().toISOString().slice(0,10) + '.csv';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
     URL.revokeObjectURL(url);
   }
 
   /* ============== Init ============== */
   document.addEventListener('DOMContentLoaded', function () {
-    // Bind form submit listeners (more robust than inline onsubmit)
     document.getElementById('loginForm').addEventListener('submit', handleLogin);
     document.getElementById('registerForm').addEventListener('submit', handleRegister);
 
