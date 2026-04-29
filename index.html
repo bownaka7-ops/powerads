@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>PowerAds — AI Marketing Automation</title>
+<!-- Leaflet (เปิดใช้แผนที่ — ต้องมีเน็ตตอนเปิดครั้งแรก) -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 <style>
@@ -267,7 +268,6 @@
     font-weight: 600; font-size: 14px;
     margin-bottom: 4px;
     transition: background .2s, color .2s;
-    cursor: pointer;
   }
   .nav-item:hover { background: rgba(255,255,255,.55); }
   .nav-item.active { background: white; color: var(--pg-primary-d); box-shadow: 0 4px 10px rgba(95,174,131,.2); }
@@ -320,7 +320,6 @@
     background: var(--pg-tint);
     cursor: pointer;
     transition: .2s;
-    display: block; /* added to ensure it acts as a full clickable block */
   }
   .upload-box:hover { background: var(--pg-light); border-color: var(--pg-primary); }
   .upload-box .ic { font-size: 28px; margin-bottom: 6px; }
@@ -390,7 +389,6 @@
     color: white;
     border: 1px solid #555;
     box-shadow: 0 6px 18px rgba(0,0,0,.25);
-    cursor: pointer; /* added pointer */
   }
   .gray-toggle .switch {
     position: relative;
@@ -453,15 +451,15 @@
 
   .submit-row { display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px; }
 
-  /* Dashboard layout */
+  /* Dashboard layout — fix scrolling so all pages work */
   html, body { height: 100%; }
   body { overflow-y: auto; }
 
   @media (max-width: 768px) {
     .dash-wrap { grid-template-columns: 1fr; }
-    .sidebar { flex-direction: row; flex-wrap: wrap; height: auto; position: static; }
+    .sidebar { flex-direction: row; flex-wrap: wrap; }
     .sidebar .brand { width: 100%; margin-bottom: 12px; }
-    .sidebar-footer { width: 100%; margin-top: 15px; }
+    .sidebar-footer { width: 100%; }
     .ads-form { grid-template-columns: 1fr; }
     .input-row { grid-template-columns: 1fr; }
   }
@@ -469,6 +467,7 @@
 </head>
 <body>
 
+<!-- ====================== LANDING PAGE ====================== -->
 <div id="landingPage">
   <nav class="nav">
     <div class="container nav-inner">
@@ -634,6 +633,7 @@
   <footer><div class="container">© 2026 PowerAds. AI Marketing Automation Platform.</div></footer>
 </div>
 
+<!-- ====================== LOGIN PAGE ====================== -->
 <div id="loginPage" class="auth-page hidden">
   <div class="auth-card">
     <button type="button" class="back-link" onclick="goLanding()">← กลับหน้าแรก</button>
@@ -668,6 +668,7 @@
   </div>
 </div>
 
+<!-- ====================== REGISTER PAGE ====================== -->
 <div id="registerPage" class="auth-page hidden">
   <div class="auth-card">
     <button type="button" class="back-link" onclick="goLanding()">← กลับหน้าแรก</button>
@@ -703,6 +704,7 @@
   </div>
 </div>
 
+<!-- ====================== DASHBOARD ====================== -->
 <div id="dashboard" class="dash-wrap hidden">
   <aside class="sidebar">
     <div class="brand">
@@ -749,6 +751,7 @@
       </div>
 
       <div class="ads-form">
+        <!-- Upload images -->
         <div class="form-card">
           <h4>🖼️ อัปโหลดรูปภาพ</h4>
           <label class="upload-box" for="adsImageInput">
@@ -760,6 +763,7 @@
           <div class="preview-grid" id="imagePreview"></div>
         </div>
 
+        <!-- Upload videos -->
         <div class="form-card">
           <h4>🎬 อัปโหลดวิดีโอ</h4>
           <label class="upload-box" for="adsVideoInput">
@@ -771,6 +775,7 @@
           <div class="preview-grid" id="videoPreview"></div>
         </div>
 
+        <!-- Tags -->
         <div class="form-card full">
           <h4>🏷️ Tags / กลุ่มเป้าหมาย</h4>
           <div class="tag-input-wrap" id="tagWrap">
@@ -778,6 +783,7 @@
           </div>
         </div>
 
+        <!-- Budget & Days -->
         <div class="form-card full">
           <h4>💰 งบประมาณและระยะเวลา</h4>
           <div class="input-row">
@@ -792,6 +798,7 @@
           </div>
         </div>
 
+        <!-- สายเทา Toggle -->
         <div class="form-card full">
           <h4>🎯 ตั้งค่าพื้นที่เป้าหมาย</h4>
           <div class="gray-toggle" id="grayToggle" onclick="toggleGrayMode()">
@@ -913,27 +920,34 @@
     document.getElementById('dashboard').classList.add('hidden');
   }
   function goLanding() {
-    hideAllPages();
+    document.getElementById('loginPage').classList.add('hidden');
+    document.getElementById('registerPage').classList.add('hidden');
+    document.getElementById('mainApp').classList.add('hidden');
     document.getElementById('landingPage').classList.remove('hidden');
     window.scrollTo({ top: 0, behavior: 'auto' });
+  });
   }
   function goLogin() {
-    hideAllPages();
+    document.getElementById('landingPage').classList.add('hidden');
+    document.getElementById('registerPage').classList.add('hidden');
+    document.getElementById('mainApp').classList.add('hidden');
     document.getElementById('loginPage').classList.remove('hidden');
-    document.getElementById('loginAlert').innerHTML = '';
     window.scrollTo({ top: 0, behavior: 'auto' });
+  });
   }
   function goRegister() {
-    hideAllPages();
+    document.getElementById('landingPage').classList.add('hidden');
+    document.getElementById('loginPage').classList.add('hidden');
+    document.getElementById('mainApp').classList.add('hidden');
     document.getElementById('registerPage').classList.remove('hidden');
-    document.getElementById('registerAlert').innerHTML = '';
     window.scrollTo({ top: 0, behavior: 'auto' });
+  });
   }
   function goDashboard(user) {
     hideAllPages();
     document.getElementById('dashboard').classList.remove('hidden');
-    document.getElementById('userName').textContent = user.name || 'User';
-    document.getElementById('userEmail').textContent = user.email || '';
+    document.getElementById('userName').textContent = user.name;
+    document.getElementById('userEmail').textContent = user.email;
     document.getElementById('userAvatar').textContent = (user.name || 'U').charAt(0).toUpperCase();
     showPage('dashboard');
     refreshMembers();
@@ -942,10 +956,8 @@
 
   /* ============== Alerts ============== */
   function showAlert(boxId, msg, type) {
-    const box = document.getElementById(boxId);
-    if (!box) return;
     const cls = type === 'success' ? 'alert-success' : 'alert-error';
-    box.innerHTML = '<div class="alert ' + cls + '">' + msg + '</div>';
+    document.getElementById(boxId).innerHTML = '<div class="alert ' + cls + '">' + msg + '</div>';
   }
 
   /* ============== Login / Register ============== */
@@ -954,11 +966,9 @@
     const email = (document.getElementById('loginEmail').value || '').trim().toLowerCase();
     const password = document.getElementById('loginPassword').value;
     if (!email || !password) { showAlert('loginAlert','กรุณากรอกอีเมลและรหัสผ่าน'); return; }
-    
     const users = getUsers();
     const user = users.find(u => u.email === email && u.password === password);
     if (!user) { showAlert('loginAlert','อีเมลหรือรหัสผ่านไม่ถูกต้อง'); return; }
-    
     setSession(user);
     showAlert('loginAlert','เข้าสู่ระบบสำเร็จ! กำลังพาคุณไป Dashboard...', 'success');
     setTimeout(function(){ goDashboard(user); }, 400);
@@ -969,14 +979,11 @@
     const name = (document.getElementById('regName').value || '').trim();
     const email = (document.getElementById('regEmail').value || '').trim().toLowerCase();
     const password = document.getElementById('regPassword').value;
-    
     if (!name)  { showAlert('registerAlert','กรุณากรอกชื่อ-นามสกุล'); return; }
     if (!email) { showAlert('registerAlert','กรุณากรอกอีเมล'); return; }
     if (!password || password.length < 6) { showAlert('registerAlert','รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร'); return; }
-    
     const users = getUsers();
     if (users.some(u => u.email === email)) { showAlert('registerAlert','อีเมลนี้ถูกใช้สมัครไปแล้ว'); return; }
-    
     const newUser = {
       id: Date.now(),
       name: name, email: email, password: password,
@@ -991,17 +998,23 @@
   }
 
   /* ============== Google Login (Mock) ============== */
+  /*
+   * NOTE: นี่คือ Mock Google Sign-In สำหรับใช้งานบน file:// หรือทดสอบบน local
+   * วิธีเปลี่ยนเป็น Google Sign-In ของจริง:
+   *   1) สมัคร Google Cloud Console -> สร้าง OAuth 2.0 Client ID (Web application)
+   *      เพิ่ม Authorized JavaScript origin = โดเมนเว็บคุณ (ต้องเป็น https)
+   *   2) ใส่ <script src="https://accounts.google.com/gsi/client" async defer></script> ที่ <head>
+   *   3) แทน loginWithGoogle() ด้วย google.accounts.id.initialize(...) ใช้ payload.email/name
+   */
   function loginWithGoogle() {
     const isOnRegister = !document.getElementById('registerPage').classList.contains('hidden');
     const alertId = isOnRegister ? 'registerAlert' : 'loginAlert';
     const email = prompt('🟢 จำลอง Google Sign-In\nกรอก Gmail ของคุณ:', '');
     if (email === null) return;
-    
     const cleanEmail = (email || '').trim().toLowerCase();
     if (!cleanEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)) {
       showAlert(alertId, 'กรุณากรอกอีเมลให้ถูกต้อง'); return;
     }
-    
     const users = getUsers();
     let user = users.find(u => u.email === cleanEmail);
     if (!user) {
@@ -1026,28 +1039,19 @@
   /* ============== Logout ============== */
   function handleLogout() {
     clearSession();
-    const loginForm = document.getElementById('loginForm');
-    const regForm = document.getElementById('registerForm');
-    if(loginForm) loginForm.reset();
-    if(regForm) regForm.reset();
+    document.getElementById('loginForm').reset();
+    document.getElementById('registerForm').reset();
     goLanding();
   }
 
   /* ============== Dashboard Pages ============== */
   function showPage(page) {
-    // Hide all pages
     document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
-    
-    // Show target page
     const target = document.getElementById('page-' + page);
     if (target) target.classList.remove('hidden');
-    
-    // Update active nav state
     document.querySelectorAll('.nav-item[data-page]').forEach(n => n.classList.remove('active'));
     const active = document.querySelector('.nav-item[data-page="' + page + '"]');
     if (active) active.classList.add('active');
-    
-    // Set titles
     const titles = {
       dashboard: 'Dashboard',
       ads: 'ADS - แคมเปญโฆษณา',
@@ -1056,10 +1060,7 @@
       platform: 'Platform',
       members: 'สมาชิกเว็บ'
     };
-    const titleEl = document.getElementById('pageTitle');
-    if (titleEl) titleEl.textContent = titles[page] || 'Dashboard';
-    
-    // Refresh specific views
+    document.getElementById('pageTitle').textContent = titles[page] || 'Dashboard';
     if (page === 'members' || page === 'dashboard') refreshMembers();
     if (page === 'ads' && grayMode && adsMap) {
       setTimeout(() => adsMap.invalidateSize(), 100);
@@ -1071,34 +1072,30 @@
     const users = getUsers();
     const stat = document.getElementById('statMembers');
     if (stat) stat.textContent = users.length;
-    
     const tbody = document.getElementById('memberTbody');
     if (!tbody) return;
-    
     if (users.length === 0) {
       tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--pg-muted);padding:24px;">ยังไม่มีสมาชิก</td></tr>';
       return;
     }
     tbody.innerHTML = users.map((u, i) => {
       const provider = u.provider === 'google'
-        ? '<span class="badge-d" style="background:#E3F2FD;color:#1565C0;border-color:#BBDEFB;">Google</span>'
+        ? '<span class="badge-d">Google</span>'
         : '<span class="badge-d">Email</span>';
       return '<tr>' +
         '<td>' + (i + 1) + '</td>' +
-        '<td>' + escapeHTML(u.name || '') + '</td>' +
-        '<td>' + escapeHTML(u.email || '') + '</td>' +
+        '<td>' + escapeHTML(u.name) + '</td>' +
+        '<td>' + escapeHTML(u.email) + '</td>' +
         '<td>' + provider + '</td>' +
         '<td>' + new Date(u.createdAt).toLocaleString('th-TH') + '</td>' +
       '</tr>';
     }).join('');
   }
-  
   function escapeHTML(s) {
     return String(s).replace(/[&<>"']/g, c => ({
       '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
     }[c]));
   }
-  
   function exportMembersCSV() {
     const users = getUsers();
     if (users.length === 0) { alert('ยังไม่มีสมาชิกให้ export'); return; }
@@ -1111,7 +1108,7 @@
       u.createdAt
     ]);
     const csv = [header.join(','), ...rows.map(r => r.join(','))].join('\n');
-    const BOM = '\uFEFF';
+    const BOM = '﻿';
     const blob = new Blob([BOM + csv], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -1130,7 +1127,6 @@
 
   function handleFileUpload(inputId, type) {
     const input = document.getElementById(inputId);
-    if (!input) return;
     input.addEventListener('change', function(e) {
       const files = Array.from(e.target.files || []);
       files.forEach(f => {
@@ -1139,10 +1135,9 @@
         else                  adsVideos.push({ name: f.name, url });
       });
       renderPreviews();
-      input.value = ''; // clear input
+      input.value = '';
     });
   }
-  
   function renderPreviews() {
     const ip = document.getElementById('imagePreview');
     const vp = document.getElementById('videoPreview');
@@ -1153,7 +1148,6 @@
       '<div class="preview-item"><video src="' + f.url + '" muted></video><button class="remove" onclick="removeMedia(\'video\',' + i + ')">✕</button></div>'
     ).join('');
   }
-  
   function removeMedia(type, idx) {
     if (type === 'image') adsImages.splice(idx, 1);
     else                  adsVideos.splice(idx, 1);
@@ -1172,7 +1166,6 @@
       wrap.insertBefore(chip, input);
     });
   }
-  
   function removeTag(i) { adsTags.splice(i, 1); renderTags(); }
 
   function setupTagInput() {
@@ -1211,9 +1204,9 @@
       targets.style.display = 'none';
     }
   }
-  
   function initAdsMap() {
     if (typeof L === 'undefined') {
+      // Leaflet not loaded (offline) — show fallback
       const el = document.getElementById('adsMap');
       if (el) el.innerHTML =
         '<div style="height:100%;display:flex;align-items:center;justify-content:center;color:var(--pg-muted);text-align:center;padding:20px;">'+
@@ -1222,46 +1215,45 @@
     }
     if (adsMap) { adsMap.remove(); adsMap = null; }
     const lasVegas = [36.1699, -115.1398];
-    const thailand = [13.7563, 100.5018];
+    const thailand = [13.7563, 100.5018]; // Bangkok
     adsMap = L.map('adsMap').setView([24, -10], 2);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap',
       maxZoom: 18
     }).addTo(adsMap);
 
+    // Las Vegas marker + 1 km circle
     L.marker(lasVegas).addTo(adsMap).bindPopup('🇺🇸 Las Vegas, Nevada<br>รัศมี 1 กม.');
     L.circle(lasVegas, {
       radius: 1000,
       color: '#5FAE83', fillColor: '#88C9A1', fillOpacity: 0.35, weight: 2
     }).addTo(adsMap);
 
+    // Thailand marker
     L.marker(thailand).addTo(adsMap).bindPopup('🇹🇭 ประเทศไทย (Bangkok)');
-    const thaiBounds = [ [20.4, 97.3], [20.4, 105.6], [5.6, 105.6], [5.6, 97.3] ];
+    // Thailand polygon (rough)
+    const thaiBounds = [
+      [20.4, 97.3], [20.4, 105.6], [5.6, 105.6], [5.6, 97.3]
+    ];
     L.polygon(thaiBounds, {
       color: '#5FAE83', fillColor: '#88C9A1', fillOpacity: 0.18, weight: 2, dashArray: '5, 5'
     }).addTo(adsMap);
 
-    const group = L.featureGroup([ L.marker(lasVegas), L.marker(thailand) ]);
+    // Fit bounds to show both
+    const group = L.featureGroup([
+      L.marker(lasVegas), L.marker(thailand)
+    ]);
     adsMap.fitBounds(group.getBounds().pad(0.5));
   }
 
   function resetAdsForm() {
     adsImages = []; adsVideos = []; adsTags = [];
     grayMode = false;
-    
-    const toggle = document.getElementById('grayToggle');
-    const status = document.getElementById('grayStatus');
-    const targets = document.getElementById('grayTargets');
-    
-    if(toggle) toggle.classList.remove('on');
-    if(status) status.textContent = 'OFF';
-    if(targets) targets.style.display = 'none';
-    
-    const budgetInput = document.getElementById('adsBudget');
-    const daysInput = document.getElementById('adsDays');
-    if(budgetInput) budgetInput.value = '';
-    if(daysInput) daysInput.value = '';
-    
+    document.getElementById('grayToggle').classList.remove('on');
+    document.getElementById('grayStatus').textContent = 'OFF';
+    document.getElementById('grayTargets').style.display = 'none';
+    document.getElementById('adsBudget').value = '';
+    document.getElementById('adsDays').value = '';
     renderPreviews();
     renderTags();
   }
@@ -1273,52 +1265,37 @@
     if (adsImages.length === 0 && adsVideos.length === 0) {
       if (!confirm('ยังไม่มีรูป/วิดีโอ จะบันทึกต่อหรือไม่?')) return;
     }
-    
     const target = grayMode ? 'ไทย, USA (Las Vegas 1km)' : 'ไทย';
     const tbody = document.getElementById('campaignTbody');
     const tr = document.createElement('tr');
     const name = adsTags.length ? adsTags.slice(0,2).join(', ') : 'แคมเปญใหม่';
-    
     tr.innerHTML =
       '<td>' + escapeHTML(name) + '</td>' +
       '<td>฿' + Number(budget).toLocaleString() + '</td>' +
-      '<td>' + escapeHTML(days) + '</td>' +
-      '<td>' + escapeHTML(target) + '</td>' +
+      '<td>' + days + '</td>' +
+      '<td>' + target + '</td>' +
       '<td><span class="badge-d">Active</span></td>';
-      
-    if(tbody) tbody.insertBefore(tr, tbody.firstChild);
-    
+    tbody.insertBefore(tr, tbody.firstChild);
     alert('✅ บันทึกแคมเปญสำเร็จ\nงบ: ฿' + Number(budget).toLocaleString() + ' / ' + days + ' วัน\nเป้าหมาย: ' + target);
     resetAdsForm();
   }
 
-  /* ============== Initialization ============== */
+  /* ============== Init ============== */
   document.addEventListener('DOMContentLoaded', function () {
-    try {
-      const loginForm = document.getElementById('loginForm');
-      if (loginForm) loginForm.addEventListener('submit', handleLogin);
-      
-      const regForm = document.getElementById('registerForm');
-      if (regForm) regForm.addEventListener('submit', handleRegister);
+    document.getElementById('loginForm').addEventListener('submit', handleLogin);
+    document.getElementById('registerForm').addEventListener('submit', handleRegister);
 
-      // Initialize Ads Components
-      handleFileUpload('adsImageInput', 'image');
-      handleFileUpload('adsVideoInput', 'video');
-      setupTagInput();
+    // ADS form
+    handleFileUpload('adsImageInput', 'image');
+    handleFileUpload('adsVideoInput', 'video');
+    setupTagInput();
 
-      // Check Authentication Session
-      const session = getSession();
-      if (session) {
-        const users = getUsers();
-        const exists = users.find(u => u.email === session.email);
-        if (exists) { 
-          goDashboard(exists); 
-          return; 
-        }
-        clearSession();
-      }
-    } catch(err) {
-      console.error("Initialization error:", err);
+    const session = getSession();
+    if (session) {
+      const users = getUsers();
+      const exists = users.find(u => u.email === session.email);
+      if (exists) { goDashboard(exists); return; }
+      clearSession();
     }
   });
 </script>
