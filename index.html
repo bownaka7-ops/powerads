@@ -7,51 +7,47 @@
 <style>
   /* ====== Pastel Green Theme ====== */
   :root {
-    --pg-bg: #F4FBF6;
-    --pg-card: #FFFFFF;
-    --pg-primary: #88C9A1;
-    --pg-primary-dark: #5FAE83;
-    --pg-light: #DFF5E1;
-    --pg-soft: #EAF7EE;
-    --pg-text: #2E4A3A;
-    --pg-muted: #7A9A87;
-    --pg-border: #CDE8D5;
-    --pg-shadow: 0 6px 18px rgba(95, 174, 131, 0.15);
-    --pg-radius: 14px;
+    --pg-bg:        #E8F5EC;   /* พื้นหลังหลัก เขียวพาสเทลอ่อน */
+    --pg-bg-2:      #D4EDDB;   /* พื้นหลังโทนเข้มขึ้นนิด */
+    --pg-card:      #FFFFFF;
+    --pg-tint:      #F2FAF4;   /* สีพื้น tint ในการ์ด */
+    --pg-primary:   #88C9A1;
+    --pg-primary-d: #5FAE83;
+    --pg-light:     #DFF5E1;
+    --pg-soft:      #EAF7EE;
+    --pg-text:      #2E4A3A;
+    --pg-muted:     #6E8F7B;
+    --pg-border:    #BFE0CC;
+    --pg-shadow:    0 6px 18px rgba(95, 174, 131, 0.18);
+    --pg-radius:    14px;
   }
 
   * { box-sizing: border-box; }
   html, body {
     margin: 0; padding: 0;
     font-family: "Segoe UI", "Noto Sans Thai", "Sarabun", system-ui, sans-serif;
-    background: var(--pg-bg);
     color: var(--pg-text);
     min-height: 100vh;
+    background:
+      radial-gradient(circle at 15% 10%, #CFEAD6, transparent 45%),
+      radial-gradient(circle at 85% 90%, #C8E6CC, transparent 45%),
+      var(--pg-bg);
   }
-  a { color: var(--pg-primary-dark); text-decoration: none; }
+  a { color: var(--pg-primary-d); text-decoration: none; }
   button { font-family: inherit; cursor: pointer; }
-
-  /* ====== Page Visibility Helpers ====== */
   .hidden { display: none !important; }
 
   /* ====== Auth Page ====== */
   .auth-wrap {
     min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
     padding: 24px;
-    background:
-      radial-gradient(circle at 20% 10%, var(--pg-light), transparent 40%),
-      radial-gradient(circle at 80% 80%, #D6F0DD, transparent 45%),
-      var(--pg-bg);
   }
   .auth-card {
-    width: 100%;
-    max-width: 420px;
+    width: 100%; max-width: 440px;
     background: var(--pg-card);
-    border-radius: 20px;
-    padding: 32px 28px;
+    border-radius: 22px;
+    padding: 32px 30px;
     box-shadow: var(--pg-shadow);
     border: 1px solid var(--pg-border);
   }
@@ -60,13 +56,14 @@
     margin-bottom: 18px;
   }
   .brand-logo {
-    width: 40px; height: 40px;
-    background: var(--pg-primary);
+    width: 42px; height: 42px;
+    background: linear-gradient(135deg, var(--pg-primary), var(--pg-primary-d));
     border-radius: 12px;
     display: flex; align-items: center; justify-content: center;
     color: white; font-weight: 700; font-size: 20px;
+    box-shadow: 0 4px 8px rgba(95,174,131,.25);
   }
-  .brand-name { font-weight: 700; font-size: 18px; }
+  .brand-name { font-weight: 700; font-size: 18px; color: var(--pg-text); }
 
   .tabs {
     display: flex;
@@ -74,21 +71,22 @@
     border-radius: 12px;
     padding: 4px;
     margin-bottom: 22px;
+    border: 1px solid var(--pg-border);
   }
   .tab {
-    flex: 1; padding: 10px 0;
+    flex: 1; padding: 11px 0;
     border: none; background: transparent;
-    border-radius: 10px; font-weight: 600;
+    border-radius: 10px; font-weight: 700; font-size: 14px;
     color: var(--pg-muted);
     transition: all .2s;
   }
   .tab.active {
     background: var(--pg-primary);
     color: white;
-    box-shadow: 0 3px 8px rgba(95,174,131,.25);
+    box-shadow: 0 3px 8px rgba(95,174,131,.3);
   }
 
-  .form-title { font-size: 20px; font-weight: 700; margin: 4px 0 18px; }
+  .form-title { font-size: 20px; font-weight: 700; margin: 4px 0 16px; }
   .form-group { margin-bottom: 14px; }
   .form-group label {
     display: block; font-size: 13px; font-weight: 600;
@@ -98,13 +96,14 @@
     width: 100%; padding: 12px 14px;
     border: 1px solid var(--pg-border);
     border-radius: 10px; font-size: 14px;
-    background: #FBFFFC;
-    transition: border-color .2s, box-shadow .2s;
+    background: var(--pg-tint);
+    transition: border-color .2s, box-shadow .2s, background .2s;
   }
   .form-group input:focus {
     outline: none;
+    background: white;
     border-color: var(--pg-primary);
-    box-shadow: 0 0 0 3px rgba(136,201,161,.2);
+    box-shadow: 0 0 0 3px rgba(136,201,161,.25);
   }
 
   .btn {
@@ -112,40 +111,39 @@
     padding: 12px;
     border: none;
     border-radius: 10px;
-    background: var(--pg-primary);
+    background: linear-gradient(135deg, var(--pg-primary), var(--pg-primary-d));
     color: white;
-    font-weight: 700;
-    font-size: 15px;
-    transition: background .2s, transform .05s;
+    font-weight: 700; font-size: 15px;
+    transition: filter .2s, transform .05s;
+    box-shadow: 0 4px 10px rgba(95,174,131,.25);
   }
-  .btn:hover { background: var(--pg-primary-dark); }
+  .btn:hover { filter: brightness(1.05); }
   .btn:active { transform: translateY(1px); }
   .btn-secondary {
     background: var(--pg-soft);
-    color: var(--pg-text);
+    color: var(--pg-primary-d);
+    box-shadow: none;
+    border: 1px solid var(--pg-border);
   }
-  .btn-secondary:hover { background: var(--pg-light); }
-  .btn-danger {
-    background: #EFB0B0; color: #5C2828;
-  }
-  .btn-danger:hover { background: #E29494; }
+  .btn-secondary:hover { background: var(--pg-light); filter:none; }
 
   .auth-footer {
     margin-top: 16px; text-align: center;
     color: var(--pg-muted); font-size: 13px;
   }
   .auth-footer .link {
-    color: var(--pg-primary-dark);
-    cursor: pointer; font-weight: 600;
+    color: var(--pg-primary-d);
+    cursor: pointer; font-weight: 700;
   }
   .alert {
     padding: 10px 12px;
     border-radius: 10px;
     font-size: 13px;
     margin-bottom: 12px;
+    border: 1px solid transparent;
   }
-  .alert-error { background: #FBE3E3; color: #8C2A2A; }
-  .alert-success { background: var(--pg-light); color: #2C5C3F; }
+  .alert-error   { background: #FBE3E3; color: #8C2A2A; border-color: #F1B5B5; }
+  .alert-success { background: var(--pg-light); color: #2C5C3F; border-color: var(--pg-border); }
 
   /* ====== Dashboard ====== */
   .dash-wrap {
@@ -154,7 +152,7 @@
     min-height: 100vh;
   }
   .sidebar {
-    background: linear-gradient(180deg, #B7E2C5, #DFF5E1);
+    background: linear-gradient(180deg, #B7E2C5 0%, #DFF5E1 100%);
     padding: 22px 16px;
     border-right: 1px solid var(--pg-border);
     display: flex; flex-direction: column;
@@ -169,13 +167,13 @@
     color: var(--pg-text);
     font-weight: 600; font-size: 14px;
     margin-bottom: 4px;
-    transition: background .2s;
+    transition: background .2s, color .2s;
   }
-  .nav-item:hover { background: rgba(255,255,255,.5); }
+  .nav-item:hover { background: rgba(255,255,255,.55); }
   .nav-item.active {
     background: white;
-    color: var(--pg-primary-dark);
-    box-shadow: 0 4px 10px rgba(95,174,131,.15);
+    color: var(--pg-primary-d);
+    box-shadow: 0 4px 10px rgba(95,174,131,.2);
   }
   .nav-icon {
     width: 22px; height: 22px;
@@ -187,20 +185,26 @@
   .main {
     padding: 28px 32px;
     overflow-y: auto;
+    background: linear-gradient(180deg, var(--pg-bg) 0%, #DDF1E2 100%);
   }
   .topbar {
     display: flex; justify-content: space-between; align-items: center;
     margin-bottom: 22px;
   }
-  .page-title { font-size: 24px; font-weight: 700; margin: 0; }
+  .page-title {
+    font-size: 24px; font-weight: 700; margin: 0;
+    color: var(--pg-text);
+  }
   .user-chip {
     display: flex; align-items: center; gap: 10px;
     background: white; padding: 6px 14px 6px 6px;
     border-radius: 50px; border: 1px solid var(--pg-border);
+    box-shadow: 0 3px 8px rgba(95,174,131,.1);
   }
   .avatar {
     width: 34px; height: 34px; border-radius: 50%;
-    background: var(--pg-primary); color: white;
+    background: linear-gradient(135deg, var(--pg-primary), var(--pg-primary-d));
+    color: white;
     display: flex; align-items: center; justify-content: center;
     font-weight: 700;
   }
@@ -213,7 +217,7 @@
     box-shadow: var(--pg-shadow);
     margin-bottom: 20px;
   }
-  .card h3 { margin: 0 0 8px; font-size: 18px; }
+  .card h3 { margin: 0 0 8px; font-size: 18px; color: var(--pg-text); }
   .card p { margin: 0; color: var(--pg-muted); }
 
   .stat-grid {
@@ -223,20 +227,24 @@
     margin-bottom: 20px;
   }
   .stat-card {
-    background: var(--pg-card);
+    background: linear-gradient(135deg, #FFFFFF 0%, var(--pg-soft) 100%);
     border: 1px solid var(--pg-border);
     border-radius: var(--pg-radius);
     padding: 18px;
     box-shadow: var(--pg-shadow);
   }
-  .stat-label { font-size: 12px; color: var(--pg-muted); text-transform: uppercase; letter-spacing: .5px; }
-  .stat-value { font-size: 26px; font-weight: 700; margin-top: 6px; color: var(--pg-primary-dark); }
+  .stat-label { font-size: 12px; color: var(--pg-muted); text-transform: uppercase; letter-spacing: .5px; font-weight: 600; }
+  .stat-value { font-size: 28px; font-weight: 700; margin-top: 6px; color: var(--pg-primary-d); }
 
-  /* ====== Tables ====== */
-  table {
-    width: 100%; border-collapse: collapse;
-    background: white; border-radius: var(--pg-radius); overflow: hidden;
+  /* Tables */
+  .table-wrap {
+    background: white;
+    border-radius: var(--pg-radius);
+    overflow: hidden;
+    border: 1px solid var(--pg-border);
+    box-shadow: var(--pg-shadow);
   }
+  table { width: 100%; border-collapse: collapse; }
   th, td {
     padding: 12px 14px; text-align: left;
     border-bottom: 1px solid var(--pg-border);
@@ -249,39 +257,38 @@
     text-transform: uppercase; letter-spacing: .3px;
   }
   tr:last-child td { border-bottom: none; }
-  tr:hover td { background: #FBFFFC; }
+  tr:hover td { background: var(--pg-tint); }
 
   .toolbar {
     display: flex; gap: 10px; justify-content: flex-end;
     margin-bottom: 14px; flex-wrap: wrap;
   }
-  .btn-inline {
-    width: auto; padding: 9px 18px; font-size: 14px;
-  }
+  .btn-inline { width: auto; padding: 9px 18px; font-size: 14px; }
 
-  /* ====== Feature Pages ====== */
+  /* Feature pages */
   .feature-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 16px;
   }
   .feature-tile {
-    background: linear-gradient(135deg, #DFF5E1, #FFFFFF);
+    background: linear-gradient(135deg, var(--pg-light) 0%, #FFFFFF 100%);
     border: 1px solid var(--pg-border);
     border-radius: var(--pg-radius);
     padding: 20px;
     box-shadow: var(--pg-shadow);
   }
-  .feature-tile h4 { margin: 0 0 6px; }
-  .feature-tile p { margin: 0; color: var(--pg-muted); font-size: 14px; }
+  .feature-tile h4 { margin: 0 0 6px; color: var(--pg-text); }
+  .feature-tile p  { margin: 0; color: var(--pg-muted); font-size: 14px; }
 
   .badge {
     display: inline-block;
     background: var(--pg-light);
-    color: var(--pg-primary-dark);
+    color: var(--pg-primary-d);
     border-radius: 999px;
     padding: 3px 10px;
-    font-size: 12px; font-weight: 600;
+    font-size: 12px; font-weight: 700;
+    border: 1px solid var(--pg-border);
   }
 
   @media (max-width: 768px) {
@@ -303,14 +310,14 @@
     </div>
 
     <div class="tabs">
-      <button class="tab active" id="tabLogin" onclick="switchTab('login')">เข้าสู่ระบบ</button>
-      <button class="tab" id="tabRegister" onclick="switchTab('register')">สมัครสมาชิก</button>
+      <button type="button" class="tab active" id="tabLogin"    onclick="switchTab('login')">เข้าสู่ระบบ</button>
+      <button type="button" class="tab"        id="tabRegister" onclick="switchTab('register')">สมัครสมาชิก</button>
     </div>
 
     <div id="alertBox"></div>
 
     <!-- Login Form -->
-    <form id="loginForm" onsubmit="handleLogin(event)">
+    <form id="loginForm" autocomplete="off">
       <div class="form-title">ยินดีต้อนรับกลับมา</div>
       <div class="form-group">
         <label>อีเมล</label>
@@ -328,7 +335,7 @@
     </form>
 
     <!-- Register Form -->
-    <form id="registerForm" class="hidden" onsubmit="handleRegister(event)">
+    <form id="registerForm" class="hidden" autocomplete="off">
       <div class="form-title">สมัครสมาชิกใหม่</div>
       <div class="form-group">
         <label>ชื่อ-นามสกุล</label>
@@ -358,28 +365,14 @@
       <div class="brand-logo">P</div>
       <div class="brand-name">PastelGreen</div>
     </div>
-    <button class="nav-item active" data-page="dashboard" onclick="showPage('dashboard')">
-      <span class="nav-icon">🏠</span> Dashboard
-    </button>
-    <button class="nav-item" data-page="ads" onclick="showPage('ads')">
-      <span class="nav-icon">📢</span> ADS
-    </button>
-    <button class="nav-item" data-page="facebook" onclick="showPage('facebook')">
-      <span class="nav-icon">📘</span> Facebook Page
-    </button>
-    <button class="nav-item" data-page="ai" onclick="showPage('ai')">
-      <span class="nav-icon">🤖</span> AI Studio
-    </button>
-    <button class="nav-item" data-page="platform" onclick="showPage('platform')">
-      <span class="nav-icon">🧩</span> Platform
-    </button>
-    <button class="nav-item" data-page="members" onclick="showPage('members')">
-      <span class="nav-icon">👥</span> สมาชิกเว็บ
-    </button>
+    <button type="button" class="nav-item active" data-page="dashboard" onclick="showPage('dashboard')"><span class="nav-icon">🏠</span> Dashboard</button>
+    <button type="button" class="nav-item" data-page="ads"      onclick="showPage('ads')"><span class="nav-icon">📢</span> ADS</button>
+    <button type="button" class="nav-item" data-page="facebook" onclick="showPage('facebook')"><span class="nav-icon">📘</span> Facebook Page</button>
+    <button type="button" class="nav-item" data-page="ai"       onclick="showPage('ai')"><span class="nav-icon">🤖</span> AI Studio</button>
+    <button type="button" class="nav-item" data-page="platform" onclick="showPage('platform')"><span class="nav-icon">🧩</span> Platform</button>
+    <button type="button" class="nav-item" data-page="members"  onclick="showPage('members')"><span class="nav-icon">👥</span> สมาชิกเว็บ</button>
     <div class="sidebar-footer">
-      <button class="nav-item" onclick="handleLogout()" style="color:#8C2A2A;">
-        <span class="nav-icon">🚪</span> Logout
-      </button>
+      <button type="button" class="nav-item" onclick="handleLogout()" style="color:#8C2A2A;"><span class="nav-icon">🚪</span> Logout</button>
     </div>
   </aside>
 
@@ -395,25 +388,13 @@
       </div>
     </div>
 
-    <!-- Page: Dashboard Home -->
+    <!-- Page: Dashboard -->
     <div id="page-dashboard" class="page">
       <div class="stat-grid">
-        <div class="stat-card">
-          <div class="stat-label">สมาชิกทั้งหมด</div>
-          <div class="stat-value" id="statMembers">0</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">โฆษณาที่กำลังรัน</div>
-          <div class="stat-value">12</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">เพจที่เชื่อมต่อ</div>
-          <div class="stat-value">3</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">AI Credits</div>
-          <div class="stat-value">8.5k</div>
-        </div>
+        <div class="stat-card"><div class="stat-label">สมาชิกทั้งหมด</div><div class="stat-value" id="statMembers">0</div></div>
+        <div class="stat-card"><div class="stat-label">โฆษณาที่กำลังรัน</div><div class="stat-value">12</div></div>
+        <div class="stat-card"><div class="stat-label">เพจที่เชื่อมต่อ</div><div class="stat-value">3</div></div>
+        <div class="stat-card"><div class="stat-label">AI Credits</div><div class="stat-value">8.5k</div></div>
       </div>
 
       <div class="card">
@@ -428,19 +409,19 @@
         <h3>📢 จัดการแคมเปญโฆษณา</h3>
         <p>ดูสถานะ งบประมาณ และผลลัพธ์ของแคมเปญที่กำลังรัน</p>
       </div>
-      <table>
-        <thead>
-          <tr><th>แคมเปญ</th><th>แพลตฟอร์ม</th><th>งบ</th><th>สถานะ</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>โปรเดือนนี้</td><td>Facebook</td><td>฿5,000</td><td><span class="badge">Active</span></td></tr>
-          <tr><td>สินค้าใหม่</td><td>Google</td><td>฿8,500</td><td><span class="badge">Active</span></td></tr>
-          <tr><td>Brand Awareness</td><td>TikTok</td><td>฿3,200</td><td><span class="badge">Paused</span></td></tr>
-        </tbody>
-      </table>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>แคมเปญ</th><th>แพลตฟอร์ม</th><th>งบ</th><th>สถานะ</th></tr></thead>
+          <tbody>
+            <tr><td>โปรเดือนนี้</td><td>Facebook</td><td>฿5,000</td><td><span class="badge">Active</span></td></tr>
+            <tr><td>สินค้าใหม่</td><td>Google</td><td>฿8,500</td><td><span class="badge">Active</span></td></tr>
+            <tr><td>Brand Awareness</td><td>TikTok</td><td>฿3,200</td><td><span class="badge">Paused</span></td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
-    <!-- Page: Facebook Page -->
+    <!-- Page: Facebook -->
     <div id="page-facebook" class="page hidden">
       <div class="card">
         <h3>📘 จัดการ Facebook Page</h3>
@@ -491,105 +472,92 @@
         <p>รายชื่อสมาชิกทั้งหมดที่สมัครใช้งานในระบบ</p>
       </div>
       <div class="toolbar">
-        <button class="btn btn-inline btn-secondary" onclick="refreshMembers()">🔄 รีเฟรช</button>
-        <button class="btn btn-inline" onclick="exportMembersCSV()">⬇️ Export CSV</button>
+        <button type="button" class="btn btn-inline btn-secondary" onclick="refreshMembers()">🔄 รีเฟรช</button>
+        <button type="button" class="btn btn-inline" onclick="exportMembersCSV()">⬇️ Export CSV</button>
       </div>
-      <table>
-        <thead>
-          <tr><th>#</th><th>ชื่อ</th><th>อีเมล</th><th>วันสมัคร</th></tr>
-        </thead>
-        <tbody id="memberTbody"></tbody>
-      </table>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>#</th><th>ชื่อ</th><th>อีเมล</th><th>วันสมัคร</th></tr></thead>
+          <tbody id="memberTbody"></tbody>
+        </table>
+      </div>
     </div>
   </main>
 </div>
 
 <script>
-  /* ============== Storage Helpers ============== */
+  /* ============== Storage ============== */
   const STORAGE_USERS = 'pg_users';
   const STORAGE_SESSION = 'pg_session';
 
-  function getUsers() {
-    return JSON.parse(localStorage.getItem(STORAGE_USERS) || '[]');
-  }
-  function saveUsers(users) {
-    localStorage.setItem(STORAGE_USERS, JSON.stringify(users));
-  }
-  function getSession() {
-    const s = localStorage.getItem(STORAGE_SESSION);
-    return s ? JSON.parse(s) : null;
-  }
-  function setSession(user) {
-    localStorage.setItem(STORAGE_SESSION, JSON.stringify(user));
-  }
-  function clearSession() {
-    localStorage.removeItem(STORAGE_SESSION);
-  }
+  function getUsers()   { try { return JSON.parse(localStorage.getItem(STORAGE_USERS) || '[]'); } catch(e){ return []; } }
+  function saveUsers(u) { localStorage.setItem(STORAGE_USERS, JSON.stringify(u)); }
+  function getSession() { try { const s = localStorage.getItem(STORAGE_SESSION); return s ? JSON.parse(s) : null; } catch(e){ return null; } }
+  function setSession(u){ localStorage.setItem(STORAGE_SESSION, JSON.stringify(u)); }
+  function clearSession(){ localStorage.removeItem(STORAGE_SESSION); }
 
   /* ============== Auth UI ============== */
   function switchTab(which) {
     document.getElementById('alertBox').innerHTML = '';
+    const tabL = document.getElementById('tabLogin');
+    const tabR = document.getElementById('tabRegister');
+    const formL = document.getElementById('loginForm');
+    const formR = document.getElementById('registerForm');
     if (which === 'login') {
-      document.getElementById('tabLogin').classList.add('active');
-      document.getElementById('tabRegister').classList.remove('active');
-      document.getElementById('loginForm').classList.remove('hidden');
-      document.getElementById('registerForm').classList.add('hidden');
+      tabL.classList.add('active'); tabR.classList.remove('active');
+      formL.classList.remove('hidden'); formR.classList.add('hidden');
     } else {
-      document.getElementById('tabRegister').classList.add('active');
-      document.getElementById('tabLogin').classList.remove('active');
-      document.getElementById('registerForm').classList.remove('hidden');
-      document.getElementById('loginForm').classList.add('hidden');
+      tabR.classList.add('active'); tabL.classList.remove('active');
+      formR.classList.remove('hidden'); formL.classList.add('hidden');
     }
   }
 
-  function showAlert(msg, type = 'error') {
+  function showAlert(msg, type) {
     const cls = type === 'success' ? 'alert-success' : 'alert-error';
-    document.getElementById('alertBox').innerHTML =
-      `<div class="alert ${cls}">${msg}</div>`;
+    document.getElementById('alertBox').innerHTML = '<div class="alert ' + cls + '">' + msg + '</div>';
   }
 
   function handleLogin(e) {
     e.preventDefault();
-    const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+    const email = (document.getElementById('loginEmail').value || '').trim().toLowerCase();
     const password = document.getElementById('loginPassword').value;
+    if (!email || !password) { showAlert('กรุณากรอกอีเมลและรหัสผ่าน'); return; }
     const users = getUsers();
     const user = users.find(u => u.email === email && u.password === password);
-    if (!user) {
-      showAlert('อีเมลหรือรหัสผ่านไม่ถูกต้อง');
-      return;
-    }
+    if (!user) { showAlert('อีเมลหรือรหัสผ่านไม่ถูกต้อง'); return; }
     setSession(user);
     enterDashboard(user);
   }
 
   function handleRegister(e) {
     e.preventDefault();
-    const name = document.getElementById('regName').value.trim();
-    const email = document.getElementById('regEmail').value.trim().toLowerCase();
+    const name = (document.getElementById('regName').value || '').trim();
+    const email = (document.getElementById('regEmail').value || '').trim().toLowerCase();
     const password = document.getElementById('regPassword').value;
+    if (!name)  { showAlert('กรุณากรอกชื่อ-นามสกุล'); return; }
+    if (!email) { showAlert('กรุณากรอกอีเมล'); return; }
+    if (!password || password.length < 6) { showAlert('รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร'); return; }
     const users = getUsers();
-    if (users.some(u => u.email === email)) {
-      showAlert('อีเมลนี้ถูกใช้สมัครไปแล้ว');
-      return;
-    }
+    if (users.some(u => u.email === email)) { showAlert('อีเมลนี้ถูกใช้สมัครไปแล้ว'); return; }
     const newUser = {
       id: Date.now(),
-      name, email, password,
+      name: name, email: email, password: password,
       createdAt: new Date().toISOString()
     };
     users.push(newUser);
     saveUsers(users);
     setSession(newUser);
-    enterDashboard(newUser);
+    showAlert('สมัครสมาชิกสำเร็จ! กำลังเข้าสู่ Dashboard...', 'success');
+    setTimeout(function(){ enterDashboard(newUser); }, 400);
   }
 
   function handleLogout() {
     clearSession();
     document.getElementById('dashboard').classList.add('hidden');
     document.getElementById('authPage').classList.remove('hidden');
-    // reset forms
     document.getElementById('loginForm').reset();
     document.getElementById('registerForm').reset();
+    document.getElementById('alertBox').innerHTML = '';
     switchTab('login');
   }
 
@@ -606,9 +574,10 @@
 
   function showPage(page) {
     document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
-    document.getElementById('page-' + page).classList.remove('hidden');
+    const target = document.getElementById('page-' + page);
+    if (target) target.classList.remove('hidden');
     document.querySelectorAll('.nav-item[data-page]').forEach(n => n.classList.remove('active'));
-    const active = document.querySelector(`.nav-item[data-page="${page}"]`);
+    const active = document.querySelector('.nav-item[data-page="' + page + '"]');
     if (active) active.classList.add('active');
     const titles = {
       dashboard: 'Dashboard',
@@ -625,21 +594,20 @@
   /* ============== Members ============== */
   function refreshMembers() {
     const users = getUsers();
-    document.getElementById('statMembers').textContent = users.length;
+    const stat = document.getElementById('statMembers');
+    if (stat) stat.textContent = users.length;
     const tbody = document.getElementById('memberTbody');
     if (!tbody) return;
     if (users.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:var(--pg-muted);padding:24px;">ยังไม่มีสมาชิก</td></tr>`;
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--pg-muted);padding:24px;">ยังไม่มีสมาชิก</td></tr>';
       return;
     }
-    tbody.innerHTML = users.map((u, i) => `
-      <tr>
-        <td>${i + 1}</td>
-        <td>${escapeHTML(u.name)}</td>
-        <td>${escapeHTML(u.email)}</td>
-        <td>${new Date(u.createdAt).toLocaleString('th-TH')}</td>
-      </tr>
-    `).join('');
+    tbody.innerHTML = users.map((u, i) =>
+      '<tr><td>' + (i + 1) + '</td>' +
+      '<td>' + escapeHTML(u.name) + '</td>' +
+      '<td>' + escapeHTML(u.email) + '</td>' +
+      '<td>' + new Date(u.createdAt).toLocaleString('th-TH') + '</td></tr>'
+    ).join('');
   }
 
   function escapeHTML(s) {
@@ -650,24 +618,21 @@
 
   function exportMembersCSV() {
     const users = getUsers();
-    if (users.length === 0) {
-      alert('ยังไม่มีสมาชิกให้ export');
-      return;
-    }
+    if (users.length === 0) { alert('ยังไม่มีสมาชิกให้ export'); return; }
     const header = ['ID', 'Name', 'Email', 'CreatedAt'];
     const rows = users.map(u => [
       u.id,
-      `"${(u.name || '').replace(/"/g,'""')}"`,
-      `"${(u.email || '').replace(/"/g,'""')}"`,
+      '"' + (u.name || '').replace(/"/g,'""') + '"',
+      '"' + (u.email || '').replace(/"/g,'""') + '"',
       u.createdAt
     ]);
     const csv = [header.join(','), ...rows.map(r => r.join(','))].join('\n');
-    // BOM for Excel Thai support
-    const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' });
+    const BOM = '﻿';
+    const blob = new Blob([BOM + csv], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `members_${new Date().toISOString().slice(0,10)}.csv`;
+    a.download = 'members_' + new Date().toISOString().slice(0,10) + '.csv';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -675,22 +640,23 @@
   }
 
   /* ============== Init ============== */
-  (function init() {
+  document.addEventListener('DOMContentLoaded', function () {
+    // Bind form submit listeners (more robust than inline onsubmit)
+    document.getElementById('loginForm').addEventListener('submit', handleLogin);
+    document.getElementById('registerForm').addEventListener('submit', handleRegister);
+
+    // Restore session if any
     const session = getSession();
     if (session) {
-      // Verify session user still exists
       const users = getUsers();
       const exists = users.find(u => u.email === session.email);
-      if (exists) {
-        enterDashboard(exists);
-        return;
-      } else {
-        clearSession();
-      }
+      if (exists) { enterDashboard(exists); return; }
+      clearSession();
     }
-  })();
+  });
 </script>
 
 </body>
 </html>
+
 
