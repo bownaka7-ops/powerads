@@ -920,28 +920,21 @@
     document.getElementById('dashboard').classList.add('hidden');
   }
   function goLanding() {
-    document.getElementById('loginPage').classList.add('hidden');
-    document.getElementById('registerPage').classList.add('hidden');
-    document.getElementById('mainApp').classList.add('hidden');
+    hideAllPages();
     document.getElementById('landingPage').classList.remove('hidden');
-    window.scrollTo({ top: 0, behavior: 'auto' });
-  });
+    window.scrollTo({ top: 0, behavior: 'instant' });
   }
   function goLogin() {
-    document.getElementById('landingPage').classList.add('hidden');
-    document.getElementById('registerPage').classList.add('hidden');
-    document.getElementById('mainApp').classList.add('hidden');
+    hideAllPages();
     document.getElementById('loginPage').classList.remove('hidden');
-    window.scrollTo({ top: 0, behavior: 'auto' });
-  });
+    document.getElementById('loginAlert').innerHTML = '';
+    window.scrollTo({ top: 0, behavior: 'instant' });
   }
   function goRegister() {
-    document.getElementById('landingPage').classList.add('hidden');
-    document.getElementById('loginPage').classList.add('hidden');
-    document.getElementById('mainApp').classList.add('hidden');
+    hideAllPages();
     document.getElementById('registerPage').classList.remove('hidden');
-    window.scrollTo({ top: 0, behavior: 'auto' });
-  });
+    document.getElementById('registerAlert').innerHTML = '';
+    window.scrollTo({ top: 0, behavior: 'instant' });
   }
   function goDashboard(user) {
     hideAllPages();
@@ -951,7 +944,7 @@
     document.getElementById('userAvatar').textContent = (user.name || 'U').charAt(0).toUpperCase();
     showPage('dashboard');
     refreshMembers();
-    window.scrollTo({ top: 0, behavior: 'auto' });
+    window.scrollTo({ top: 0, behavior: 'instant' });
   }
 
   /* ============== Alerts ============== */
@@ -961,6 +954,32 @@
   }
 
   /* ============== Login / Register ============== */
+  
+  /* ============== Navigation Functions ============== */
+  function goLogin() {
+    document.getElementById('landingPage').classList.add('hidden');
+    document.getElementById('registerPage').classList.add('hidden');
+    if(document.getElementById('mainApp')) document.getElementById('mainApp').classList.add('hidden');
+    document.getElementById('loginPage').classList.remove('hidden');
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }
+
+  function goRegister() {
+    document.getElementById('landingPage').classList.add('hidden');
+    document.getElementById('loginPage').classList.add('hidden');
+    if(document.getElementById('mainApp')) document.getElementById('mainApp').classList.add('hidden');
+    document.getElementById('registerPage').classList.remove('hidden');
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }
+
+  function goLanding() {
+    document.getElementById('loginPage').classList.add('hidden');
+    document.getElementById('registerPage').classList.add('hidden');
+    if(document.getElementById('mainApp')) document.getElementById('mainApp').classList.add('hidden');
+    document.getElementById('landingPage').classList.remove('hidden');
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }
+
   function handleLogin(e) {
     e.preventDefault();
     const email = (document.getElementById('loginEmail').value || '').trim().toLowerCase();
