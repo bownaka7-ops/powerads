@@ -4,78 +4,140 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PowerAds</title>
-    <style>
-      :root { color-scheme: dark light; }
-      * { box-sizing: border-box; }
-      body {
-        margin: 0;
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: radial-gradient(circle at top, #0f172a 0%, #020617 100%);
-        color: #f8fafc;
-        font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        padding: 1.5rem;
-      }
-      .card {
-        max-width: 780px;
-        width: 100%;
-        padding: 2rem;
-        border-radius: 32px;
-        background: rgba(15, 23, 42, 0.88);
-        border: 1px solid rgba(148, 163, 184, 0.16);
-        box-shadow: 0 30px 90px rgba(2, 6, 23, 0.45);
-      }
-      h1 {
-        margin: 0 0 1rem;
-        font-size: clamp(2.6rem, 4vw, 3.8rem);
-        letter-spacing: -0.04em;
-      }
-      p {
-        margin: 0 0 1.5rem;
-        line-height: 1.8;
-        color: #cbd5e1;
-      }
-      .button {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.75rem;
-        padding: 0.95rem 1.4rem;
-        border-radius: 999px;
-        background: linear-gradient(135deg, #38bdf8, #818cf8);
-        color: #0f172a;
-        font-weight: 700;
-        text-decoration: none;
-        box-shadow: 0 16px 40px rgba(56, 189, 248, 0.2);
-      }
-      ul {
-        margin: 1rem 0 0;
-        padding-left: 1.5rem;
-        color: #cbd5e1;
-      }
-      li + li {
-        margin-top: 0.75rem;
-      }
-      footer {
-        margin-top: 1.75rem;
-        color: #94a3b8;
-      }
-    </style>
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="card">
-      <h1>PowerAds</h1>
-      <p>ยินดีต้อนรับสู่หน้าเว็บ PowerAds! ขณะนี้หน้าเว็บนี้พร้อมใช้งานแล้วเป็น landing page ขณะโปรเจกต์แอปพลิเคชันหลักกำลังถูกพัฒนาในรีโป.</p>
-      <a class="button" href="https://github.com/bownaka7-ops/powerads" target="_blank" rel="noreferrer">ดูโค้ดโปรเจกต์</a>
-      <ul>
-        <li>หน้าเว็บนี้ทำงานได้ทันทีบน GitHub Pages</li>
-        <li>หากต้องการเว็บแอปเต็มรูปแบบ ให้เพิ่มโค้ด frontend/React ในรีโป</li>
-        <li>ผมสามารถช่วยสร้างหน้าหลักหรือ landing page เพิ่มเติมได้</li>
-      </ul>
-      <footer>PowerAds - GitHub Pages พร้อมใช้งานแล้ว</footer>
-    </div>
+    <header class="site-header">
+      <div class="container">
+        <nav>
+          <div class="brand">PowerAds</div>
+          <div class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#shop">Shop</a>
+            <a href="#integration">API</a>
+            <a href="#contact">Contact</a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero">
+        <div class="hero-copy">
+          <span class="highlight">PowerAds</span>
+          <h1>แพลตฟอร์มโฆษณาอัจฉริยะสำหรับธุรกิจมืออาชีพ</h1>
+          <p>สร้างแคมเปญ ยิงแอด เชื่อมต่อ API และจัดการตะกร้าบริการโฆษณาได้ในหน้าเดียว พร้อมระบบเก็บข้อมูลและส่งคำขอแบบมืออาชีพ.</p>
+          <div class="hero-actions">
+            <a class="btn-primary" href="#shop">เลือกรายการบริการ</a>
+            <a class="btn-secondary" href="#integration">เชื่อม API ยิงแอด</a>
+          </div>
+        </div>
+        <aside class="hero-panel">
+          <h2>PowerAds พร้อมใช้งาน</h2>
+          <ul>
+            <li>หน้าจอแอดมินสำหรับเลือกแพ็กเกจโฆษณา</li>
+            <li>ตะกร้าสินค้าเพื่อรวมบริการก่อนชำระ</li>
+            <li>เชื่อม API ยิงแอดตามแพลตฟอร์มยอดนิยม</li>
+            <li>ระบบ deploy แบบเว็บจริงบน GitHub Pages</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section id="features" class="section">
+        <div class="section-title">
+          <h2>ฟีเจอร์หลัก</h2>
+          <p>ออกแบบสำหรับธุรกิจที่ต้องการจัดการโฆษณาอย่างมืออาชีพ</p>
+        </div>
+        <div class="grid-3 features-list">
+          <div class="feature-item card">
+            <h3>ระบบจัดการตะกร้า</h3>
+            <p>เลือกแพ็กเกจบริการโฆษณา, เพิ่ม-ลดจำนวน และดูยอดรวมก่อนสั่งซื้อได้ทันที.</p>
+          </div>
+          <div class="feature-item card">
+            <h3>เชื่อม API แจ้งยิงแอด</h3>
+            <p>ส่งคำขอไปยัง API endpoint ของคุณ พร้อมข้อมูลแพลตฟอร์ม, แคมเปญ และงบประมาณ.</p>
+          </div>
+          <div class="feature-item card">
+            <h3>หน้าเสนอขายแบบมืออาชีพ</h3>
+            <p>ดีไซน์สวยทันสมัย เหมาะสำหรับนำเสนอให้ลูกค้าและทีมการตลาด.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="shop" class="section">
+        <div class="section-title">
+          <h2>บริการโฆษณา</h2>
+          <p>เลือกรายการแพ็กเกจโฆษณาเพื่อเริ่มต้นสร้างแคมเปญ</p>
+        </div>
+        <div id="product-grid" class="products-grid"></div>
+      </section>
+
+      <section class="section">
+        <div class="section-title">
+          <h2>ตะกร้าบริการ</h2>
+          <p>รวมแพ็กเกจแล้วจัดการยอดรวมก่อนส่งคำขอยิงแอด</p>
+        </div>
+        <div class="cart-panel">
+          <h3>ตะกร้าปัจจุบัน <span id="cart-count">0</span> รายการ</h3>
+          <div id="cart-items" class="cart-items"></div>
+          <div class="summary">
+            <div><span>รวมทั้งหมด</span><strong id="cart-total">฿0.00</strong></div>
+          </div>
+          <button id="clear-cart" class="checkout-btn" type="button">ล้างตะกร้า</button>
+        </div>
+      </section>
+
+      <section id="integration" class="section">
+        <div class="section-title">
+          <h2>เชื่อม API ยิงแอด</h2>
+          <p>ส่งคำสั่งไปยัง API ของคุณเพื่อดำเนินการแคมเปญโฆษณาแบบอัตโนมัติ</p>
+        </div>
+        <div class="form-grid">
+          <div class="form-card">
+            <label for="api-endpoint">API Endpoint</label>
+            <input id="api-endpoint" type="url" placeholder="https://your-ad-service.com/api/send-ad" />
+            <label for="api-key">API Key (ถ้ามี)</label>
+            <input id="api-key" type="text" placeholder="คีย์เข้าถึง API" />
+            <label for="ad-platform">แพลตฟอร์ม</label>
+            <select id="ad-platform">
+              <option value="facebook">Facebook / Instagram</option>
+              <option value="google">Google Ads</option>
+              <option value="tiktok">TikTok</option>
+              <option value="line">LINE Ads</option>
+            </select>
+            <label for="ad-budget">งบประมาณ (THB)</label>
+            <input id="ad-budget" type="number" min="0" step="100" />
+            <button id="save-config" class="btn-primary" type="button">บันทึกการตั้งค่า</button>
+          </div>
+          <div class="form-card api-panel">
+            <label for="ad-message">ข้อความโฆษณา</label>
+            <textarea id="ad-message" rows="6"></textarea>
+            <div class="status-box" id="response-status">กรอกข้อมูลแล้วกดส่งคำขอ API เพื่อทดสอบเชื่อมต่อ</div>
+            <button id="send-ad" class="checkout-btn" type="button">ส่งคำขอยิงแอด</button>
+          </div>
+        </div>
+        <p style="color:#94a3b8; margin-top:1rem;">หมายเหตุ: API endpoint ของคุณต้องรองรับการเรียกแบบ CORS เพื่อให้เว็บนี้สามารถเชื่อมต่อได้จากเบราว์เซอร์</p>
+      </section>
+
+      <section id="contact" class="section">
+        <div class="section-title">
+          <h2>พร้อมให้บริการ</h2>
+          <p>เว็บนี้ออกแบบให้เป็น landing page และระบบทดลองใช้งานโฆษณา ซึ่งสามารถต่อยอดเป็นระบบจริงได้ทันที</p>
+        </div>
+        <div class="card">
+          <p>ถ้าคุณต้องการ ผมสามารถต่อยอดระบบนี้ให้เป็นแพลตฟอร์มจริงได้ครบทั้งหน้าแบ็กออฟฟิศ, ระบบจัดการแคมเปญ, การเชื่อม API แอด, และการ deploy บน URL ของบริษัท.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="section">
+      <div class="container" style="display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; color:#94a3b8;">
+        <span>PowerAds © 2026</span>
+        <span>Deploy ด้วย GitHub Pages / Static Web</span>
+      </div>
+    </footer>
+
+    <script src="app.js" defer></script>
   </body>
 </html>
 
