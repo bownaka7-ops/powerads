@@ -3,10 +3,969 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Power Ads</title>
+  <title>PowerAds AI Marketer</title>
+
+  <style>
+    :root {
+      --bg: #06140d;
+      --bg2: #092016;
+      --card: rgba(255, 255, 255, 0.07);
+      --card2: rgba(255, 255, 255, 0.1);
+      --green: #22c55e;
+      --green2: #86efac;
+      --green3: #16a34a;
+      --text: #f2fff6;
+      --muted: #b8d8c2;
+      --line: rgba(255,255,255,0.12);
+      --shadow: 0 24px 80px rgba(0,0,0,.35);
+      --radius: 28px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(34,197,94,.35), transparent 35%),
+        radial-gradient(circle at 80% 0%, rgba(134,239,172,.25), transparent 30%),
+        linear-gradient(180deg, #06140d 0%, #082015 45%, #041009 100%);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(18px);
+      background: rgba(6, 20, 13, .72);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-inner {
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 900;
+      font-size: 22px;
+      letter-spacing: -.5px;
+    }
+
+    .logo-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--green), var(--green2));
+      color: #05200f;
+      box-shadow: 0 10px 30px rgba(34,197,94,.35);
+    }
+
+    .menu {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .menu a:hover {
+      color: white;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn {
+      border: 0;
+      cursor: pointer;
+      padding: 13px 20px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 15px;
+      transition: .2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--green), var(--green2));
+      color: #05200f;
+      box-shadow: 0 14px 34px rgba(34,197,94,.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 44px rgba(34,197,94,.45);
+    }
+
+    .btn-ghost {
+      background: rgba(255,255,255,.07);
+      color: white;
+      border: 1px solid var(--line);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255,255,255,.12);
+    }
+
+    .hero {
+      padding: 90px 0 60px;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.02fr .98fr;
+      gap: 54px;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(34,197,94,.12);
+      border: 1px solid rgba(134,239,172,.28);
+      color: var(--green2);
+      font-weight: 800;
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--green);
+      box-shadow: 0 0 18px var(--green);
+    }
+
+    h1 {
+      font-size: clamp(46px, 6vw, 86px);
+      line-height: .95;
+      letter-spacing: -3px;
+      margin-bottom: 24px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #ffffff, #86efac, #22c55e);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .lead {
+      color: var(--muted);
+      font-size: 20px;
+      line-height: 1.7;
+      max-width: 640px;
+      margin-bottom: 32px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+
+    .trust {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .avatars {
+      display: flex;
+    }
+
+    .avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      border: 2px solid #082015;
+      margin-left: -10px;
+      background: linear-gradient(135deg, #dcfce7, #22c55e);
+    }
+
+    .avatar:first-child {
+      margin-left: 0;
+    }
+
+    .mockup {
+      position: relative;
+      border-radius: 36px;
+      background: linear-gradient(180deg, rgba(255,255,255,.13), rgba(255,255,255,.05));
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      padding: 18px;
+      overflow: hidden;
+    }
+
+    .mockup:before {
+      content: "";
+      position: absolute;
+      inset: -80px;
+      background: radial-gradient(circle, rgba(34,197,94,.25), transparent 55%);
+      pointer-events: none;
+    }
+
+    .dashboard {
+      position: relative;
+      border-radius: 26px;
+      background: #07160f;
+      border: 1px solid rgba(255,255,255,.1);
+      padding: 18px;
+      overflow: hidden;
+    }
+
+    .dash-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .window-dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .window-dots span {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.2);
+    }
+
+    .status {
+      color: var(--green2);
+      background: rgba(34,197,94,.13);
+      border: 1px solid rgba(134,239,172,.25);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .dash-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .metric {
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 18px;
+    }
+
+    .metric small {
+      color: var(--muted);
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .metric strong {
+      font-size: 28px;
+    }
+
+    .chart {
+      height: 180px;
+      border-radius: 22px;
+      background:
+        linear-gradient(180deg, rgba(34,197,94,.2), rgba(34,197,94,0)),
+        repeating-linear-gradient(to right, rgba(255,255,255,.06) 0 1px, transparent 1px 60px),
+        repeating-linear-gradient(to bottom, rgba(255,255,255,.06) 0 1px, transparent 1px 45px);
+      border: 1px solid var(--line);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+
+    .chart svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .task {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--line);
+      margin-bottom: 10px;
+    }
+
+    .task-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .check {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: rgba(34,197,94,.18);
+      color: var(--green2);
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+    }
+
+    .task p {
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .task span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .pill {
+      color: #05200f;
+      background: var(--green2);
+      border-radius: 999px;
+      padding: 8px 10px;
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .section {
+      padding: 80px 0;
+    }
+
+    .section-head {
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto 44px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(34px, 4vw, 58px);
+      line-height: 1;
+      letter-spacing: -2px;
+      margin-bottom: 18px;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      border-radius: var(--radius);
+      background: var(--card);
+      border: 1px solid var(--line);
+      padding: 28px;
+      box-shadow: 0 16px 44px rgba(0,0,0,.16);
+    }
+
+    .icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(34,197,94,.25), rgba(134,239,172,.12));
+      border: 1px solid rgba(134,239,172,.18);
+      font-size: 24px;
+      margin-bottom: 22px;
+    }
+
+    .card h3 {
+      font-size: 23px;
+      margin-bottom: 12px;
+      letter-spacing: -.4px;
+    }
+
+    .card p {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .platforms {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .platform {
+      padding: 18px;
+      border-radius: 22px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--line);
+      text-align: center;
+      font-weight: 900;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .panel {
+      border-radius: 34px;
+      background: linear-gradient(180deg, rgba(255,255,255,.1), rgba(255,255,255,.04));
+      border: 1px solid var(--line);
+      padding: 34px;
+      box-shadow: var(--shadow);
+    }
+
+    .panel h2 {
+      font-size: clamp(34px, 4vw, 54px);
+      line-height: 1;
+      letter-spacing: -2px;
+      margin-bottom: 18px;
+    }
+
+    .panel p {
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 17px;
+      margin-bottom: 18px;
+    }
+
+    .list {
+      display: grid;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .list div {
+      display: flex;
+      gap: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .list b {
+      color: var(--green2);
+    }
+
+    .ai-box {
+      min-height: 420px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .orb {
+      width: 230px;
+      height: 230px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 35% 30%, #dcfce7, #86efac 26%, #22c55e 55%, #064e3b 100%);
+      margin: 20px auto 28px;
+      box-shadow: 0 0 80px rgba(34,197,94,.35);
+    }
+
+    .recommend {
+      background: rgba(0,0,0,.22);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 16px;
+      margin-top: 12px;
+    }
+
+    .recommend strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .recommend span {
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    .pricing {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .price-card {
+      border-radius: 30px;
+      padding: 28px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--line);
+    }
+
+    .price-card.featured {
+      background: linear-gradient(180deg, rgba(34,197,94,.24), rgba(255,255,255,.06));
+      border-color: rgba(134,239,172,.45);
+      transform: translateY(-12px);
+    }
+
+    .price-card h3 {
+      font-size: 24px;
+      margin-bottom: 12px;
+    }
+
+    .price {
+      font-size: 44px;
+      font-weight: 900;
+      margin-bottom: 18px;
+    }
+
+    .price small {
+      font-size: 15px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .price-card ul {
+      list-style: none;
+      display: grid;
+      gap: 12px;
+      color: var(--muted);
+      margin: 22px 0;
+    }
+
+    .price-card li:before {
+      content: "✓";
+      color: var(--green2);
+      font-weight: 900;
+      margin-right: 9px;
+    }
+
+    .faq {
+      max-width: 880px;
+      margin: 0 auto;
+      display: grid;
+      gap: 12px;
+    }
+
+    .faq-item {
+      border-radius: 22px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--line);
+      padding: 22px;
+    }
+
+    .faq-item h3 {
+      margin-bottom: 8px;
+      font-size: 18px;
+    }
+
+    .faq-item p {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .cta {
+      text-align: center;
+      border-radius: 40px;
+      padding: 70px 24px;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(134,239,172,.34), transparent 40%),
+        linear-gradient(135deg, rgba(34,197,94,.23), rgba(255,255,255,.06));
+      border: 1px solid rgba(134,239,172,.25);
+      box-shadow: var(--shadow);
+    }
+
+    .cta h2 {
+      font-size: clamp(36px, 5vw, 68px);
+      line-height: 1;
+      letter-spacing: -2px;
+      margin-bottom: 18px;
+    }
+
+    .cta p {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+
+    footer {
+      padding: 34px 0;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      text-align: center;
+    }
+
+    @media (max-width: 920px) {
+      .menu {
+        display: none;
+      }
+
+      .hero-grid,
+      .split {
+        grid-template-columns: 1fr;
+      }
+
+      .cards,
+      .pricing {
+        grid-template-columns: 1fr;
+      }
+
+      .platforms {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .price-card.featured {
+        transform: none;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .nav-actions .btn-ghost {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 58px;
+      }
+
+      h1 {
+        letter-spacing: -2px;
+      }
+
+      .dash-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .platforms {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
+
 <body>
-  <h1>Power Ads</h1>
-  <p>ระบบจัดการโพสต์และโฆษณา</p>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="#" class="logo">
+        <span class="logo-icon">⚡</span>
+        <span>PowerAds</span>
+      </a>
+
+      <div class="menu">
+        <a href="#features">ฟีเจอร์</a>
+        <a href="#platforms">แพลตฟอร์ม</a>
+        <a href="#pricing">ราคา</a>
+        <a href="#faq">คำถาม</a>
+      </div>
+
+      <div class="nav-actions">
+        <a class="btn btn-ghost" href="#">Login</a>
+        <a class="btn btn-primary" href="#start">เริ่มใช้ฟรี</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="badge">
+            <span class="dot"></span>
+            AI Marketing Automation Dashboard
+          </div>
+
+          <h1>
+            ผู้ช่วย AI สำหรับ
+            <span class="gradient-text">ยิงแอดและโพสต์คอนเทนต์</span>
+          </h1>
+
+          <p class="lead">
+            รวมระบบจัดการคอนเทนต์ โฆษณา และแคมเปญไว้ในที่เดียว
+            รองรับ Facebook, TikTok, YouTube และ Shopee
+            ช่วยวางแผน สร้างข้อความ วิเคราะห์ผล และเตรียมโพสต์ได้เร็วขึ้น
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#start">Start Free Trial →</a>
+            <a class="btn btn-ghost" href="#features">ดูฟีเจอร์</a>
+          </div>
+
+          <div class="trust">
+            <div class="avatars">
+              <span class="avatar"></span>
+              <span class="avatar"></span>
+              <span class="avatar"></span>
+              <span class="avatar"></span>
+            </div>
+            <span>เหมาะสำหรับร้านค้าออนไลน์ นักยิงแอด และทีมคอนเทนต์</span>
+          </div>
+        </div>
+
+        <div class="mockup">
+          <div class="dashboard">
+            <div class="dash-top">
+              <div class="window-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <div class="status">AI Active</div>
+            </div>
+
+            <div class="dash-grid">
+              <div class="metric">
+                <small>ยอดเข้าชม</small>
+                <strong>128K</strong>
+              </div>
+              <div class="metric">
+                <small>ROAS</small>
+                <strong>4.8x</strong>
+              </div>
+            </div>
+
+            <div class="chart">
+              <svg viewBox="0 0 500 180" preserveAspectRatio="none">
+                <path d="M0,135 C60,120 85,95 130,102 C190,112 190,45 250,58 C315,72 320,35 380,42 C430,48 450,22 500,30"
+                  fill="none" stroke="#86efac" stroke-width="5" />
+                <path d="M0,135 C60,120 85,95 130,102 C190,112 190,45 250,58 C315,72 320,35 380,42 C430,48 450,22 500,30 L500,180 L0,180 Z"
+                  fill="rgba(34,197,94,.16)" />
+              </svg>
+            </div>
+
+            <div class="task">
+              <div class="task-left">
+                <div class="check">✓</div>
+                <div>
+                  <p>AI พบกลุ่มเป้าหมายใหม่</p>
+                  <span>แนะนำให้เพิ่มงบกับแคมเปญที่กำลังโต</span>
+                </div>
+              </div>
+              <span class="pill">Launch</span>
+            </div>
+
+            <div class="task">
+              <div class="task-left">
+                <div class="check">✓</div>
+                <div>
+                  <p>สร้าง Caption พร้อม Hashtag</p>
+                  <span>เหมาะกับ TikTok และ YouTube Shorts</span>
+                </div>
+              </div>
+              <span class="pill">Ready</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>ทำงานการตลาดให้เร็วขึ้นด้วย AI</h2>
+          <p>
+            ระบบนี้ออกแบบมาเพื่อช่วยลดเวลาการทำงานซ้ำ ๆ
+            ตั้งแต่คิดคอนเทนต์ เตรียมโพสต์ วิเคราะห์ผล ไปจนถึงจัดการแคมเปญ
+          </p>
+        </div>
+
+        <div class="cards">
+          <div class="card">
+            <div class="icon">🤖</div>
+            <h3>AI Campaign Assistant</h3>
+            <p>ให้ AI ช่วยวิเคราะห์แคมเปญ แนะนำจุดที่ควรปรับ และสรุปสิ่งที่ควรทำต่อแบบเข้าใจง่าย</p>
+          </div>
+
+          <div class="card">
+            <div class="icon">🎬</div>
+            <h3>Auto Post Hub</h3>
+            <p>อัปโหลดวิดีโอ ใส่ Caption เลือกแพลตฟอร์ม และเตรียมโพสต์ได้จากหน้าเดียว</p>
+          </div>
+
+          <div class="card">
+            <div class="icon">📈</div>
+            <h3>Performance Dashboard</h3>
+            <p>ดูภาพรวมยอดเข้าชม ค่าโฆษณา คอนเวอร์ชัน และผลลัพธ์ของทุกช่องทาง</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="platforms" class="section">
+      <div class="container split">
+        <div class="panel">
+          <h2>เชื่อมหลายแพลตฟอร์มในที่เดียว</h2>
+          <p>
+            วางระบบให้รองรับการเชื่อมต่อ API ของแต่ละแพลตฟอร์ม
+            เพื่อจัดการคอนเทนต์และข้อมูลการตลาดจากศูนย์กลางเดียว
+          </p>
+
+          <div class="list">
+            <div><b>✓</b> Login และเชื่อมบัญชีผู้ใช้</div>
+            <div><b>✓</b> อัปโหลดรูปภาพหรือวิดีโอ</div>
+            <div><b>✓</b> ตั้ง Caption และ Hashtag</div>
+            <div><b>✓</b> ดูประวัติการโพสต์และสถานะงาน</div>
+          </div>
+
+          <div class="platforms">
+            <div class="platform">Facebook</div>
+            <div class="platform">TikTok</div>
+            <div class="platform">YouTube</div>
+            <div class="platform">Shopee</div>
+          </div>
+        </div>
+
+        <div class="panel ai-box">
+          <div class="orb"></div>
+
+          <div class="recommend">
+            <strong>AI Recommendation</strong>
+            <span>แนะนำให้ใช้คลิปสั้น 15–25 วินาที พร้อม Hook ใน 3 วินาทีแรก เพื่อเพิ่มอัตราการรับชม</span>
+          </div>
+
+          <div class="recommend">
+            <strong>Audience Insight</strong>
+            <span>กลุ่มเป้าหมายที่มีแนวโน้มตอบสนองดีที่สุดคือผู้ใช้ที่สนใจสินค้าราคาพิเศษและรีวิวจากผู้ใช้จริง</span>
+          </div>
+
+          <div class="recommend">
+            <strong>Next Action</strong>
+            <span>เตรียมชุดโฆษณาใหม่ 3 แบบ เพื่อทดสอบข้อความ รูปภาพ และกลุ่มเป้าหมาย</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>เลือกแพ็กเกจที่เหมาะกับคุณ</h2>
+          <p>เริ่มจากระบบทดลองก่อน แล้วค่อยอัปเกรดเมื่อพร้อมใช้งานจริง</p>
+        </div>
+
+        <div class="pricing">
+          <div class="price-card">
+            <h3>Starter</h3>
+            <div class="price">ฟรี <small>/ ทดลอง</small></div>
+            <ul>
+              <li>Dashboard พื้นฐาน</li>
+              <li>บันทึกแคมเปญ</li>
+              <li>ทดสอบหน้าเว็บ</li>
+            </ul>
+            <a class="btn btn-ghost" href="#">เริ่มต้น</a>
+          </div>
+
+          <div class="price-card featured">
+            <h3>Pro</h3>
+            <div class="price">฿499 <small>/ เดือน</small></div>
+            <ul>
+              <li>เชื่อมหลายแพลตฟอร์ม</li>
+              <li>AI Caption</li>
+              <li>ตั้งเวลาโพสต์</li>
+              <li>Analytics Dashboard</li>
+            </ul>
+            <a class="btn btn-primary" href="#">เลือกแพ็กเกจนี้</a>
+          </div>
+
+          <div class="price-card">
+            <h3>Agency</h3>
+            <div class="price">฿1,990 <small>/ เดือน</small></div>
+            <ul>
+              <li>หลายบัญชีผู้ใช้</li>
+              <li>จัดการลูกค้าหลายแบรนด์</li>
+              <li>รายงานขั้นสูง</li>
+            </ul>
+            <a class="btn btn-ghost" href="#">ติดต่อเรา</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>คำถามที่พบบ่อย</h2>
+        </div>
+
+        <div class="faq">
+          <div class="faq-item">
+            <h3>ระบบนี้ยิงแอดได้ทันทีไหม?</h3>
+            <p>หน้านี้เป็น Landing Page สำหรับเริ่มต้น ส่วนระบบยิงแอดจริงต้องเชื่อม API และผ่านเงื่อนไขของแต่ละแพลตฟอร์มก่อน</p>
+          </div>
+
+          <div class="faq-item">
+            <h3>รองรับ TikTok และ YouTube ไหม?</h3>
+            <p>รองรับในแผนระบบได้ แต่ต้องทำ OAuth Login และเชื่อม API ของแต่ละแพลตฟอร์มในขั้นตอน Backend</p>
+          </div>
+
+          <div class="faq-item">
+            <h3>ใช้ GitHub Pages ได้ไหม?</h3>
+            <p>ใช้ได้สำหรับหน้าเว็บแบบ Static เช่นหน้า Landing Page นี้ แต่ถ้าจะ Login และเชื่อม API จริง ต้องมี Backend เพิ่ม</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="start" class="section">
+      <div class="container">
+        <div class="cta">
+          <h2>เริ่มสร้างระบบ PowerAds วันนี้</h2>
+          <p>
+            ทดลองหน้าเว็บ Landing Page ก่อน แล้วค่อยต่อยอดเป็นระบบ Login,
+            Dashboard, Upload และเชื่อม API ภายหลัง
+          </p>
+          <a class="btn btn-primary" href="#">Start Free Trial →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      © 2026 PowerAds. AI Marketing Automation Platform.
+    </div>
+  </footer>
 </body>
 </html>
