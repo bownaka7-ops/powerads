@@ -3,170 +3,430 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PowerAds - Login & Ads Dashboard</title>
+  <title>PowerAds - AI Ads & Creative Platform</title>
+
   <style>
-    :root{
-      --bg:#f7f2e8;--paper:#fffdf7;--line:#e5d8bd;--text:#2b2418;--muted:#7a6e58;
-      --gold:#d8a334;--gold2:#efc965;--green:#6c8b42;--red:#c85a4e;--blue:#4b78d1;
-      --shadow:0 18px 50px rgba(84,64,28,.11);--radius:24px;--side:252px
+    :root {
+      --bg: #f7f2e8;
+      --paper: #fffdf7;
+      --line: #e5d8bd;
+      --text: #2b2418;
+      --muted: #7a6e58;
+      --gold: #d8a334;
+      --gold2: #efc965;
+      --green: #6c8b42;
+      --shadow: 0 18px 50px rgba(84, 64, 28, 0.11);
+      --radius: 24px;
+      --side: 258px;
     }
-    *{box-sizing:border-box;margin:0;padding:0}html,body{min-height:100%;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:var(--bg)}
-    a{color:inherit;text-decoration:none}button,input,select,textarea{font:inherit}.hide{display:none!important}
-    body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.30;background-image:linear-gradient(30deg,rgba(216,163,52,.13) 12%,transparent 12.5%,transparent 87%,rgba(216,163,52,.13) 87.5%),linear-gradient(150deg,rgba(216,163,52,.13) 12%,transparent 12.5%,transparent 87%,rgba(216,163,52,.13) 87.5%);background-size:80px 140px;z-index:-1}
-    .btn{border:0;border-radius:999px;padding:12px 18px;cursor:pointer;font-weight:800;transition:.18s;display:inline-flex;align-items:center;justify-content:center;gap:8px}.btn:hover{transform:translateY(-1px)}
-    .btn-primary{background:linear-gradient(135deg,var(--gold),#e8ad25);color:#2b210d;box-shadow:0 14px 28px rgba(216,163,52,.26)}.btn-soft{background:#fffaf0;border:1px solid var(--line);color:#4a3a1c}.btn-danger{background:#fdecea;color:#9a4038;border:1px solid #efc7c2}.btn-full{width:100%}
-    .input,.select,.textarea{width:100%;border:1px solid var(--line);background:#fffdf8;border-radius:14px;outline:none;padding:14px 15px;color:var(--text)}.textarea{min-height:110px;resize:vertical}.input:focus,.select:focus,.textarea:focus{border-color:#d1a84d;box-shadow:0 0 0 4px rgba(216,163,52,.12)}label{display:block;font-weight:800;font-size:13px;margin:0 0 8px;color:#5e4d2d}.field{margin-bottom:15px}
-    .auth-wrap{min-height:100vh;display:grid;grid-template-columns:1.02fr .98fr}.auth-left{padding:44px;display:flex;flex-direction:column;justify-content:space-between;border-right:1px solid var(--line);background:rgba(255,253,247,.55)}
-    .brand{display:flex;align-items:center;gap:14px}.logo{width:54px;height:54px;border-radius:16px;background:linear-gradient(135deg,var(--gold),var(--gold2));display:grid;place-items:center;font-weight:900;color:#fff;box-shadow:0 12px 24px rgba(216,163,52,.25)}.brand h1{font-size:24px}.brand p{font-size:12px;color:var(--muted);margin-top:4px}
-    .hero-copy{max-width:650px}.eyebrow{letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-size:12px;font-weight:900;margin-bottom:10px}.hero-copy h2{font-size:clamp(36px,4vw,60px);line-height:1.03;letter-spacing:-1.5px;margin-bottom:18px}.hero-copy p{font-size:18px;line-height:1.7;color:var(--muted)}
-    .mini-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:28px}.mini{background:rgba(255,253,248,.75);border:1px solid var(--line);border-radius:18px;padding:17px;box-shadow:var(--shadow)}.mini h3{font-size:16px;margin-bottom:8px}.mini p{font-size:13px;line-height:1.55;color:var(--muted)}
-    .auth-right{display:grid;place-items:center;padding:34px}.auth-card{width:min(560px,100%);background:rgba(255,253,248,.9);border:1px solid var(--line);border-radius:30px;box-shadow:var(--shadow);padding:30px}.auth-card h2{font-size:30px;margin-bottom:7px}.sub{color:var(--muted);line-height:1.6;margin-bottom:22px}.auth-row{display:flex;justify-content:space-between;align-items:center;gap:12px;color:var(--muted);font-size:14px;margin:8px 0 18px}.consent{display:flex;gap:10px;align-items:flex-start;color:var(--muted);font-size:13px;line-height:1.5;margin:12px 0}.switch{margin-top:16px;text-align:center;color:var(--muted);font-size:14px}.switch a{font-weight:900;color:#6b5325}
-    .app{display:grid;grid-template-columns:var(--side) 1fr;min-height:100vh}.side{position:sticky;top:0;height:100vh;overflow:auto;background:#fbf8f1;border-right:1px solid var(--line);padding:22px 15px}.side-brand{display:flex;gap:12px;align-items:center;padding:8px 8px 18px;border-bottom:1px solid var(--line);margin-bottom:16px}.side-brand .logo{width:46px;height:46px}.menu-title{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#9c8f75;font-weight:900;margin:18px 10px 10px}.nav-item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 13px;border-radius:14px;margin:4px 0;color:#3c3222}.nav-item:hover,.nav-item.active{background:linear-gradient(90deg,rgba(216,163,52,.18),rgba(216,163,52,.06));box-shadow:inset 3px 0 0 var(--gold)}.nav-left{display:flex;gap:10px;align-items:center;font-weight:800}.pill{border-radius:999px;background:#ead9ac;color:#725414;padding:5px 9px;font-size:12px;font-weight:900}
-    .main{min-width:0}.top{height:78px;position:sticky;top:0;z-index:5;background:rgba(249,245,237,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:14px;padding:0 26px}.search{max-width:430px;flex:1;position:relative}.search input{padding-left:40px}.search span{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#9b8c70}.top-actions{display:flex;gap:10px;align-items:center}.chip{height:38px;border-radius:999px;border:1px solid var(--line);background:#fffdf8;display:inline-flex;align-items:center;gap:8px;padding:0 13px;font-weight:800;font-size:13px;color:#54472f}.dot{width:9px;height:9px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px rgba(108,139,66,.12)}
-    .content{padding:28px}.page{display:none}.page.active{display:block}.page-head{margin-bottom:20px}.page-head h1{font-size:40px;letter-spacing:-1px;margin-bottom:8px}.page-head p{color:var(--muted);line-height:1.7;max-width:900px}.grid{display:grid;gap:18px}.g4{grid-template-columns:repeat(4,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:repeat(2,1fr)}.card{background:rgba(255,253,248,.9);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px}.card-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:16px}.card h3{font-size:20px;margin-bottom:5px}.card p,.muted{color:var(--muted);line-height:1.6}.stat .label{color:var(--muted);font-size:13px}.stat .num{font-size:34px;font-weight:900;margin-top:7px}.stat .trend{color:var(--green);font-weight:900;margin-top:8px;font-size:13px}
-    .platform{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px;border:1px solid var(--line);border-radius:18px;background:#fffdf8;margin-bottom:12px}.platform-left{display:flex;align-items:center;gap:12px}.ico{width:46px;height:46px;border-radius:14px;color:white;display:grid;place-items:center;font-weight:900}.fb{background:#1877f2}.tt{background:#111}.yt{background:#f33}.sp{background:#ee4d2d}.gm{background:#db4437}.ok{background:#eef5e4;color:#57762b;border:1px solid #d9e7c0}.warn{background:#fff5de;color:#9a6c12;border:1px solid #f0dfad}.bad{background:#fdecea;color:#a63e36;border:1px solid #efc7c2}.status{border-radius:999px;padding:8px 10px;font-size:12px;font-weight:900}.chart{height:280px;border-radius:20px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(216,163,52,.12),transparent),repeating-linear-gradient(to right,rgba(185,134,32,.07) 0 1px,transparent 1px 80px),repeating-linear-gradient(to bottom,rgba(185,134,32,.07) 0 1px,transparent 1px 54px),#fffdf8;overflow:hidden}.chart svg{width:100%;height:100%}.table{overflow:auto;border:1px solid var(--line);border-radius:18px;background:#fffdf8}table{width:100%;border-collapse:collapse;min-width:850px}th{background:#faf4e8;color:#8b7a5d;text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.08em;padding:14px}td{border-top:1px solid #eee4d1;padding:14px;font-size:14px}.progress{height:10px;background:#efe7d8;border-radius:999px;overflow:hidden}.progress span{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:inherit}.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0 16px}.toast{position:fixed;right:18px;bottom:18px;background:#2b2418;color:#fff;border-radius:14px;padding:13px 16px;box-shadow:var(--shadow);z-index:50}.footer{text-align:center;color:var(--muted);font-size:13px;padding:28px}
-    @media(max-width:1100px){.g4{grid-template-columns:repeat(2,1fr)}.g3,.g2{grid-template-columns:1fr}.auth-wrap{grid-template-columns:1fr}.auth-left{border-right:0;border-bottom:1px solid var(--line)}.app{grid-template-columns:1fr}.side{position:relative;height:auto}.top{height:auto;padding:14px;flex-wrap:wrap}.search{max-width:none;width:100%;flex-basis:100%}.form-grid{grid-template-columns:1fr}}
-    @media(max-width:650px){.content{padding:16px}.page-head h1{font-size:30px}.g4,.mini-grid{grid-template-columns:1fr}.top-actions{flex-wrap:wrap}.auth-left,.auth-right{padding:20px}.auth-card{padding:22px}}
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      min-height: 100%;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font: inherit; }
+    .hide { display: none !important; }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.24;
+      background-image:
+        linear-gradient(30deg, rgba(216, 163, 52, 0.13) 12%, transparent 12.5%, transparent 87%, rgba(216, 163, 52, 0.13) 87.5%),
+        linear-gradient(150deg, rgba(216, 163, 52, 0.13) 12%, transparent 12.5%, transparent 87%, rgba(216, 163, 52, 0.13) 87.5%);
+      background-size: 80px 140px;
+      z-index: -1;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 999px;
+      padding: 12px 18px;
+      cursor: pointer;
+      font-weight: 900;
+      transition: 0.18s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold), #e8ad25);
+      color: #2b210d;
+      box-shadow: 0 14px 28px rgba(216, 163, 52, 0.26);
+    }
+
+    .btn-soft {
+      background: #fffaf0;
+      border: 1px solid var(--line);
+      color: #4a3a1c;
+    }
+
+    .btn-full { width: 100%; }
+
+    .input, .select, .textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: #fffdf8;
+      border-radius: 14px;
+      outline: none;
+      padding: 14px 15px;
+      color: var(--text);
+    }
+
+    .textarea { min-height: 108px; resize: vertical; }
+
+    .input:focus, .select:focus, .textarea:focus {
+      border-color: #d1a84d;
+      box-shadow: 0 0 0 4px rgba(216, 163, 52, 0.12);
+    }
+
+    label {
+      display: block;
+      font-weight: 900;
+      font-size: 13px;
+      margin: 0 0 8px;
+      color: #5e4d2d;
+    }
+
+    .field { margin-bottom: 15px; }
+    .muted { color: var(--muted); line-height: 1.6; }
+
+    .eyebrow {
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    .logo {
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      color: #fff;
+      box-shadow: 0 12px 24px rgba(216, 163, 52, 0.25);
+    }
+
+    .brand { display: flex; align-items: center; gap: 14px; }
+    .brand h1 { font-size: 24px; }
+    .brand p { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+    .card {
+      background: rgba(255, 253, 248, 0.94);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px;
+    }
+
+    .card h3 { font-size: 21px; margin-bottom: 8px; }
+
+    .chip {
+      height: 38px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fffdf8;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 13px;
+      font-weight: 900;
+      font-size: 13px;
+      color: #54472f;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 4px rgba(108, 139, 66, 0.12);
+    }
+
+    .landing { min-height: 100vh; }
+
+    .landing-nav {
+      height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .navlinks { display: flex; align-items: center; gap: 24px; color: #6f6046; font-weight: 900; }
+    .nav-actions { display: flex; gap: 10px; align-items: center; }
+
+    .hero {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 72px 0 38px;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 44px;
+      align-items: center;
+    }
+
+    .hero h2 {
+      font-size: clamp(42px, 5vw, 72px);
+      line-height: 1;
+      letter-spacing: -2px;
+      margin-bottom: 18px;
+    }
+
+    .hero p { font-size: 18px; color: var(--muted); line-height: 1.7; max-width: 680px; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 26px; }
+
+    .mock-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+    .window-dots span { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #d9caa8; margin-right: 6px; }
+
+    .hero-kpi { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .mini-stat { padding: 16px; border-radius: 18px; border: 1px solid var(--line); background: #fffaf0; }
+    .mini-stat b { font-size: 28px; }
+
+    .platform-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 14px; }
+    .plat { padding: 14px; border-radius: 16px; text-align: center; background: #fffdf8; border: 1px solid var(--line); font-weight: 900; }
+
+    .landing-section { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 58px 0; }
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .price { font-size: 34px; font-weight: 900; margin: 12px 0; }
+    .footer { text-align: center; color: var(--muted); font-size: 13px; padding: 28px; }
+
+    .auth-wrap { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; }
+    .auth-left { padding: 44px; display: flex; flex-direction: column; justify-content: space-between; border-right: 1px solid var(--line); background: rgba(255, 253, 247, 0.62); }
+    .auth-right { display: grid; place-items: center; padding: 34px; }
+
+    .auth-card {
+      width: min(600px, 100%);
+      background: rgba(255, 253, 248, 0.94);
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+      padding: 30px;
+    }
+
+    .auth-card h2 { font-size: 30px; margin-bottom: 8px; }
+    .auth-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; color: var(--muted); font-size: 14px; margin: 8px 0 18px; }
+    .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 16px; }
+    .consent { display: flex; gap: 10px; align-items: flex-start; color: var(--muted); font-size: 13px; line-height: 1.5; margin: 12px 0; }
+    .switch { text-align: center; margin-top: 16px; color: var(--muted); }
+    .switch a { font-weight: 900; color: #6b5325; }
+
+    .app { display: grid; grid-template-columns: var(--side) 1fr; min-height: 100vh; }
+    .side { position: sticky; top: 0; height: 100vh; overflow: auto; background: #fbf8f1; border-right: 1px solid var(--line); padding: 22px 15px; }
+    .side-brand { display: flex; gap: 12px; align-items: center; padding: 8px 8px 18px; border-bottom: 1px solid var(--line); margin-bottom: 16px; }
+    .side-brand .logo { width: 46px; height: 46px; }
+    .menu-title { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: #9c8f75; font-weight: 900; margin: 18px 10px 10px; }
+
+    .nav-item { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 13px; border-radius: 14px; margin: 4px 0; color: #3c3222; }
+    .nav-item:hover, .nav-item.active { background: linear-gradient(90deg, rgba(216, 163, 52, 0.18), rgba(216, 163, 52, 0.06)); box-shadow: inset 3px 0 0 var(--gold); }
+    .nav-left { display: flex; gap: 10px; align-items: center; font-weight: 900; }
+    .pill { border-radius: 999px; background: #ead9ac; color: #725414; padding: 5px 9px; font-size: 12px; font-weight: 900; }
+
+    .main { min-width: 0; }
+    .top { position: sticky; top: 0; z-index: 5; height: 78px; background: rgba(249, 245, 237, 0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 0 26px; }
+    .search { max-width: 430px; flex: 1; position: relative; }
+    .search input { padding-left: 40px; }
+    .search span { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #9b8c70; }
+    .top-actions { display: flex; gap: 10px; align-items: center; }
+    .content { padding: 28px; }
+    .page { display: none; }
+    .page.active { display: block; }
+    .page-head { margin-bottom: 20px; }
+    .page-head h1 { font-size: 40px; letter-spacing: -1px; margin-bottom: 8px; }
+    .page-head p { color: var(--muted); line-height: 1.7; max-width: 920px; }
+
+    .grid { display: grid; gap: 18px; }
+    .g4 { grid-template-columns: repeat(4, 1fr); }
+    .g3 { grid-template-columns: repeat(3, 1fr); }
+    .g2 { grid-template-columns: repeat(2, 1fr); }
+    .stat .label { color: var(--muted); font-size: 13px; }
+    .stat .num { font-size: 34px; font-weight: 900; margin-top: 7px; }
+    .stat .trend { color: var(--green); font-weight: 900; margin-top: 8px; font-size: 13px; }
+
+    .platform { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 15px; border: 1px solid var(--line); border-radius: 18px; background: #fffdf8; margin-bottom: 12px; }
+    .platform-left { display: flex; align-items: center; gap: 12px; }
+    .ico { width: 46px; height: 46px; border-radius: 14px; color: white; display: grid; place-items: center; font-weight: 900; }
+    .fb { background: #1877f2; }
+    .tt { background: #111; }
+    .yt { background: #f33; }
+    .sp { background: #ee4d2d; }
+    .gm { background: #db4437; }
+    .ai { background: #7c4dff; }
+
+    .ok { background: #eef5e4; color: #57762b; border: 1px solid #d9e7c0; }
+    .warn { background: #fff5de; color: #9a6c12; border: 1px solid #f0dfad; }
+    .status { border-radius: 999px; padding: 8px 10px; font-size: 12px; font-weight: 900; }
+
+    .chart { height: 280px; border-radius: 20px; border: 1px solid var(--line); background: linear-gradient(180deg, rgba(216, 163, 52, 0.12), transparent), #fffdf8; overflow: hidden; }
+    .chart svg { width: 100%; height: 100%; }
+
+    .table { overflow: auto; border: 1px solid var(--line); border-radius: 18px; background: #fffdf8; }
+    table { width: 100%; border-collapse: collapse; min-width: 850px; }
+    th { background: #faf4e8; color: #8b7a5d; text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; padding: 14px; }
+    td { border-top: 1px solid #eee4d1; padding: 14px; font-size: 14px; }
+
+    .dark-panel { background: #17151d; color: #f6f0ff; border-color: #2d2938; }
+    .dark-panel .input, .dark-panel .select, .dark-panel .textarea { background: #23212a; border-color: #393443; color: #fff; }
+    .dark-panel label { color: #bdb4d5; }
+    .dark-panel .muted { color: #aaa0bd; }
+
+    .preview-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .preview-card { height: 210px; border-radius: 18px; border: 1px solid #393443; background: linear-gradient(135deg, #2b2638, #111); display: grid; place-items: center; text-align: center; padding: 16px; color: #fff; }
+    .credit-card { background: linear-gradient(135deg, #fff6dc, #fffdf8); border: 1px solid var(--line); border-radius: 22px; padding: 20px; }
+    .credit-card b { font-size: 30px; }
+
+    .page-form { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .fb-preview { border: 1px solid var(--line); border-radius: 22px; background: #fffdf8; overflow: hidden; box-shadow: var(--shadow); }
+    .cover { height: 150px; background: linear-gradient(135deg, #1877f2, #9fc5ff); display: grid; place-items: center; color: #fff; font-weight: 900; }
+    .avatar { width: 84px; height: 84px; border-radius: 24px; background: #fff; border: 4px solid #fff; margin: -42px 0 0 22px; display: grid; place-items: center; font-weight: 900; color: #1877f2; box-shadow: var(--shadow); }
+    .preview-body { padding: 12px 22px 22px; }
+
+    .toast { position: fixed; right: 18px; bottom: 18px; background: #2b2418; color: #fff; border-radius: 14px; padding: 13px 16px; box-shadow: var(--shadow); z-index: 50; }
+
+    @media (max-width: 1100px) {
+      .hero, .auth-wrap, .app, .g2, .g3, .page-form { grid-template-columns: 1fr; }
+      .g4 { grid-template-columns: repeat(2, 1fr); }
+      .side { position: relative; height: auto; }
+      .top { height: auto; padding: 14px; flex-wrap: wrap; }
+      .search { max-width: none; width: 100%; flex-basis: 100%; }
+      .form-grid { grid-template-columns: 1fr; }
+      .navlinks { display: none; }
+    }
+
+    @media (max-width: 650px) {
+      .content, .auth-left, .auth-right { padding: 18px; }
+      .g4, .cards, .platform-strip, .preview-grid { grid-template-columns: 1fr; }
+      .page-head h1 { font-size: 30px; }
+      .top-actions, .nav-actions { flex-wrap: wrap; }
+    }
   </style>
 </head>
+
 <body>
-  <section id="auth" class="auth-wrap">
-    <div class="auth-left">
-      <div class="brand"><div class="logo">PA</div><div><h1>PowerAds</h1><p>AI Marketing & Ads Control Center</p></div></div>
-      <div class="hero-copy">
-        <div class="eyebrow">CONNECTED MARKETING PLATFORM</div>
-        <h2>ระบบ Login สมัครสมาชิก และ Dashboard ยิง ADS ในธีมเดียวกัน</h2>
-        <p>รองรับการเก็บข้อมูลลูกค้าเพื่อสำรองข้อมูล ติดต่อกลับ และใช้ทำกลุ่มการตลาดในอนาคต โดยมี consent แยกชัดเจน พร้อมหน้าเชื่อมต่อ Facebook, TikTok, YouTube, Shopee และ Gmail</p>
-        <div class="mini-grid">
-          <div class="mini"><h3>สมัครสมาชิก</h3><p>เก็บชื่อ อีเมล เบอร์ ธุรกิจ จังหวัด งบโฆษณา และ consent</p></div>
-          <div class="mini"><h3>Login Gmail</h3><p>ปุ่ม Google Login พร้อม mock flow และตำแหน่งสำหรับต่อ Firebase จริง</p></div>
-          <div class="mini"><h3>ADS Dashboard</h3><p>แสดง Spend, CTR, CPC, ROAS, Conversion และ Campaign</p></div>
-          <div class="mini"><h3>รองรับ Scale</h3><p>หน้า Leads แยกข้อมูลลูกค้า และ export CSV สำหรับระบบ backend ในอนาคต</p></div>
-        </div>
+  <section id="landing" class="landing">
+    <nav class="landing-nav">
+      <div class="brand"><div class="logo">PA</div><div><h1>PowerAds</h1><p>AI Ads & Creative Platform</p></div></div>
+      <div class="navlinks"><a href="#features">ฟีเจอร์</a><a href="#pricing">เครดิต AI</a><a href="#auth">เข้าสู่ระบบ</a></div>
+      <div class="nav-actions"><button class="btn btn-soft" data-open-login>Login</button><button class="btn btn-primary" data-open-register>สมัครใช้งาน</button></div>
+    </nav>
+
+    <section class="hero">
+      <div>
+        <div class="eyebrow">POWERADS CONTROL CENTER</div>
+        <h2>สร้างเพจ ยิงแอด และเจนภาพ/วิดีโอ AI จากระบบเดียว</h2>
+        <p>แพลตฟอร์มสำหรับลูกค้าที่ต้องการจัดการ Facebook Page, Campaign ADS, การเชื่อมต่อแพลตฟอร์ม และซื้อเครดิตเพื่อใช้ระบบ AI Generator ของเว็บเรา</p>
+        <div class="hero-actions"><button class="btn btn-primary" data-open-register>เริ่มสมัครใช้งาน</button><button class="btn btn-soft" data-open-login>เข้าสู่ระบบ</button></div>
       </div>
-      <div class="muted">© 2026 PowerAds Prototype</div>
-    </div>
+      <div class="card">
+        <div class="mock-top"><div class="window-dots"><span></span><span></span><span></span></div><span class="chip"><span class="dot"></span>AI & ADS Online</span></div>
+        <div class="hero-kpi"><div class="mini-stat"><span class="muted">AI Credits</span><br><b>1,250</b></div><div class="mini-stat"><span class="muted">ROAS</span><br><b>4.72x</b></div><div class="mini-stat"><span class="muted">Pages</span><br><b>18</b></div><div class="mini-stat"><span class="muted">Campaigns</span><br><b>42</b></div></div>
+        <div class="platform-strip"><div class="plat">Facebook</div><div class="plat">TikTok</div><div class="plat">YouTube</div><div class="plat">Shopee</div></div>
+      </div>
+    </section>
+
+    <section id="features" class="landing-section"><div class="cards"><div class="card"><h3>สร้าง Facebook Page</h3><p class="muted">กรอกชื่อเพจ หมวดหมู่ คำอธิบาย กลุ่มเป้าหมาย และเตรียมข้อมูลก่อนเชื่อม API จริง</p></div><div class="card"><h3>AI Image / Video Generator</h3><p class="muted">ลูกค้าซื้อเครดิตจากเว็บเรา แล้วใช้เครดิตเจนภาพนิ่งหรือวิดีโอผ่านระบบ AI ของเรา</p></div><div class="card"><h3>ADS & Platform Hub</h3><p class="muted">รวมสถานะ Campaign, API และข้อมูล Performance ไว้ใน Dashboard เดียว</p></div></div></section>
+    <section id="pricing" class="landing-section"><div class="cards"><div class="card"><h3>Starter Credit</h3><div class="price">฿299</div><p class="muted">เหมาะสำหรับทดลองเจนภาพนิ่ง</p></div><div class="card"><h3>Creator Credit</h3><div class="price">฿999</div><p class="muted">เหมาะสำหรับร้านค้าและครีเอเตอร์</p></div><div class="card"><h3>Agency Credit</h3><div class="price">฿4,990</div><p class="muted">เหมาะสำหรับทีมที่เจนงานจำนวนมาก</p></div></div></section>
+    <div class="footer">© 2026 PowerAds Landing Page</div>
+  </section>
+
+  <section id="auth" class="auth-wrap hide">
+    <div class="auth-left"><div class="brand"><div class="logo">PA</div><div><h1>PowerAds</h1><p>AI Marketing & Ads Control Center</p></div></div><div><div class="eyebrow">MEMBER ACCESS</div><h2 style="font-size: clamp(36px, 4vw, 58px); line-height: 1.04; margin-bottom: 16px;">สมัครสมาชิกเพื่อเข้าใช้งาน Dashboard</h2><p class="muted" style="font-size: 18px;">ข้อมูลผู้สมัครจะถูกเก็บเป็นข้อมูลสมาชิกของเว็บคุณเท่านั้น เพื่อใช้ติดต่อกลับ สำรองข้อมูล และทำกลุ่มการตลาดตาม consent</p></div><button class="btn btn-soft" data-back-home>← กลับหน้าแรก</button></div>
     <div class="auth-right">
-      <div id="loginCard" class="auth-card">
-        <h2>เข้าสู่ระบบ</h2><p class="sub">เข้าสู่ Dashboard เพื่อจัดการ ADS และแพลตฟอร์มที่เชื่อมต่อ</p>
-        <form id="loginForm">
-          <div class="field"><label>อีเมล</label><input id="loginEmail" class="input" type="email" placeholder="name@company.com" required></div>
-          <div class="field"><label>รหัสผ่าน</label><input id="loginPassword" class="input" type="password" placeholder="••••••••" required></div>
-          <div class="auth-row"><label style="margin:0"><input type="checkbox" checked> จดจำฉัน</label><a href="#">ลืมรหัสผ่าน?</a></div>
-          <button class="btn btn-primary btn-full" type="submit">เข้าสู่ระบบ</button>
-        </form>
-        <button id="googleLogin" class="btn btn-soft btn-full" style="margin-top:12px">เข้าสู่ระบบด้วย Gmail / Google</button>
-        <div class="switch">ยังไม่มีบัญชี? <a href="#register" data-show-register>สมัครสมาชิก</a></div>
-      </div>
-      <div id="registerCard" class="auth-card hide">
-        <h2>สมัครสมาชิก</h2><p class="sub">ข้อมูลนี้จะถูกเก็บไว้เพื่อสำรองข้อมูล ติดต่อกลับ และจัดกลุ่มลูกค้าในอนาคต</p>
-        <form id="registerForm">
-          <div class="form-grid">
-            <div class="field"><label>ชื่อ - นามสกุล</label><input name="name" class="input" required></div>
-            <div class="field"><label>อีเมล</label><input name="email" class="input" type="email" required></div>
-            <div class="field"><label>เบอร์โทร</label><input name="phone" class="input" required></div>
-            <div class="field"><label>รหัสผ่าน</label><input name="password" class="input" type="password" required></div>
-            <div class="field"><label>ชื่อธุรกิจ / ร้านค้า</label><input name="businessName" class="input"></div>
-            <div class="field"><label>ประเภทธุรกิจ</label><select name="businessType" class="select"><option>ร้านค้าออนไลน์</option><option>เอเจนซี่</option><option>ครีเอเตอร์</option><option>ธุรกิจท้องถิ่น</option></select></div>
-            <div class="field"><label>จังหวัด</label><input name="province" class="input" placeholder="เช่น กรุงเทพ / เชียงใหม่"></div>
-            <div class="field"><label>งบโฆษณาต่อเดือน</label><select name="budget" class="select"><option>ต่ำกว่า 10,000</option><option>10,000 - 50,000</option><option>50,000 - 200,000</option><option>มากกว่า 200,000</option></select></div>
-            <div class="field"><label>แพลตฟอร์มหลัก</label><select name="mainPlatform" class="select"><option>Facebook</option><option>TikTok</option><option>YouTube</option><option>Shopee</option></select></div>
-          </div>
-          <label class="consent"><input name="marketingConsent" type="checkbox" required> ฉันยินยอมให้ PowerAds ติดต่อกลับ ส่งข่าวสาร โปรโมชั่น และข้อเสนอทางการตลาด</label>
-          <label class="consent"><input name="adsConsent" type="checkbox"> ฉันยินยอมให้นำข้อมูลที่ให้ไว้ไปใช้จัดกลุ่มเป้าหมายโฆษณาตามนโยบายความเป็นส่วนตัว</label>
-          <button class="btn btn-primary btn-full" type="submit">สมัครสมาชิกและเข้าสู่ระบบ</button>
-        </form>
-        <button id="googleRegister" class="btn btn-soft btn-full" style="margin-top:12px">สมัครด้วย Gmail / Google</button>
-        <div class="switch">มีบัญชีแล้ว? <a href="#login" data-show-login>เข้าสู่ระบบ</a></div>
-      </div>
+      <div id="loginCard" class="auth-card"><h2>เข้าสู่ระบบ</h2><p class="muted" style="margin-bottom: 20px;">เข้าสู่ Dashboard เพื่อจัดการ ADS, Facebook Page และ AI Generator</p><form id="loginForm"><div class="field"><label>อีเมล</label><input id="loginEmail" class="input" type="email" placeholder="name@company.com" required></div><div class="field"><label>รหัสผ่าน</label><input id="loginPassword" class="input" type="password" placeholder="••••••••" required></div><div class="auth-row"><label style="margin:0"><input type="checkbox" checked> จดจำฉัน</label><a href="#">ลืมรหัสผ่าน?</a></div><button class="btn btn-primary btn-full" type="submit">เข้าสู่ระบบ</button></form><button id="googleLogin" class="btn btn-soft btn-full" style="margin-top:12px">เข้าสู่ระบบด้วย Gmail / Google</button><div class="switch">ยังไม่มีบัญชี? <a href="#register" data-show-register>สมัครสมาชิก</a></div></div>
+      <div id="registerCard" class="auth-card hide"><h2>สมัครสมาชิก</h2><p class="muted" style="margin-bottom: 20px;">ข้อมูลนี้จะถูกเก็บไว้เป็นสมาชิกของเว็บคุณ สำหรับติดต่อและบริการในอนาคต</p><form id="registerForm"><div class="form-grid"><div class="field"><label>ชื่อ - นามสกุล</label><input name="name" class="input" required></div><div class="field"><label>อีเมล</label><input name="email" class="input" type="email" required></div><div class="field"><label>เบอร์โทร</label><input name="phone" class="input" required></div><div class="field"><label>รหัสผ่าน</label><input name="password" class="input" type="password" required></div><div class="field"><label>ชื่อธุรกิจ / ร้านค้า</label><input name="businessName" class="input"></div><div class="field"><label>ประเภทธุรกิจ</label><select name="businessType" class="select"><option>ร้านค้าออนไลน์</option><option>เอเจนซี่</option><option>ครีเอเตอร์</option><option>ธุรกิจท้องถิ่น</option></select></div><div class="field"><label>จังหวัด</label><input name="province" class="input" placeholder="เช่น กรุงเทพ / เชียงใหม่"></div><div class="field"><label>งบโฆษณาต่อเดือน</label><select name="budget" class="select"><option>ต่ำกว่า 10,000</option><option>10,000 - 50,000</option><option>50,000 - 200,000</option><option>มากกว่า 200,000</option></select></div><div class="field"><label>แพลตฟอร์มหลัก</label><select name="mainPlatform" class="select"><option>Facebook</option><option>TikTok</option><option>YouTube</option><option>Shopee</option></select></div></div><label class="consent"><input name="marketingConsent" type="checkbox" required> ฉันยินยอมให้ PowerAds ติดต่อกลับ ส่งข่าวสาร โปรโมชั่น และข้อเสนอทางการตลาด</label><label class="consent"><input name="adsConsent" type="checkbox"> ฉันยินยอมให้นำข้อมูลที่ให้ไว้ไปใช้จัดกลุ่มเป้าหมายโฆษณาตามนโยบายความเป็นส่วนตัว</label><button class="btn btn-primary btn-full" type="submit">สมัครสมาชิกและเข้าสู่ระบบ</button></form><button id="googleRegister" class="btn btn-soft btn-full" style="margin-top:12px">สมัครด้วย Gmail / Google</button><div class="switch">มีบัญชีแล้ว? <a href="#login" data-show-login>เข้าสู่ระบบ</a></div></div>
     </div>
   </section>
 
   <section id="app" class="app hide">
     <aside class="side">
-      <div class="side-brand"><div class="logo">PA</div><div><h2>PowerAds</h2><p class="muted">AI Ads Suite v1.0</p></div></div>
-      <div class="menu-title">เมนูหลัก</div>
-      <a class="nav-item active" href="#dashboard" data-route="dashboard"><span class="nav-left">🏠 ภาพรวม</span></a>
-      <a class="nav-item" href="#ads" data-route="ads"><span class="nav-left">📣 จัดการ ADS</span><span class="pill">ADS</span></a>
-      <a class="nav-item" href="#platforms" data-route="platforms"><span class="nav-left">🔗 เชื่อมแพลตฟอร์ม</span><span class="pill">API</span></a>
-      <a class="nav-item" href="#leads" data-route="leads"><span class="nav-left">👥 ข้อมูลลูกค้า</span><span class="pill" id="leadCount">0</span></a>
-      <a class="nav-item" href="#analytics" data-route="analytics"><span class="nav-left">📊 วิเคราะห์</span></a>
-      <a class="nav-item" href="#settings" data-route="settings"><span class="nav-left">⚙️ ตั้งค่า</span></a>
-      <div class="menu-title">ระบบ</div>
-      <a class="nav-item" href="#privacy" data-route="privacy"><span class="nav-left">🛡️ Consent & Privacy</span></a>
-      <a class="nav-item" href="#" id="logoutBtn"><span class="nav-left">🚪 ออกจากระบบ</span></a>
+      <div class="side-brand"><div class="logo">PA</div><div><h2>PowerAds</h2><p class="muted">AI Ads Suite v2.0</p></div></div>
+      <div class="menu-title">เมนูหลัก</div><a class="nav-item active" href="#dashboard" data-route="dashboard"><span class="nav-left">🏠 ภาพรวม</span></a><a class="nav-item" href="#ads" data-route="ads"><span class="nav-left">📣 จัดการ ADS</span><span class="pill">ADS</span></a><a class="nav-item" href="#facebook-page" data-route="facebook-page"><span class="nav-left">📘 สร้างเพจ Facebook</span><span class="pill">NEW</span></a><a class="nav-item" href="#ai-studio" data-route="ai-studio"><span class="nav-left">✨ AI Studio</span><span class="pill" id="creditBadge">0</span></a><a class="nav-item" href="#platforms" data-route="platforms"><span class="nav-left">🔗 เชื่อมแพลตฟอร์ม</span><span class="pill">API</span></a><a class="nav-item" href="#members" data-route="members"><span class="nav-left">👥 สมาชิกเว็บ</span><span class="pill" id="memberCount">0</span></a><a class="nav-item" href="#analytics" data-route="analytics"><span class="nav-left">📊 วิเคราะห์</span></a><a class="nav-item" href="#settings" data-route="settings"><span class="nav-left">⚙️ ตั้งค่า</span></a><div class="menu-title">ระบบ</div><a class="nav-item" href="#privacy" data-route="privacy"><span class="nav-left">🛡️ Consent & Privacy</span></a><a class="nav-item" href="#" id="logoutBtn"><span class="nav-left">🚪 ออกจากระบบ</span></a>
     </aside>
-    <main class="main">
-      <div class="top">
-        <div class="search"><span>🔎</span><input class="input" placeholder="ค้นหา campaign, platform, lead..."></div>
-        <div class="top-actions"><span class="chip"><span class="dot"></span>API Online</span><span class="chip" id="helloUser">Guest</span><a class="btn btn-primary" href="#ads">+ สร้างแคมเปญ</a></div>
-      </div>
-      <div class="content">
-        <section class="page active" id="page-dashboard">
-          <div class="page-head"><div class="eyebrow">OVERVIEW</div><h1>ภาพรวมการยิงโฆษณา</h1><p>สถานะบัญชี แพลตฟอร์มที่เชื่อมต่อ และผลลัพธ์ ADS แบบรวมศูนย์</p></div>
-          <div class="grid g4">
-            <div class="card stat"><div class="label">งบที่ใช้วันนี้</div><div class="num">฿18,420</div><div class="trend">▲ +12.4%</div></div>
-            <div class="card stat"><div class="label">ยอดคลิก</div><div class="num">8,914</div><div class="trend">CTR 3.8%</div></div>
-            <div class="card stat"><div class="label">ROAS</div><div class="num">4.72x</div><div class="trend">ดีขึ้น</div></div>
-            <div class="card stat"><div class="label">Conversion</div><div class="num">412</div><div class="trend">CPA ฿146</div></div>
-          </div>
-          <div style="height:18px"></div>
-          <div class="grid g2">
-            <div class="card"><div class="card-head"><div><h3>Performance Graph</h3><p>แนวโน้ม Spend / Click / Result</p></div><span class="pill">7 days</span></div><div class="chart"><svg viewBox="0 0 800 300" preserveAspectRatio="none"><path d="M0,240 C70,210 120,220 180,185 C260,140 310,190 390,150 C470,110 540,145 610,100 C700,55 740,70 800,45" fill="none" stroke="#d8a334" stroke-width="6"/><path d="M0,260 C90,245 160,225 230,230 C330,240 380,175 470,185 C560,160 620,135 700,120 C750,105 780,100 800,90" fill="none" stroke="#6c8b42" stroke-width="4"/></svg></div></div>
-            <div class="card"><div class="card-head"><div><h3>API Status</h3><p>สถานะการเชื่อมต่อ</p></div></div><div id="apiStatus"></div></div>
-          </div>
-        </section>
-
-        <section class="page" id="page-platforms">
-          <div class="page-head"><div class="eyebrow">PLATFORM CONNECTIONS</div><h1>เชื่อมต่อแพลตฟอร์มและ API</h1><p>ปุ่มนี้เป็น demo connection สำหรับ Frontend ส่วน OAuth จริงต้องต่อ Firebase / Backend เพิ่ม</p></div>
-          <div class="grid g2">
-            <div class="card"><h3>Connected Platforms</h3><div id="platformList"></div></div>
-            <div class="card"><h3>OAuth / API Checklist</h3><p>1. สร้าง App ในแต่ละแพลตฟอร์ม<br>2. ตั้ง Redirect URL<br>3. เก็บ token ใน Backend เท่านั้น<br>4. ใช้ Refresh Token และ Consent Log</p></div>
-          </div>
-        </section>
-
-        <section class="page" id="page-ads">
-          <div class="page-head"><div class="eyebrow">ADS MANAGER</div><h1>จัดการ Campaign ADS</h1><p>ตัวอย่างหน้าสร้างและติดตามแคมเปญ</p></div>
-          <div class="grid g2">
-            <div class="card"><h3>สร้างแคมเปญใหม่</h3><div class="field"><label>ชื่อแคมเปญ</label><input class="input" placeholder="เช่น โปรโมทร้านค้า Q2"></div><div class="field"><label>แพลตฟอร์ม</label><select class="select"><option>Facebook</option><option>TikTok</option><option>YouTube</option><option>Shopee</option></select></div><div class="field"><label>งบประมาณ</label><input class="input" placeholder="10000"></div><button class="btn btn-primary btn-full" onclick="toast('บันทึกแคมเปญแบบ Demo แล้ว')">บันทึกแคมเปญ</button></div>
-            <div class="card"><h3>Campaign Performance</h3><div class="table"><table><thead><tr><th>Campaign</th><th>Platform</th><th>Spend</th><th>ROAS</th><th>Status</th></tr></thead><tbody><tr><td>สินค้าใหม่ Q2</td><td>Facebook</td><td>฿7,920</td><td>5.1x</td><td><span class="status ok">Active</span></td></tr><tr><td>Short Video Hook</td><td>TikTok</td><td>฿5,140</td><td>4.3x</td><td><span class="status ok">Active</span></td></tr><tr><td>Shopee Booster</td><td>Shopee</td><td>฿3,210</td><td>6.0x</td><td><span class="status warn">Learning</span></td></tr></tbody></table></div></div>
-          </div>
-        </section>
-
-        <section class="page" id="page-leads">
-          <div class="page-head"><div class="eyebrow">CUSTOMER DATA</div><h1>ข้อมูลลูกค้าและผู้สมัคร</h1><p>แสดงข้อมูลสมัครสมาชิกที่เก็บไว้ ใช้สำหรับติดต่อกลับและทำกลุ่มการตลาดตาม consent</p></div>
-          <div class="card"><div class="card-head"><div><h3>Leads / Members</h3><p>ข้อมูลเก็บใน localStorage สำหรับ demo</p></div><button id="exportLeads" class="btn btn-primary">Export CSV</button></div><div class="table"><table><thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Interest</th><th>Marketing Consent</th><th>Created</th></tr></thead><tbody id="leadRows"></tbody></table></div></div>
-        </section>
-
-        <section class="page" id="page-analytics"><div class="page-head"><div class="eyebrow">ANALYTICS</div><h1>วิเคราะห์ผลลัพธ์</h1><p>หน้าเตรียมไว้สำหรับรวมข้อมูลจาก Marketing API จริง</p></div><div class="grid g3"><div class="card stat"><div class="label">CPC เฉลี่ย</div><div class="num">฿4.10</div></div><div class="card stat"><div class="label">CPM</div><div class="num">฿89</div></div><div class="card stat"><div class="label">CTR</div><div class="num">3.8%</div></div></div></section>
-        <section class="page" id="page-settings"><div class="page-head"><div class="eyebrow">SETTINGS</div><h1>ตั้งค่าระบบ</h1><p>เตรียมไว้สำหรับ Firebase Config, API Keys และ Webhook</p></div><div class="card"><h3>Firebase / Backend Config</h3><textarea class="textarea" placeholder="ใส่ firebaseConfig หรือ endpoint backend ที่นี่"></textarea><button class="btn btn-primary" style="margin-top:12px" onclick="toast('บันทึก config แบบ Demo แล้ว')">บันทึก</button></div></section>
-        <section class="page" id="page-privacy"><div class="page-head"><div class="eyebrow">CONSENT & PRIVACY</div><h1>Consent และ Privacy</h1><p>ควรมี Privacy Policy, Terms, Consent Log และปุ่มยกเลิกการรับข่าวสารเมื่อใช้งานจริง</p></div><div class="card"><h3>หลักการใช้งานข้อมูล</h3><p>ข้อมูลอีเมล เบอร์โทร และข้อมูลธุรกิจควรถูกใช้เฉพาะผู้ที่ยินยอมเท่านั้น ก่อนส่งไป Custom Audience ควร hash ข้อมูลและส่งผ่าน Backend ที่ปลอดภัย</p></div></section>
-        <div class="footer">© 2026 PowerAds Connected Pages Prototype</div>
-      </div>
-    </main>
+    <main class="main"><div class="top"><div class="search"><span>🔎</span><input class="input" placeholder="ค้นหา campaign, platform, member..."></div><div class="top-actions"><span class="chip"><span class="dot"></span>API Online</span><span class="chip" id="helloUser">Guest</span><a class="btn btn-primary" href="#ai-studio">+ ซื้อเครดิต / เจน AI</a></div></div><div class="content">
+      <section class="page active" id="page-dashboard"><div class="page-head"><div class="eyebrow">OVERVIEW</div><h1>ภาพรวมระบบ PowerAds</h1><p>จุดเริ่มต้นหลัง Login รวม ADS, Facebook Page, AI Credits และแพลตฟอร์มที่เชื่อมต่อ</p></div><div class="grid g4"><div class="card stat"><div class="label">งบ ADS วันนี้</div><div class="num">฿18,420</div><div class="trend">▲ +12.4%</div></div><div class="card stat"><div class="label">AI Credits คงเหลือ</div><div class="num" id="dashCredit">0</div><div class="trend">ใช้สำหรับเจนภาพ/วิดีโอ</div></div><div class="card stat"><div class="label">Facebook Pages</div><div class="num" id="pageCount">0</div><div class="trend">สร้างในระบบ</div></div><div class="card stat"><div class="label">สมาชิกเว็บ</div><div class="num" id="dashMembers">0</div><div class="trend">ข้อมูลผู้สมัครจริง</div></div></div><div style="height:18px"></div><div class="grid g2"><div class="card"><h3>Performance Graph</h3><p class="muted">แนวโน้ม Spend / Click / Result</p><div class="chart" style="margin-top:14px"><svg viewBox="0 0 800 300" preserveAspectRatio="none"><path d="M0,240 C70,210 120,220 180,185 C260,140 310,190 390,150 C470,110 540,145 610,100 C700,55 740,70 800,45" fill="none" stroke="#d8a334" stroke-width="6"/><path d="M0,260 C90,245 160,225 230,230 C330,240 380,175 470,185 C560,160 620,135 700,120 C750,105 780,100 800,90" fill="none" stroke="#6c8b42" stroke-width="4"/></svg></div></div><div class="card"><h3>API Status</h3><p class="muted">สถานะการเชื่อมต่อ</p><div id="apiStatus" style="margin-top:14px"></div></div></div></section>
+      <section class="page" id="page-facebook-page"><div class="page-head"><div class="eyebrow">FACEBOOK PAGE BUILDER</div><h1>สร้างเพจ Facebook</h1><p>แบบฟอร์มเตรียมข้อมูลเพจก่อนส่งเข้าระบบ API จริง หรือให้ทีมงานนำไปสร้างต่อ</p></div><div class="page-form"><div class="card"><h3>ข้อมูลเพจ</h3><div class="field"><label>ชื่อเพจ</label><input id="fbPageName" class="input" placeholder="เช่น PowerAds Shop"></div><div class="field"><label>หมวดหมู่</label><select id="fbPageCategory" class="select"><option>ร้านค้าออนไลน์</option><option>สุขภาพและความงาม</option><option>อาหารและเครื่องดื่ม</option><option>ครีเอเตอร์</option><option>บริการท้องถิ่น</option></select></div><div class="field"><label>คำอธิบายเพจ</label><textarea id="fbPageDesc" class="textarea" placeholder="อธิบายธุรกิจ สินค้า และบริการ"></textarea></div><div class="field"><label>กลุ่มเป้าหมายหลัก</label><input id="fbPageAudience" class="input" placeholder="เช่น ผู้หญิง 20-35 สนใจสกินแคร์"></div><button class="btn btn-primary btn-full" id="saveFbPage">บันทึกเพจ</button></div><div class="fb-preview"><div class="cover">Facebook Cover Preview</div><div class="avatar">FB</div><div class="preview-body"><h2 id="previewPageName">ชื่อเพจของคุณ</h2><p class="muted" id="previewPageCategory">หมวดหมู่เพจ</p><p id="previewPageDesc" class="muted">คำอธิบายเพจจะแสดงตรงนี้</p><button class="btn btn-primary">ติดตามเพจ</button></div></div></div><div style="height:18px"></div><div class="card"><h3>รายการเพจที่สร้าง</h3><p class="muted">ข้อมูลเก็บใน localStorage สำหรับ demo</p><div id="fbPageList" style="margin-top:14px"></div></div></section>
+      <section class="page" id="page-ai-studio"><div class="page-head"><div class="eyebrow">AI CREATIVE STUDIO</div><h1>สร้างภาพนิ่งหรือวิดีโอด้วย AI</h1><p>ลูกค้าซื้อเครดิตจากเว็บเรา แล้วใช้เครดิตเพื่อเจนภาพ/วิดีโอผ่าน AI ของเว็บเรา</p></div><div class="grid g3"><div class="credit-card"><span class="muted">เครดิตคงเหลือ</span><br><b id="creditBalance">0</b><p class="muted">เครดิต</p></div><div class="credit-card"><span class="muted">ราคาต้นทุนจำลอง</span><br><b>฿0.35</b><p class="muted">ต่อ 1 เครดิต จากผู้ให้บริการ</p></div><div class="credit-card"><span class="muted">ราคาขายจำลอง</span><br><b>฿1.00</b><p class="muted">ต่อ 1 เครดิต ให้ลูกค้า</p></div></div><div style="height:18px"></div><div class="grid g2"><div class="card"><h3>ซื้อเครดิต</h3><div class="grid g3"><button class="btn btn-soft" onclick="buyCredits(300)">+300 เครดิต<br>฿299</button><button class="btn btn-soft" onclick="buyCredits(1200)">+1,200 เครดิต<br>฿999</button><button class="btn btn-soft" onclick="buyCredits(6500)">+6,500 เครดิต<br>฿4,990</button></div><p class="muted" style="margin-top:12px">ระบบจริงต้องต่อ payment gateway และบันทึก transaction ลงฐานข้อมูล</p></div><div class="card dark-panel"><h3>AI Generator</h3><div class="field"><label>ประเภทงาน</label><select id="aiType" class="select"><option value="image">ภาพนิ่ง</option><option value="video">วิดีโอ</option></select></div><div class="field"><label>สไตล์</label><select id="aiStyle" class="select"><option>โฆษณาสินค้า</option><option>UGC รีวิว</option><option>Cinematic</option><option>Big Head</option><option>Live Sale</option></select></div><div class="field"><label>Prompt</label><textarea id="aiPrompt" class="textarea" placeholder="เช่น สร้างภาพโฆษณาสกินแคร์ โทนสดใส มีข้อความโปรโมชัน"></textarea></div><button class="btn btn-primary btn-full" id="generateAi">✨ สร้างด้วย AI</button></div></div><div style="height:18px"></div><div class="card dark-panel"><h3>ผลงานล่าสุด</h3><p class="muted">Preview จำลองหลังใช้เครดิต</p><div class="preview-grid" id="aiGallery" style="margin-top:14px"></div></div></section>
+      <section class="page" id="page-platforms"><div class="page-head"><div class="eyebrow">PLATFORM CONNECTIONS</div><h1>เชื่อมต่อแพลตฟอร์มและ API</h1><p>ปุ่มนี้เป็น demo connection สำหรับ Frontend ส่วน OAuth จริงต้องต่อ Firebase / Backend เพิ่ม</p></div><div class="grid g2"><div class="card"><h3>Connected Platforms</h3><div id="platformList" style="margin-top:14px"></div></div><div class="card"><h3>OAuth / API Checklist</h3><p class="muted">1. สร้าง App ในแต่ละแพลตฟอร์ม<br>2. ตั้ง Redirect URL<br>3. เก็บ token ใน Backend เท่านั้น<br>4. ใช้ Refresh Token และ Consent Log</p></div></div></section>
+      <section class="page" id="page-ads"><div class="page-head"><div class="eyebrow">ADS MANAGER</div><h1>จัดการ Campaign ADS</h1><p>ตัวอย่างหน้าสร้างและติดตามแคมเปญ</p></div><div class="grid g2"><div class="card"><h3>สร้างแคมเปญใหม่</h3><div class="field"><label>ชื่อแคมเปญ</label><input class="input" placeholder="เช่น โปรโมทร้านค้า Q2"></div><div class="field"><label>แพลตฟอร์ม</label><select class="select"><option>Facebook</option><option>TikTok</option><option>YouTube</option><option>Shopee</option></select></div><div class="field"><label>งบประมาณ</label><input class="input" placeholder="10000"></div><button class="btn btn-primary btn-full" onclick="toast('บันทึกแคมเปญแบบ Demo แล้ว')">บันทึกแคมเปญ</button></div><div class="card"><h3>Campaign Performance</h3><div class="table"><table><thead><tr><th>Campaign</th><th>Platform</th><th>Spend</th><th>ROAS</th><th>Status</th></tr></thead><tbody><tr><td>สินค้าใหม่ Q2</td><td>Facebook</td><td>฿7,920</td><td>5.1x</td><td><span class="status ok">Active</span></td></tr><tr><td>Short Video Hook</td><td>TikTok</td><td>฿5,140</td><td>4.3x</td><td><span class="status ok">Active</span></td></tr><tr><td>Shopee Booster</td><td>Shopee</td><td>฿3,210</td><td>6.0x</td><td><span class="status warn">Learning</span></td></tr></tbody></table></div></div></div></section>
+      <section class="page" id="page-members"><div class="page-head"><div class="eyebrow">MEMBERS DATA</div><h1>ข้อมูลสมาชิกเว็บ</h1><p>ส่วนนี้แสดงเฉพาะข้อมูลคนที่สมัครในเว็บของคุณ ไม่ใช่ข้อมูลลูกค้าจากแคมเปญโฆษณา</p></div><div class="card"><div style="display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:18px"><div><h3>Members</h3><p class="muted">ข้อมูลเก็บใน localStorage สำหรับ demo</p></div><button id="exportMembers" class="btn btn-primary">Export CSV</button></div><div class="table"><table><thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Business</th><th>Budget</th><th>Consent</th><th>Created</th></tr></thead><tbody id="memberRows"></tbody></table></div></div></section>
+      <section class="page" id="page-analytics"><div class="page-head"><div class="eyebrow">ANALYTICS</div><h1>วิเคราะห์ผลลัพธ์</h1><p>หน้าเตรียมไว้สำหรับรวมข้อมูลจาก Marketing API จริง</p></div><div class="grid g3"><div class="card stat"><div class="label">CPC เฉลี่ย</div><div class="num">฿4.10</div></div><div class="card stat"><div class="label">CPM</div><div class="num">฿89</div></div><div class="card stat"><div class="label">CTR</div><div class="num">3.8%</div></div></div></section>
+      <section class="page" id="page-settings"><div class="page-head"><div class="eyebrow">SETTINGS</div><h1>ตั้งค่าระบบ</h1><p>เตรียมไว้สำหรับ Firebase Config, API Keys, Payment Gateway และ Webhook</p></div><div class="grid g2"><div class="card"><h3>Firebase / Backend Config</h3><textarea class="textarea" placeholder="ใส่ firebaseConfig หรือ endpoint backend ที่นี่"></textarea><button class="btn btn-primary" style="margin-top:12px" onclick="toast('บันทึก config แบบ Demo แล้ว')">บันทึก</button></div><div class="card"><h3>AI Credit Resell Config</h3><p class="muted">กำหนดต้นทุนเครดิตจากผู้ให้บริการ, ราคาขาย, package และ margin ของเว็บเรา</p></div></div></section>
+      <section class="page" id="page-privacy"><div class="page-head"><div class="eyebrow">CONSENT & PRIVACY</div><h1>Consent และ Privacy</h1><p>ควรมี Privacy Policy, Terms, Consent Log และปุ่มยกเลิกการรับข่าวสารเมื่อใช้งานจริง</p></div><div class="card"><h3>หลักการใช้งานข้อมูล</h3><p class="muted">ข้อมูลอีเมล เบอร์โทร และข้อมูลธุรกิจควรถูกใช้เฉพาะผู้ที่ยินยอมเท่านั้น ก่อนส่งไป Custom Audience ควร hash ข้อมูลและส่งผ่าน Backend ที่ปลอดภัย</p></div></section>
+      <div class="footer">© 2026 PowerAds Connected Pages Prototype</div>
+    </div></main>
   </section>
 
   <script>
-    const K={users:'pa_users',session:'pa_session',leads:'pa_leads',platforms:'pa_platforms'};
-    const $=q=>document.querySelector(q); const $$=q=>document.querySelectorAll(q);
-    function read(k,d=[]){try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}}
-    function write(k,v){localStorage.setItem(k,JSON.stringify(v))}
-    function toast(msg){const t=document.createElement('div');t.className='toast';t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2600)}
-    function session(){return JSON.parse(localStorage.getItem(K.session)||'null')}
-    function showAuth(mode){$('#auth').classList.remove('hide');$('#app').classList.add('hide');$('#loginCard').classList.toggle('hide',mode==='register');$('#registerCard').classList.toggle('hide',mode!=='register')}
-    function showApp(){ $('#auth').classList.add('hide');$('#app').classList.remove('hide'); $('#helloUser').textContent=(session()?.name||'Guest'); renderAll(); route(); }
-    function googleDemo(){const u={uid:'google_'+Date.now(),name:'Google Demo User',email:'demo.gmail@gmail.com',phone:'-',provider:'google',mainPlatform:'Google',marketingConsent:true,createdAt:new Date().toISOString()}; const users=read(K.users); if(!users.find(x=>x.email===u.email))users.push(u); write(K.users,users); addLead(u); localStorage.setItem(K.session,JSON.stringify(u)); showApp(); location.hash='dashboard'}
-    function addLead(u){const leads=read(K.leads); if(!leads.find(x=>x.email===u.email))leads.push({name:u.name,email:u.email,phone:u.phone,interest:u.mainPlatform,consentMarketing:!!u.marketingConsent,createdAt:u.createdAt}); write(K.leads,leads)}
-    $('#loginForm').onsubmit=e=>{e.preventDefault(); const email=$('#loginEmail').value.trim().toLowerCase(), pass=$('#loginPassword').value; const u=read(K.users).find(x=>x.email===email&&x.password===pass); if(!u)return toast('อีเมลหรือรหัสผ่านไม่ถูกต้อง'); localStorage.setItem(K.session,JSON.stringify(u)); showApp(); location.hash='dashboard'};
-    $('#registerForm').onsubmit=e=>{e.preventDefault(); const fd=new FormData(e.target), email=String(fd.get('email')).toLowerCase(); const users=read(K.users); if(users.find(x=>x.email===email))return toast('อีเมลนี้สมัครแล้ว'); const u={uid:'uid_'+Date.now(),name:fd.get('name'),email,phone:fd.get('phone'),password:fd.get('password'),businessName:fd.get('businessName'),businessType:fd.get('businessType'),province:fd.get('province'),budget:fd.get('budget'),mainPlatform:fd.get('mainPlatform'),marketingConsent:fd.get('marketingConsent')==='on',adsConsent:fd.get('adsConsent')==='on',createdAt:new Date().toISOString()}; users.push(u); write(K.users,users); addLead(u); localStorage.setItem(K.session,JSON.stringify(u)); showApp(); location.hash='dashboard'};
-    $('[data-show-register]').onclick=()=>showAuth('register'); $('[data-show-login]').onclick=()=>showAuth('login'); $('#googleLogin').onclick=googleDemo; $('#googleRegister').onclick=googleDemo; $('#logoutBtn').onclick=e=>{e.preventDefault();localStorage.removeItem(K.session);showAuth('login')};
-    function route(){const name=(location.hash||'#dashboard').replace('#',''); $$('.page').forEach(p=>p.classList.toggle('active',p.id==='page-'+name)); $$('[data-route]').forEach(a=>a.classList.toggle('active',a.dataset.route===name));}
-    window.addEventListener('hashchange',route);
-    function connect(p){const list=read(K.platforms,{}); list[p]={connected:true,status:'Connected',at:new Date().toISOString()}; write(K.platforms,list); renderAll(); toast('เชื่อมต่อ '+p+' แบบ Demo แล้ว')}
-    function platformItem(p,cls,label){const list=read(K.platforms,{}); const ok=list[p]?.connected; return `<div class="platform"><div class="platform-left"><div class="ico ${cls}">${label}</div><div><b>${p}</b><div class="muted">${ok?'Connected • Token demo':'ยังไม่ได้เชื่อมต่อ'}</div></div></div><button class="btn ${ok?'btn-soft ok':'btn-primary'}" onclick="connect('${p}')">${ok?'Connected':'Connect'}</button></div>`}
-    function renderAll(){ const platforms=['Facebook','TikTok','YouTube','Shopee','Gmail']; const html=platformItem('Facebook','fb','f')+platformItem('TikTok','tt','♪')+platformItem('YouTube','yt','▶')+platformItem('Shopee','sp','S')+platformItem('Gmail','gm','G'); $('#platformList').innerHTML=html; $('#apiStatus').innerHTML=platforms.map(p=>`<div class="platform"><b>${p} API</b><span class="status ${read(K.platforms,{})[p]?.connected?'ok':'warn'}">${read(K.platforms,{})[p]?.connected?'Connected':'Waiting'}</span></div>`).join(''); const leads=read(K.leads); $('#leadCount').textContent=leads.length; $('#leadRows').innerHTML=leads.map(r=>`<tr><td>${r.name||'-'}</td><td>${r.email||'-'}</td><td>${r.phone||'-'}</td><td>${r.interest||'-'}</td><td>${r.consentMarketing?'Yes':'No'}</td><td>${new Date(r.createdAt).toLocaleString('th-TH')}</td></tr>`).join('')||'<tr><td colspan="6">ยังไม่มีข้อมูลสมัครสมาชิก</td></tr>' }
-    $('#exportLeads').onclick=()=>{const rows=read(K.leads); const csv=['name,email,phone,interest,consentMarketing,createdAt',...rows.map(r=>[r.name,r.email,r.phone,r.interest,r.consentMarketing,r.createdAt].map(v=>'"'+String(v??'').replaceAll('"','""')+'"').join(','))].join('\n'); const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'})); a.download='powerads_leads.csv'; a.click()}
-    if(session())showApp();else showAuth(location.hash==='#register'?'register':'login');
+    const K = { users: "pa_users_v3", session: "pa_session_v3", platforms: "pa_platforms_v3", credits: "pa_credits_v3", pages: "pa_fb_pages_v3", gallery: "pa_ai_gallery_v3" };
+    const $ = (q) => document.querySelector(q);
+    const $$ = (q) => document.querySelectorAll(q);
+
+    function read(key, fallback = []) { try { const value = JSON.parse(localStorage.getItem(key)); return value ?? fallback; } catch (e) { return fallback; } }
+    function write(key, value) { localStorage.setItem(key, JSON.stringify(value)); }
+    function toast(message) { const t = document.createElement("div"); t.className = "toast"; t.textContent = message; document.body.appendChild(t); setTimeout(() => t.remove(), 2600); }
+    function currentUser() { return JSON.parse(localStorage.getItem(K.session) || "null"); }
+
+    function openLanding() { $("#landing").classList.remove("hide"); $("#auth").classList.add("hide"); $("#app").classList.add("hide"); }
+    function showAuth(mode) { $("#landing").classList.add("hide"); $("#auth").classList.remove("hide"); $("#app").classList.add("hide"); $("#loginCard").classList.toggle("hide", mode === "register"); $("#registerCard").classList.toggle("hide", mode !== "register"); }
+    function showApp() { $("#landing").classList.add("hide"); $("#auth").classList.add("hide"); $("#app").classList.remove("hide"); $("#helloUser").textContent = currentUser()?.name || "Guest"; renderAll(); route(); }
+
+    document.querySelectorAll("[data-open-login]").forEach((btn) => { btn.onclick = () => showAuth("login"); });
+    document.querySelectorAll("[data-open-register]").forEach((btn) => { btn.onclick = () => showAuth("register"); });
+    document.querySelectorAll("[data-back-home]").forEach((btn) => { btn.onclick = openLanding; });
+    $("[data-show-register]").onclick = () => showAuth("register");
+    $("[data-show-login]").onclick = () => showAuth("login");
+
+    $("#loginForm").onsubmit = (e) => { e.preventDefault(); const email = $("#loginEmail").value.trim().toLowerCase(); const password = $("#loginPassword").value; const user = read(K.users).find((item) => item.email === email && item.password === password); if (!user) { toast("อีเมลหรือรหัสผ่านไม่ถูกต้อง"); return; } localStorage.setItem(K.session, JSON.stringify(user)); showApp(); location.hash = "dashboard"; };
+
+    $("#registerForm").onsubmit = (e) => { e.preventDefault(); const fd = new FormData(e.target); const email = String(fd.get("email")).toLowerCase(); const users = read(K.users); if (users.find((item) => item.email === email)) { toast("อีเมลนี้สมัครแล้ว"); return; } const user = { uid: "uid_" + Date.now(), name: fd.get("name"), email, phone: fd.get("phone"), password: fd.get("password"), businessName: fd.get("businessName"), businessType: fd.get("businessType"), province: fd.get("province"), budget: fd.get("budget"), mainPlatform: fd.get("mainPlatform"), marketingConsent: fd.get("marketingConsent") === "on", adsConsent: fd.get("adsConsent") === "on", createdAt: new Date().toISOString() }; users.push(user); write(K.users, users); localStorage.setItem(K.session, JSON.stringify(user)); if (!localStorage.getItem(K.credits)) write(K.credits, 100); showApp(); location.hash = "dashboard"; };
+
+    function googleDemo() { const email = prompt("ใส่อีเมล Gmail สำหรับสมัคร/เข้าสู่ระบบแบบ Demo", ""); if (!email) return; const users = read(K.users); let user = users.find((item) => item.email === email.toLowerCase()); if (!user) { user = { uid: "google_" + Date.now(), name: email.split("@")[0], email: email.toLowerCase(), phone: "", provider: "google", businessName: "", businessType: "", budget: "", mainPlatform: "Google", marketingConsent: false, adsConsent: false, createdAt: new Date().toISOString() }; users.push(user); write(K.users, users); } localStorage.setItem(K.session, JSON.stringify(user)); if (!localStorage.getItem(K.credits)) write(K.credits, 100); showApp(); location.hash = "dashboard"; }
+    $("#googleLogin").onclick = googleDemo;
+    $("#googleRegister").onclick = googleDemo;
+    $("#logoutBtn").onclick = (e) => { e.preventDefault(); localStorage.removeItem(K.session); openLanding(); location.hash = ""; };
+
+    function route() { const name = (location.hash || "#dashboard").replace("#", ""); if ($("#app").classList.contains("hide")) return; $$(".page").forEach((page) => { page.classList.toggle("active", page.id === "page-" + name); }); $$("[data-route]").forEach((nav) => { nav.classList.toggle("active", nav.dataset.route === name); }); }
+    window.addEventListener("hashchange", route);
+
+    function connect(platform) { const list = read(K.platforms, {}); list[platform] = { connected: true, status: "Connected", at: new Date().toISOString() }; write(K.platforms, list); renderAll(); toast("เชื่อมต่อ " + platform + " แบบ Demo แล้ว"); }
+
+    function platformItem(platform, cls, label) { const list = read(K.platforms, {}); const ok = list[platform]?.connected; return `<div class="platform"><div class="platform-left"><div class="ico ${cls}">${label}</div><div><b>${platform}</b><div class="muted">${ok ? "Connected • Token demo" : "ยังไม่ได้เชื่อมต่อ"}</div></div></div><button class="btn ${ok ? "btn-soft ok" : "btn-primary"}" onclick="connect('${platform}')">${ok ? "Connected" : "Connect"}</button></div>`; }
+
+    function buyCredits(amount) { const total = read(K.credits, 0) + amount; write(K.credits, total); renderAll(); toast("ซื้อเครดิตแบบ Demo สำเร็จ: +" + amount); }
+
+    $("#generateAi").onclick = () => { let credits = read(K.credits, 0); const type = $("#aiType").value; const cost = type === "video" ? 80 : 20; if (credits < cost) { toast("เครดิตไม่พอ ต้องใช้ " + cost + " เครดิต"); return; } credits -= cost; write(K.credits, credits); const gallery = read(K.gallery); gallery.unshift({ type, style: $("#aiStyle").value, prompt: $("#aiPrompt").value || "AI Creative", at: new Date().toISOString() }); write(K.gallery, gallery.slice(0, 12)); renderAll(); toast("สร้าง " + (type === "video" ? "วิดีโอ" : "ภาพนิ่ง") + " สำเร็จ ใช้ " + cost + " เครดิต"); };
+
+    function updatePreview() { $("#previewPageName").textContent = $("#fbPageName").value || "ชื่อเพจของคุณ"; $("#previewPageCategory").textContent = $("#fbPageCategory").value || "หมวดหมู่เพจ"; $("#previewPageDesc").textContent = $("#fbPageDesc").value || "คำอธิบายเพจจะแสดงตรงนี้"; }
+    ["fbPageName", "fbPageCategory", "fbPageDesc"].forEach((id) => { $("#" + id).addEventListener("input", updatePreview); });
+
+    $("#saveFbPage").onclick = () => { const name = $("#fbPageName").value.trim(); if (!name) { toast("กรุณาใส่ชื่อเพจ"); return; } const pages = read(K.pages); pages.unshift({ name, category: $("#fbPageCategory").value, desc: $("#fbPageDesc").value, audience: $("#fbPageAudience").value, createdAt: new Date().toISOString() }); write(K.pages, pages); renderAll(); toast("บันทึกเพจแล้ว"); };
+
+    function renderAll() { const platforms = ["Facebook", "TikTok", "YouTube", "Shopee", "Gmail", "AI Gateway"]; $("#platformList").innerHTML = platformItem("Facebook", "fb", "f") + platformItem("TikTok", "tt", "♪") + platformItem("YouTube", "yt", "▶") + platformItem("Shopee", "sp", "S") + platformItem("Gmail", "gm", "G") + platformItem("AI Gateway", "ai", "AI"); $("#apiStatus").innerHTML = platforms.map((platform) => { const connected = read(K.platforms, {})[platform]?.connected; return `<div class="platform"><b>${platform} API</b><span class="status ${connected ? "ok" : "warn"}">${connected ? "Connected" : "Waiting"}</span></div>`; }).join(""); const users = read(K.users); const credits = read(K.credits, 0); const pages = read(K.pages); const gallery = read(K.gallery); $("#memberCount").textContent = users.length; $("#dashMembers").textContent = users.length; $("#creditBadge").textContent = credits; $("#creditBalance").textContent = credits; $("#dashCredit").textContent = credits; $("#pageCount").textContent = pages.length; $("#fbPageList").innerHTML = pages.map((page) => `<div class="platform"><div><b>${page.name}</b><div class="muted">${page.category} • ${page.audience || "ไม่ระบุกลุ่มเป้าหมาย"}</div></div><span class="status ok">Saved</span></div>`).join("") || '<p class="muted">ยังไม่มีเพจที่สร้าง</p>'; $("#memberRows").innerHTML = users.map((user) => `<tr><td>${user.name || "-"}</td><td>${user.email || "-"}</td><td>${user.phone || "-"}</td><td>${user.businessName || "-"}</td><td>${user.budget || "-"}</td><td>${user.marketingConsent ? "Yes" : "No"}</td><td>${new Date(user.createdAt).toLocaleString("th-TH")}</td></tr>`).join("") || '<tr><td colspan="7">ยังไม่มีข้อมูลสมาชิก</td></tr>'; $("#aiGallery").innerHTML = gallery.map((item) => `<div class="preview-card"><div><b>${item.type === "video" ? "🎬 Video" : "🖼 Image"}</b><p>${item.style}</p><small>${item.prompt}</small></div></div>`).join("") || '<div class="preview-card">ยังไม่มีผลงาน AI</div>'; }
+
+    $("#exportMembers").onclick = () => { const rows = read(K.users); const csvRows = ["name,email,phone,businessName,businessType,province,budget,mainPlatform,marketingConsent,adsConsent,createdAt", ...rows.map((row) => [row.name, row.email, row.phone, row.businessName, row.businessType, row.province, row.budget, row.mainPlatform, row.marketingConsent, row.adsConsent, row.createdAt].map((value) => '"' + String(value ?? "").replaceAll('"', '""') + '"').join(","))]; const csv = csvRows.join("
+"); const blob = new Blob([csv], { type: "text/csv;charset=utf-8" }); const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "powerads_members.csv"; a.click(); };
+
+    if (currentUser()) showApp(); else openLanding();
   </script>
 </body>
 </html>
+
